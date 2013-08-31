@@ -13,7 +13,7 @@ if ($connection->connect_error)
 
 function _userExists($email) {
 	
-	$query = $connection->query("SELECT email FROM users WHERE email = $email");
+	$query = $connection->query("SELECT email FROM users WHERE email = \"%$email%\"");
 	if ($result = $query->fetch_assoc())
 		return true;
 	else 
@@ -50,7 +50,7 @@ function _generateSalt() {
 function _addUser($email, $username, $password, $salt, $ip) 
 {
 	$result = $connection->query("INSERT INTO users (id, email, username, password, salt, date_created, created_ip, varified, invited, last_log_date, last_log_ip) 
-			VALUES (NULL, $email, $username, $password, $salt, CURRENT_TIMESTAMP, $ip, 0, 0, CURRENT_TIMESTAMP, $ip)");
+			VALUES (NULL, \"%$email%\", \"%$username%\", \"%$password%\", \"%$salt%\", CURRENT_TIMESTAMP, $ip, 0, 0, CURRENT_TIMESTAMP, $ip)");
 	if ($result) {
 		return true;
 	}	
@@ -74,13 +74,13 @@ if (isset($_REQUEST['email'])) {
 	
 // check if username received
 if (isset($_REQUEST['name'])) {
-	$email = mysql_real_escape_string($_REQUEST['name']);
+	$username = mysql_real_escape_string($_REQUEST['name']);
 } else
 	exit(json_encode(array("error" => "no username")));
 
 // check if password received
 if (isset($_REQUEST['pass'])) {
-	$email = mysql_real_escape_string($_REQUEST['pass']);
+	$pass = mysql_real_escape_string($_REQUEST['pass']);
 } else
 	exit(json_encode(array("error" => "no password")));
 
