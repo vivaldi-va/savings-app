@@ -1,0 +1,70 @@
+
+<div class="timeline"></div>
+<div class="column left income">
+	<div class="column-heading">income</div>
+
+	<div class="finance-item blue">
+		<div class="finance-item-amount-wrapper">
+			<div class="finance-item-amount">9,999.99&euro;</div>
+			<div class="finance-item-time-meta">every week</div>
+		</div>
+		<div class="finance-item-name">the name for items is 50 characters</div>
+	</div>
+	<div class="finance-item blue">
+		<div class="finance-item-amount-wrapper">
+			<div class="finance-item-amount">9,999.99&euro;</div>
+			<div class="finance-item-time-meta">every week</div>
+		</div>
+		<div class="finance-item-name">the name for items is 50 characters</div>
+	</div>
+
+
+	<form action="">
+		<div class="row">
+			<div class="input-group">
+				<label for="finances-name" class="input-label">name</label>
+				<input id="finances-name" class="input" type="text"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-6 input-group">
+				<label for="finances-amount" class="input-label">amount</label>
+				<input id="finances-amount" class="input" type="text"/>
+			</div>
+			<div class="col-6 input-group">
+				<label for="finances-date" class="input-label">due date</label>
+				<input id="finances-date" class="input" type="text"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-group">
+				<label for="finances-interval" class="input-label">interval</label>
+				<select class="input" name="interval" id="finances-interval">
+					<option value="1">daily</option>
+					<option value="2">weekly</option>
+					<option value="3">every other week</option>
+					<option value="4">each month</option>
+					<option value="5">every 6 months</option>
+					<option value="6">yearly</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-group">
+				<label for="finances-interval" class="input-label">description</label>
+				<textarea id="finances-description" class="input" name="description" id="" cols="10" rows="10"></textarea>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-6">
+				<button class="button">cancel</button>
+			</div>
+			<div class="col-6">
+				<button class="button">save</button>
+			</div>
+		</div>
+	</form>
+
+</div>
+<div class="column right expenses"></div>

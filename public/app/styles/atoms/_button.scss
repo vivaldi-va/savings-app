@@ -1,0 +1,15 @@
+.button {
+	display: inline-block;
+	width: 100%;
+	height: 35px;
+	line-height: 35px;
+
+	border: none;
+	background: $muted;
+	color: $white;
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+
+}

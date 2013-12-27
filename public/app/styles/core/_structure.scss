@@ -1,0 +1,29 @@
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.container {
+	position: absolute;
+	top: 35px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.column {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 300px;
+	padding: 0 5px;
+
+	&.left {
+		left: 0;
+	}
+
+	&.right {
+		right: 0;
+	}
+}
