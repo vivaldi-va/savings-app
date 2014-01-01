@@ -37,8 +37,8 @@
 }
 
 .finance-item-amount {
-	font-size: 1.265em;
-	font-weight: 700;
+	font-size: 1.5em;
+	font-weight: 600;
 }
 
 .finance-item-time-meta {
@@ -48,4 +48,8 @@
 .finance-item-name {
 	float: left;
 	width: 65%;
+}
+
+.finance-form {
+	display: inline-block;
 }

@@ -12,4 +12,8 @@
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 
+	&:active,&:hover,&:focus {
+		background: darken($muted, 25%);
+	}
+
 }

@@ -12,10 +12,12 @@
 @import "atoms/_input";
 @import "atoms/_input-label";
 @import "atoms/_button";
+@import "atoms/_new-finance-button";
 
 // molecules
 
 @import "molecules/_finance-item";
+@import "molecules/_finance-form";
 
 // organisms
 @import "organisms/_header";
