@@ -7,7 +7,7 @@ angular.module('Savings.Config')
 	.config(['$routeProvider', function($routeProvider) {
 		$routeProvider
 			.when('/timeline', {
-				"controller": "TimelineCtrl",
+				"controller": "FinanceCtrl",
 				"templateUrl": "views/timeline.html"
 			})
 			.otherwise({

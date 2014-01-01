@@ -1,6 +1,6 @@
 
 <div class="timeline"></div>
-<div id="income" class="column left income" ng-controller="FinanceCtrl">
+<div id="income" class="column left income">
 	<div class="column-heading">income</div>
 
 
@@ -111,7 +111,7 @@
 	</form>
 
 </div>
-<div id="expenses" class="column right expenses" ng-controller="FinanceCtrl">
+<div id="expenses" class="column right expenses">
 	<div class="column-heading">expenses</div>
 	<div class="finance-item-wrapper" ng-repeat="finance in finances.expenses" ng-click="doToggleFinanceForm(finance)">
 		<div class="finance-item red" ng-class="{active: !!finance.edit}">
