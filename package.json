@@ -20,5 +20,9 @@
     "express": "~3.4.7",
     "express-validator": "~1.0.1",
     "npmlog": "0.0.6"
+  },
+  "dependencies": {
+    "dateformat": "~1.0.7-1.2.3",
+    "moment": "~2.5.0"
   }
 }
