@@ -1,5 +1,11 @@
 public/node_modules
 public/dist
+
+node_modules
+.settings
+.editorconfig
+.project
+conf.json
 .tmp
 .sass-cache
 public/app/bower_components

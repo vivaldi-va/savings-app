@@ -1,8 +1,8 @@
 {
 	"db": {
 		"host": "localhost",
-		"user": "root",
-		"password": "",
-		"database": "savings_app"
+		"user": "b0d19bc5a08289",
+		"password": "ee1cccbe",
+		"database": "heroku_804bff458fece32"
 	}
 }
