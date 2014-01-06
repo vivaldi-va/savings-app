@@ -10,4 +10,5 @@ conf.json
 .sass-cache
 public/app/bower_components
 public/app/styles/*.css
+!public/app/styles/app.css
 .idea

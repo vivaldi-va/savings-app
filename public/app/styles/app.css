@@ -1,0 +1,329 @@
+@import url(../bower_components/normalize-css/normalize.css);
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.container {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+
+.column {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  padding: 0 5px 2em;
+  overflow-y: scroll; }
+  .column.left {
+    left: 0; }
+  .column.right {
+    right: 0; }
+
+.row {
+  float: left;
+  width: 100%; }
+  .row + .row {
+    margin: 16px 0 0; }
+
+[class*='col-'] {
+  float: left;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+@media screen and (min-width: 0px) {
+  [class*='col-'] + [class*='col-'] {
+    padding: 0 0 0 16px; }
+
+  .reverse [class^='col-'] {
+    float: right; }
+    .reverse [class^='col-'] + [class^='col-'] {
+      padding: 0 16px 0 0; }
+
+  .col-1 {
+    width: 8.3333%; }
+
+  .col-2 {
+    width: 16.6666%; }
+
+  .col-3 {
+    width: 24.9999%; }
+
+  .col-4 {
+    width: 33.3332%; }
+
+  .col-5 {
+    width: 41.6665%; }
+
+  .col-6 {
+    width: 49.9998%; }
+
+  .col-7 {
+    width: 58.3331%; }
+
+  .col-8 {
+    width: 66.6664%; }
+
+  .col-9 {
+    width: 74.9997%; }
+
+  .col-10 {
+    width: 83.333%; }
+
+  .col-11 {
+    width: 91.6663%; }
+
+  .col-12 {
+    width: 99.9996%; }
+
+  .offset-1 {
+    margin-left: 8.3333%; }
+
+  .offset-2 {
+    margin-left: 16.6666%; }
+
+  .offset-3 {
+    margin-left: 24.9999%; }
+
+  .offset-4 {
+    margin-left: 33.3332%; }
+
+  .offset-5 {
+    margin-left: 41.6665%; }
+
+  .offset-6 {
+    margin-left: 49.9998%; }
+
+  .offset-7 {
+    margin-left: 58.3331%; }
+
+  .offset-8 {
+    margin-left: 66.6664%; }
+
+  .offset-9 {
+    margin-left: 74.9997%; }
+
+  .offset-10 {
+    margin-left: 83.333%; }
+
+  .offset-11 {
+    margin-left: 91.6663%; }
+
+  .offset-12 {
+    margin-left: 99.9996%; } }
+.container {
+  background: #dfdfdf; }
+
+.column {
+  background: #f7f7f7; }
+
+html {
+  font-size: 10px; }
+
+body {
+  font: 400 1.4rem/1.15 'source sans pro', sans-serif; }
+
+.column-heading {
+  display: inline-block;
+  width: 100%;
+  margin: 1em 0;
+  font-size: 1.14em;
+  font-weight: 700;
+  text-align: right;
+  text-transform: uppercase; }
+
+.input {
+  display: block;
+  width: 100%;
+  min-height: 35px;
+  padding: 0 0.5em;
+  border: 1px solid #ddd;
+  border-radius: 3px; }
+
+.input-label {
+  display: inline-block;
+  margin: 0 0 0.5em;
+  font-size: 0.8em;
+  font-weight: 700;
+  text-transform: uppercase; }
+
+.button {
+  display: inline-block;
+  width: 100%;
+  height: 35px;
+  line-height: 35px;
+  border: none;
+  background: #999999;
+  color: white;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px; }
+  .button:active, .button:hover, .button:focus {
+    background: #595959; }
+  .button.red {
+    background: #e22e07; }
+
+.new-finance-button {
+  margin: 32px 0 0; }
+
+.finance-item {
+  width: 100%;
+  height: 54px;
+  padding: 10px 3px;
+  margin: 0 0 2px;
+  background: #999999;
+  color: white;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px; }
+  .finance-item.blue {
+    background: #79c9e8; }
+    .finance-item.blue.active {
+      background: #38aedd; }
+  .finance-item.red {
+    background: #f95e3d; }
+    .finance-item.red.active {
+      background: #e22e07; }
+
+.finance-item-amount-wrapper {
+  float: left;
+  width: 35%;
+  text-align: center; }
+
+.finance-item-amount {
+  font-size: 1.5em;
+  font-weight: 600; }
+
+.finance-item-time-meta {
+  font-size: 0.85em; }
+
+.finance-item-name {
+  float: left;
+  width: 65%; }
+
+.finance-form {
+  display: inline-block; }
+
+.finance-form {
+  margin: 2em 0; }
+
+.header-bar {
+  width: 100%;
+  height: 35px;
+  background: #333333;
+  color: white; }
+
+.timeline {
+  width: 100%;
+  height: 100%;
+  padding: 0 300px;
+  overflow-y: scroll; }
+
+/*.timeline {
+	width: 100%;
+	background: #f7f7f7;
+	font-size: 10px;
+}*/
+.timeline-segment {
+  position: relative;
+  float: left;
+  width: 100%;
+  padding: 0 0 4em; }
+  .timeline-segment:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 10px;
+    height: 100%;
+    margin: 0 0 0 -5px;
+    background: #999; }
+
+.timeline-segment-meta {
+  width: 310px;
+  font-weight: 700;
+  text-transform: uppercase; }
+
+.item-container {
+  position: relative;
+  width: 50%; }
+  .item-container.income {
+    float: left; }
+    .item-container.income .timeline-segment-meta {
+      float: right; }
+  .item-container.expenses {
+    float: right; }
+    .item-container.expenses .timeline-segment-meta {
+      float: left;
+      text-align: right; }
+
+.item-row {
+  float: left;
+  width: 100%;
+  height: 30px;
+  margin: 0 0 0.25em; }
+  .item-row.first .item:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -105px;
+    width: 105px;
+    height: 3px;
+    margin: -2px 0 0;
+    background: #999; }
+
+.expenses .item-row.first .item:before {
+  left: -105px; }
+
+.item-wrapper {
+  position: absolute;
+  width: 200px; }
+  .item-wrapper.blue {
+    right: 110px; }
+    .item-wrapper.blue .item {
+      background: #38AEDD; }
+      .item-wrapper.blue .item:before {
+        background: #38AEDD; }
+  .item-wrapper.red {
+    left: 110px; }
+    .item-wrapper.red .item {
+      background: #E22E07; }
+      .item-wrapper.red .item:before {
+        background: #E22E07; }
+
+.item {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  padding: 0 0.25em;
+  background: #999;
+  color: #fff;
+  border-radius: 6px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.item-amount-wrapper {
+  float: left;
+  width: 33%; }
+  .item-amount-wrapper .item-amount {
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: 600; }
+
+.item-name-wrapper {
+  float: left;
+  width: 66%;
+  padding: 0.25em 0 0 0.5em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+  .item-name-wrapper .item-name {
+    font-size: 0.75em; }
+    .item-name-wrapper .item-name:first-letter {
+      text-transform: uppercase; }
