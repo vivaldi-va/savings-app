@@ -3,4 +3,161 @@
 	height: 100%;
 
 	padding: 0 300px;
+
+	overflow-y: scroll;
+}
+
+/*.timeline {
+	width: 100%;
+	background: #f7f7f7;
+	font-size: 10px;
+}*/
+
+.timeline-segment {
+	position: relative;
+	float: left;
+	width: 100%;
+	padding: 0 0 4em;
+
+	&:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 50%;
+
+		width: 10px;
+		height: 100%;
+
+		margin: 0 0 0 -5px;
+
+		background: #999;
+	}
+}
+
+.timeline-segment-meta {
+	width: 310px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.item-container {
+	position: relative;
+	width: 50%;
+
+	&.income {
+		float: left;
+		.timeline-segment-meta {
+			float: right;
+		}
+	}
+
+	&.expenses {
+		float: right;
+		.timeline-segment-meta {
+			float: left;
+			text-align: right;
+		}
+	}
+}
+
+.item-row {
+	float: left;
+	width: 100%;
+	height: 30px;
+	margin: 0 0 0.25em;
+
+	&.first {
+		.item:before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			right: -105px;
+			width: 105px;
+			height: 3px;
+			margin: -2px 0 0;
+
+			background: #999;
+		}
+	}
+}
+
+.expenses {
+	.item-row.first {
+		.item:before {
+			left: -105px;
+		}
+	}
+}
+
+
+
+.item-wrapper {
+	position: absolute;
+	width: 200px;
+
+	&.blue {
+		right: 110px;
+
+		.item {
+			background: #38AEDD;
+
+			&:before {background: #38AEDD;}
+		}
+	}
+
+	&.red {
+		left: 110px;
+
+		.item {
+			background: #E22E07;
+
+			&:before {background: #E22E07;}
+		}
+	}
+}
+
+.item {
+
+	position: relative;
+	width: 100%;
+	height: 30px;
+	padding: 0 0.25em;
+	background: #999;
+	color: #fff;
+
+	border-radius: 6px;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+
+
+}
+
+.item-amount-wrapper {
+	float: left;
+	width: 33%;
+
+	.item-amount {
+		font-size: 14px;
+		line-height: 30px;
+		font-weight: 600;
+	}
+}
+
+.item-name-wrapper {
+	float: left;
+	width: 66%;
+	padding: 0.25em 0 0 0.5em;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+	.item-name {
+		font-size: 0.75em;
+
+		&:first-letter {text-transform: uppercase;}
+	}
 }

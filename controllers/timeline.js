@@ -7,6 +7,8 @@ module.exports.set = function(app, db) {
 	var log		= require('npmlog');
 	var q		= require('q');
 	var moment	= require('moment');
+	var os		= require('os');
+	var load	= os.loadavg();
 	moment.lang('en-gb');
 
 
@@ -148,27 +150,39 @@ module.exports.set = function(app, db) {
 					var firstDate = _calcFirstDate(data[f], 'days', 1);
 
 					log.info('Debug', "calculating first date", firstDate);
-					data[f].interval_dates.push(_calcFinanceDates(firstDate, 'days', 1));
+					data[f].interval_dates = _calcFinanceDates(firstDate, 'days', 1);
 
 					break;
 				case 'week':
+					var firstDate = _calcFirstDate(data[f], 'weeks', 1);
 
+					log.info('Debug', "calculating first date", firstDate);
+					data[f].interval_dates = _calcFinanceDates(firstDate, 'weeks', 1);
 					break;
 				case 'biweekly':
+					var firstDate = _calcFirstDate(data[f], 'weeks', 2);
 
+					log.info('Debug', "calculating first date", firstDate);
+					data[f].interval_dates = _calcFinanceDates(firstDate, 'weeks', 2);
 					break;
 				case 'month':
 					var firstDate = _calcFirstDate(data[f], 'months', 1);
 
 					log.info('Debug', "calculating first date", firstDate);
-					data[f].interval_dates.push(_calcFinanceDates(firstDate, 'months', 1));
+					data[f].interval_dates = _calcFinanceDates(firstDate, 'months', 1);
 
 					break;
 				case 'sixmonths':
+					var firstDate = _calcFirstDate(data[f], 'months', 6);
 
+					log.info('Debug', "calculating first date", firstDate);
+					data[f].interval_dates = _calcFinanceDates(firstDate, 'months', 6);
 					break;
 				case 'year':
+					var firstDate = _calcFirstDate(data[f], 'years', 1);
 
+					log.info('Debug', "calculating first date", firstDate);
+					data[f].interval_dates = _calcFinanceDates(firstDate, 'years', 1);
 					break;
 			}
 
@@ -176,11 +190,12 @@ module.exports.set = function(app, db) {
 
 		//for(var i = 0; i<)
 
+		// create timeline objects for 2 months +- current date
 		for(start; moment(start).isBefore(end); start.add('days', 1)) {
-			log.info('Debug', "current date in iteration", start.calendar());
+			//log.info('Debug', "current date in iteration", start.calendar());
 			var timelineItemModel = {
 				"attrs": {
-					"date": start.calendar(),
+					"date": start.format('L'),
 					"finances_count": 0
 				},
 				"finances": {
@@ -189,29 +204,44 @@ module.exports.set = function(app, db) {
 				}
 			};
 
-			// loop through finances, if the due date matches the current date
-			// in the dates iteration, add it.
-			for(var f in data) {
-				/*log.info('Debug', "checking finances for date", data[f]);
-				log.info('Debug', "date for finance", data[f].duedate);*/
-				log.info('Debug', "date for finance", moment(data[f].duedate).format('L'));
-				log.info('Debug', "date for finance", start.format('L'));
-				log.info('Debug', "date for finance", start.format('L') === moment(data[f].duedate).format('L'));
-				if(start.format('L') === moment(data[f].duedate).format('L')) {
-					if(data[f].type === 0) timelineItemModel.finances.income.push(data[f]);
-					if(data[f].type === 1) timelineItemModel.finances.expenses.push(data[f]);
-
-					timelineItemModel.attrs.finances_count++;
-
-					log.info('Debug', "found a finance", data[f]);
-				}
-
-			}
-
 			timeline.push(timelineItemModel);
 		}
 
+
+		// loop through generated timeline objects
+		// then loop through finances
+		// if there's a corresponding date in generated interval dates
+		// add it to the timeline object's relevant array
+		for(var i = 0; i<timeline.length; i++) {
+			var date = timeline[i].attrs.date;
+			//log.info('Debug', "looping timeline date objects", date);
+
+			for(var f in data) {
+				var calculatedDates = data[f].interval_dates;
+				//delete data[f].interval_dates;
+				//log.info('Debug', "finding finances and getting interval date info", calculatedDates);
+
+				if (!!calculatedDates.length) {
+					//log.info('Debug', "looping dates", calculatedDates);
+					for(var d in calculatedDates) {
+						//log.info('Debug', "current interval date", calculatedDates[d]);
+
+						//log.info('Debug', "moment date formatting", moment(date));
+						//log.info('Debug', "does date match current timeline item date?", date, calculatedDates[d]);
+						if (date === calculatedDates[d]) {
+							timeline[i].attrs.finances_count++;
+							if(data[f].type === 0) timeline[i].finances.income.push(data[f]);
+							if(data[f].type === 1) timeline[i].finances.expenses.push(data[f]);
+						}
+					}
+				}
+				//if(timeline[i].finances.income.length)log.info('Debug', "Data", timeline[i]);
+
+			}
+		}
+
 		//log.info('Debug', "Data", timeline);
+		log.info('Debug', "Recent system load", os.freemem()/(1024*1024));
 		return timeline;
 	}
 
@@ -232,7 +262,9 @@ module.exports.set = function(app, db) {
 
 		_getFinances().then(
 			function(success) {
-				res.send(_createTimelineData(success));
+				model.success = true;
+				model.data = _createTimelineData(success);
+				res.send(model);
 
 			},
 			function(reason) {
