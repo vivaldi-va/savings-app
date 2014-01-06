@@ -16,4 +16,7 @@
 		background: darken($muted, 25%);
 	}
 
+	&.red {
+		background: $red;
+	}
 }
