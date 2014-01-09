@@ -66,10 +66,32 @@ angular.module('Savings.Services')
 
 			return dfd.promise;
 		}
+		function _disableFinance(id) {
+			var dfd = $q.defer();
+
+			$http({
+				url: '/api/finances/' + id,
+				method: 'delete'
+			})
+				.success(function(status) {
+					$log.info('DEBUG: finance item disabled');
+					if(!status.success) dfd.reject(status.error);
+					if(status.success) dfd.resolve(status.message);
+				})
+				.error(
+					function(reason) {
+						$log.warn('ERROR: finance item failed to be disabled ', reason);
+						dfd.reject(reason);
+					}
+				);
+
+			return dfd.promise;
+		}
 
 		return {
 			createFinance: _createFinance,
 			getFinances: _getFinances(),
-			modifyFinance: _modifyFinance
+			modifyFinance: _modifyFinance,
+			disableFinance: _disableFinance
 		}
 	});

@@ -64,11 +64,7 @@ module.exports.set = function(app, db) {
 			"data": null
 		};
 
-
-
-
-
-		log.info("DEBUG", "Sql for inserting finance: %s", sql);
+//		log.info("DEBUG", "Sql for inserting finance: %s", sql);
 		// input validation
 		req.checkBody('name', "Name is missing").notEmpty();
 		req.assert('name', "Name is too long").len(1,50);
@@ -78,7 +74,8 @@ module.exports.set = function(app, db) {
 		// TODO: change currency input to compensate for using commas as decimals
 
 
-
+		req.checkBody('date', "date is missing").notEmpty();
+		req.assert('date', "invalid date, correct format is: dd/mm/yy").is(/(\d{2})\/(\d{2})\/(\d{2,4})/);
 		var duedate = req.body.date.replace(/(\d{2})\/(\d{2})\/(\d{2,4})/, "$3-$2-$1");
 
 
@@ -89,8 +86,8 @@ module.exports.set = function(app, db) {
 		}
 
 		var sql = "INSERT INTO finances " +
-			"(`id`, `userid`, `created`, `active`, `name`, `type`, `amount`, `duedate`, `interval`, `description`) " +
-			"VALUES(null, 1, null, 1, \"" + req.body.name + "\", " + req.body.type + ", " + req.body.amount + ", \"" + duedate + "\", \"" + req.body.interval + "\", \"" + req.body.description + "\");";
+			"(`id`, `userid`, `created`, `active`, `name`, `type`, `amount`, `duedate`, `interval`, `description`, `disabled`) " +
+			"VALUES(null, 1, null, 1, \"" + req.body.name + "\", " + req.body.type + ", " + req.body.amount + ", \"" + duedate + "\", \"" + req.body.interval + "\", \"" + req.body.description + "\", null);";
 
 
 		db.query(sql, function(err, result) {
@@ -101,7 +98,9 @@ module.exports.set = function(app, db) {
 			}
 
 			if(result) {
+				log.info("DEBUG", "insertion query successful", result);
 				model.success = true;
+				model.data = {"insertId": result.insertId};
 				model.message = "New finance item added";
 				res.send(model);
 			}
@@ -129,6 +128,34 @@ module.exports.set = function(app, db) {
 		var duedate = req.body.duedate.replace(/(\d{2})\/(\d{2})\/(\d{2,4})/, "$3-$2-$1");
 		db.query("UPDATE finances SET `name`=\""+req.body.name+"\", `amount`=" +
 			req.body.amount + ", `duedate` = \"" + duedate + "\", `interval` = \"" + req.body.interval + "\", `description` = \"" + req.body.description + "\"" +
+			" WHERE id = " + req.params.id,
+			function(err, result) {
+				if(err) {
+					log.error('SQL ERR', "error updating finance item", err);
+					model.error = err;
+					res.send(model);
+				}
+				if(result) {
+					log.info('HTTP', "Finance updating successful", result);
+					model.success = true;
+					model.message = "finance id " + req.params.id + " updated";
+
+					res.send(model);
+				}
+			});
+	});
+
+	app.delete('/api/finances/:id', function(req, res) {
+		log.info('HTTP', "DELETE request for finance id " + req.params.id + " received");
+
+		var model = {
+			"success": false,
+			"error": null,
+			"message": null,
+			"data": null
+		};
+
+		db.query("UPDATE finances SET `active` = 0, `disabled` = CURRENT_DATE"+
 			" WHERE id = " + req.params.id,
 			function(err, result) {
 				if(err) {

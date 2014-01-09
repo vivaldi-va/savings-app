@@ -62,8 +62,12 @@ angular.module('Savings.Controllers')
 				function(success) {
 					// create a new finance item based on the info supplied to the function
 					// so as to avoid getting new data to update it
+
+					data.id = success.data.insertId;
 					if(type===0) $scope.finances.income.push(data);
 					if(type===1) $scope.finances.expenses.push(data);
+					$log.info("DEBUG: inserting finance item", data);
+
 
 				},
 				function(reason) {
@@ -84,6 +88,23 @@ angular.module('Savings.Controllers')
 			);
 		};
 
+		$scope.doDisableFinance = function(finance) {
+
+
+			//$log.info()
+			$financeService.disableFinance(finance.id).then(
+				function(success) {
+					$log.info("DEBUG: disabling finance item successful");
+					finance.disabled = true;
+				},
+				function(reason) {
+					$scope.errors.push(reason);
+				}
+			);
+			$log.info("DEBUG: disable finance item", finance);
+
+		};
+
 		$scope.doToggleNewIncomeForm = function() {
 			$log.info('DEBUG: Toggle income form');
 			$scope.showNewIncomeForm = !$scope.showNewIncomeForm;
@@ -96,5 +117,6 @@ angular.module('Savings.Controllers')
 
 		$scope.doToggleFinanceForm = function(finance) {
 			finance.edit = !finance.edit;
+			$log.info('DEBUG: Toggle expenses form', finance);
 		};
 	}]);
