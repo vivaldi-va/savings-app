@@ -89,17 +89,20 @@ module.exports.set = function(app, db) {
 	 * for use in formatting the timeline
 	 *
 	 * @param data
+	 * @param past
+	 * @param future
 	 * @returns {Array}
 	 * @private
 	 */
 	function _createTimelineData(data, past, future) {
 
 		var timeline = [];
-		var d = new Date();
+		var today = moment(new Date());
+		var tomorrow = today.add('days', 1);
 		//var day = d.getDate();
 
 		var past = past || 2;
-		var future = future || 0;
+		var future = future || 1;
 
 
 		var start = moment().subtract('months', past);
@@ -153,9 +156,9 @@ module.exports.set = function(app, db) {
 
 					}
 				} else {
-					log.info('Debug', "Startdate after due date", startDate.isAfter(moment(dueDate)) || startDate.isSame(moment(dueDate)), moment(dueDate).format('L') + ' ' + startDate.format('L'));
+					//log.info('Debug', "Startdate after due date", startDate.isAfter(moment(dueDate)) || startDate.isSame(moment(dueDate)), moment(dueDate).format('L') + ' ' + startDate.format('L'));
 					if(startDate.isAfter(moment(dueDate)) || startDate.isSame(moment(dueDate))) {
-						log.info('Debug', "Startdate after due date");
+						//log.info('Debug', "Startdate after due date");
 						financeDates.push(startDate.format('L'));
 					}
 				}
@@ -167,25 +170,26 @@ module.exports.set = function(app, db) {
 
 
 
+		// parse the interval string from the database into arguments that are
+		// usable by moment.js
+		// =================== +
+		// first find the first date on the timeline the finance is applicable to
+		// then find the interval dates, or the dates that the finance will appear on the timeline
 		for(var f in data) {
 
 			//log.info('Debug', "calculating intervals");
 			data[f].interval_dates = [];
 
-            // parse the interval string from the database into arguments that are
-            // usable by moment.js
-            // =================== +
-            // first find the first date on the timeline the finance is applicable to
-            // then find the interval dates, or the dates that the finance will appear on the timeline
+
 
 			switch(data[f].interval) {
 				case 'day':
 
 					var firstDate = _calcFirstDate(data[f], 'days', 1);
 
-					log.info('Debug', "calculating first date", firstDate);
+					//log.info('Debug', "calculating first date", firstDate);
 					data[f].interval_dates = _calcFinanceDates(firstDate, data[f].duedate, 'days', 1, data[f].disabled);
-					log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates);
+					//log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates);
 
 					break;
 				case 'week':
@@ -193,21 +197,21 @@ module.exports.set = function(app, db) {
 
 					//log.info('Debug', "calculating first date", firstDate);
 					data[f].interval_dates = _calcFinanceDates(firstDate, data[f].duedate, 'weeks', 1, data[f].disabled);
-					log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
+					//log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
 					break;
 				case 'biweekly':
 					var firstDate = _calcFirstDate(data[f], 'weeks', 2);
 
 					//log.info('Debug', "calculating first date", firstDate);
 					data[f].interval_dates = _calcFinanceDates(firstDate, data[f].duedate, 'weeks', 2, data[f].disabled);
-					log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
+					//log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
 					break;
 				case 'month':
 					var firstDate = _calcFirstDate(data[f], 'months', 1);
 
 					//log.info('Debug', "calculating first date", firstDate);
 					data[f].interval_dates = _calcFinanceDates(firstDate, data[f].duedate, 'months', 1, data[f].disabled);
-					log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
+					//log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
 
 					break;
 				case 'sixmonths':
@@ -215,26 +219,26 @@ module.exports.set = function(app, db) {
 
 					//log.info('Debug', "calculating first date", firstDate);
 					data[f].interval_dates = _calcFinanceDates(firstDate, data[f].duedate, 'months', 6, data[f].disabled);
-					log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
+					//log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
 					break;
 				case 'year':
 					var firstDate = _calcFirstDate(data[f], 'years', 1);
 
 					//log.info('Debug', "calculating first date", firstDate);
 					data[f].interval_dates = _calcFinanceDates(firstDate, data[f].duedate, 'years', 1, data[f].disabled);
-					log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
+					//log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
 					break;
 			}
 
 		}
 
-		//for(var i = 0; i<)
 
-		// create timeline objects for 2 months +- current date
+		// create timeline objects for 2 months - current date
         // this bootstrapped timeline will server to allow
         // adding finances to it
-		for(start; moment(start).isBefore(end); start.add('days', 1)) {
-			////log.info('Debug', "current date in iteration", start.calendar());
+		//log.info('Debug', "today + 1", today.add('days', 1));
+		for(start; moment(start).isBefore(tomorrow) ; start.add('days', 1)) {
+			//log.info('Debug', "current date in iteration", start.calendar());
 			var timelineItemModel = {
 				"attrs": {
 					"date": start.format('L'),
@@ -246,8 +250,11 @@ module.exports.set = function(app, db) {
 				}
 			};
 
-			timeline.push(timelineItemModel);
+			if (moment(start).format('L') === moment(new Date()).format('L')) {
+				timelineItemModel.attrs.today = true;
+			}
 
+			timeline.push(timelineItemModel);
 		}
 
 
@@ -268,8 +275,8 @@ module.exports.set = function(app, db) {
 
 
 						if (date === calculatedDates[d]) {
-							log.info('Add to timeline obj', "date matches?", date===calculatedDates[d]);
-							log.info('Add to timeline obj', "date matches?", data[f].type);
+							//log.info('Add to timeline obj', "date matches?", date===calculatedDates[d]);
+							//log.info('Add to timeline obj', "date matches?", data[f].type);
 							timeline[i].attrs.finances_count++;
 							if(data[f].type === 0) timeline[i].finances.income.push(data[f]);
 							if(data[f].type === 1) timeline[i].finances.expenses.push(data[f]);
