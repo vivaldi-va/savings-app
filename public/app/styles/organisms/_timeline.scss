@@ -30,6 +30,7 @@
 		height: 100%;
 
 		margin: 0 0 0 -5px;
+		padding: 0 0 15px;
 
 		background: $muted;
 	}
@@ -86,6 +87,12 @@
 			-moz-border-radius: 15px;
 			border-radius: 15px;
 
+		}
+	}
+
+	&.future {
+		&:before {
+			background: #ccc;
 		}
 	}
 
