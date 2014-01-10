@@ -1,7 +1,7 @@
 
 
 <div class="timeline" ng-controller="TimelineCtrl">
-	<div class="timeline-segment" ng-repeat="timelineSegment in timeline | reverse">
+	<div class="timeline-segment" ng-repeat="timelineSegment in timeline | reverse" ng-class="{today: timelineSegment.attrs.today==true, first: $index===0 && !timelineSegment.attrs.today, future: timelineSegment.attrs.future === true}">
 
 
 		<div class="item-container income" ng-if="timelineSegment.finances.income.length">
@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<div class="item-container expenses" ng-if="timelineSegment.finances.expenses.length">
-			<div class="timeline-segment-meta">expected {{ timelineSegment.attrs.date }}</div>
+			<div class="timeline-segment-meta">due {{ timelineSegment.attrs.date }}</div>
 			<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.expenses">
 				<div class="item-wrapper red">
 					<div class="item">
