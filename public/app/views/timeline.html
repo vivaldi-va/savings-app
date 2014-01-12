@@ -5,7 +5,12 @@
 
 
 		<div class="item-container income" ng-if="timelineSegment.finances.income.length">
-			<div class="timeline-segment-meta">expected {{ timelineSegment.attrs.date }}</div>
+			<div class="timeline-segment-meta" ng-switch="timelineSegment.attrs.future">
+
+				<span ng-switch-when="true">expected</span>
+				<span ng-switch-default>received</span>
+				{{ timelineSegment.attrs.date }}
+			</div>
 			<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.income">
 				<div class="item-wrapper blue">
 					<div class="item">
@@ -21,7 +26,10 @@
 			</div>
 		</div>
 		<div class="item-container expenses" ng-if="timelineSegment.finances.expenses.length">
-			<div class="timeline-segment-meta">due {{ timelineSegment.attrs.date }}</div>
+			<div class="timeline-segment-meta" ng-switch="timelineSegment.attrs.future">
+				<span ng-switch-when="true">due</span>
+				<span ng-switch-default>paid</span>
+				{{ timelineSegment.attrs.date }}</div>
 			<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.expenses">
 				<div class="item-wrapper red">
 					<div class="item">
@@ -45,7 +53,13 @@
 
 
 <div id="income" class="column left income">
-	<div class="column-heading">income</div>
+	<div class="column-heading">
+		<span class="column-totals income">
+			<em>{{ finances.attrs.income.count }}</em> item<span ng-if="finances.attrs.income.count>1">s</span> totaling <em>
+			{{ finances.attrs.income.total_per_month }}&euro;</em> per month
+		</span>
+		income
+	</div>
 
 
 	<div class="finance-item-wrapper" ng-repeat="finance in finances.income | hideDeleted" ng-click="doToggleFinanceForm(finance)">
@@ -156,7 +170,14 @@
 
 </div>
 <div id="expenses" class="column right expenses">
-	<div class="column-heading">expenses</div>
+	<div class="column-heading">
+		<span class="column-totals expenses">
+			<em>{{ finances.attrs.expenses.count }}</em>
+			item<span ng-if="finances.attrs.expenses.count>1">s</span> totaling
+			<em>{{ finances.attrs.expenses.total_per_month }}&euro;</em> per month
+		</span>
+		expenses
+	</div>
 	<div class="finance-item-wrapper" ng-repeat="finance in finances.expenses | hideDeleted" ng-click="doToggleFinanceForm(finance)">
 		<div class="finance-item red" ng-class="{active: !!finance.edit}">
 			<div class="finance-item-amount-wrapper">

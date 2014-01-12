@@ -128,15 +128,6 @@ html {
 body {
   font: 400 1.4rem/1.15 'source sans pro', sans-serif; }
 
-.column-heading {
-  display: inline-block;
-  width: 100%;
-  margin: 1em 0;
-  font-size: 1.14em;
-  font-weight: 700;
-  text-align: right;
-  text-transform: uppercase; }
-
 .input {
   display: block;
   width: 100%;
@@ -170,6 +161,31 @@ body {
 
 .new-finance-button {
   margin: 32px 0 0; }
+
+.column-heading {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin: 1em 0;
+  font-size: 1.14em;
+  font-weight: 700;
+  text-align: right;
+  text-transform: uppercase; }
+
+.column-totals {
+  position: absolute;
+  left: 0;
+  font-size: 0.7em;
+  line-height: 1.4em; }
+  .column-totals em {
+    font-size: 1.3em;
+    font-style: normal; }
+
+.income .column-totals em {
+  color: #38aedd; }
+
+.expenses .column-totals em {
+  color: #e22e07; }
 
 .finance-item {
   width: 100%;
@@ -242,6 +258,7 @@ body {
     width: 10px;
     height: 100%;
     margin: 0 0 0 -5px;
+    padding: 0 0 15px;
     background: #999999; }
   .timeline-segment.today:before {
     margin-top: 15px; }
@@ -278,11 +295,20 @@ body {
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
     border-radius: 15px; }
+  .timeline-segment.future .income .timeline-segment-meta {
+    color: #38aedd; }
+  .timeline-segment.future .expenses .timeline-segment-meta {
+    color: #e22e07; }
+  .timeline-segment.future:before {
+    background: #ccc; }
 
 .timeline-segment-meta {
   width: 310px;
+  margin: 0 0 0.25em;
+  font-size: 0.8em;
   font-weight: 700;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  color: #999999; }
 
 .item-container {
   position: relative;

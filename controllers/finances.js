@@ -7,6 +7,40 @@
 module.exports.set = function(app, db) {
 	var log			= require('npmlog');
 	var dateFormat	= require('dateformat');
+	var moment		= require('moment');
+
+
+
+
+	function _getTotalPerMonth(interval, amount) {
+
+		var daysThisMonth = moment().daysInMonth();
+		var multiplyBy = null;
+		switch(interval) {
+			case 'day':
+				multiplyBy = daysThisMonth;
+
+				break;
+			case 'week':
+				multiplyBy = 4;
+
+				break;
+			case 'biweekly':
+				multiplyBy = 2;
+				break;
+			case 'month':
+				multiplyBy = 1;
+				break;
+			case 'sixmonths':
+
+				break;
+			case 'year':
+
+				break;
+		}
+		//log.info('_getTotalPerMonth', "mult numbe", multiplyBy, "calc'd amount", amount * multiplyBy);
+		return amount * multiplyBy;
+	}
 
 	app.get('/api/finances', function(req, res) {
 
@@ -28,12 +62,23 @@ module.exports.set = function(app, db) {
 					model.error = "no results found";
 					res.send(model);
 				} else {
-					log.info('QUERY', "getting finances successful", result);
+					//log.info('QUERY', "getting finances successful", result);
 
 
 					model.data = {
 						"income": [],
-						"expenses": []
+						"expenses": [],
+						"attrs": {
+							"income": {
+								"count": 0,
+								"total_per_month": 0
+							},
+							"expenses": {
+								"count": 0,
+								"total_per_month": 0
+							}
+
+						}
 					};
 
 					for(var i = 0; i<result.length; i++) {
@@ -42,8 +87,16 @@ module.exports.set = function(app, db) {
 						var newDate = dateFormat(result[i].duedate, 'dd/mm/yyyy');
 						result[i].duedate = newDate;
 
-						if(result[i].type === 0) model.data.income.push(result[i]);
-						if(result[i].type === 1) model.data.expenses.push(result[i]);
+						if(result[i].type === 0) {
+							model.data.income.push(result[i]);
+							model.data.attrs.income.count++;
+							model.data.attrs.income.total_per_month += _getTotalPerMonth(result[i].interval, parseFloat(result[i].amount));
+						}
+						if(result[i].type === 1) {
+							model.data.expenses.push(result[i]);
+							model.data.attrs.expenses.count++;
+							model.data.attrs.expenses.total_per_month += _getTotalPerMonth(result[i].interval, parseFloat(result[i].amount));
+						}
 					}
 
 					//model.data = result;
