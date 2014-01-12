@@ -90,7 +90,24 @@
 		}
 	}
 
+
+
 	&.future {
+
+		// colour the future timeline item meta data
+		.income {
+			.timeline-segment-meta {
+				color: $blue;
+			}
+		}
+
+		.expenses {
+			.timeline-segment-meta {
+				color: $red;
+			}
+		}
+
+		// make the timeline grey in the future
 		&:before {
 			background: #ccc;
 		}
@@ -103,8 +120,13 @@
 
 .timeline-segment-meta {
 	width: 310px;
+	margin: 0 0 0.25em;
+	font-size: 0.8em;
 	font-weight: 700;
 	text-transform: uppercase;
+	color: $muted;
+
+
 }
 
 .item-container {

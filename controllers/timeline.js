@@ -256,6 +256,23 @@ module.exports.set = function(app, db) {
 
 			timeline.push(timelineItemModel);
 		}
+		for(today; moment(today).isBefore(end) ; today.add('days', 1)) {
+			//log.info('Debug', "current date in iteration", start.calendar());
+			var timelineItemModel = {
+				"attrs": {
+					"date": today.format('L'),
+					"finances_count": 0,
+					"future": true
+				},
+				"finances": {
+					"income": [],
+					"expenses": []
+				}
+			};
+
+
+			timeline.push(timelineItemModel);
+		}
 
 
 		// loop through generated timeline objects
