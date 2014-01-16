@@ -120,49 +120,62 @@ module.exports.set = function(app, db) {
 //		log.info("DEBUG", "Sql for inserting finance: %s", sql);
 		// input validation
 		req.checkBody('name', "Name is missing").notEmpty();
-		req.assert('name', "Name is too long").len(1,50);
+		req.assert('name', "Name is too long").len(0,50);
 
+		// valdiate, generate errors
 		req.checkBody('amount', "Amount is missing").notEmpty();
 		req.assert('amount', "Amount needs to be a currency value").is(/\d+([,.]\d+)?/);
-		// TODO: change currency input to compensate for using commas as decimals
+
+		//convert currency to propper float decimal format.
+		if(req.body.amount) {
+			req.body.amount = req.body.amount.replace(',', '.');
+		}
 
 
+
+		// Validate date
 		req.checkBody('date', "date is missing").notEmpty();
 		req.assert('date', "invalid date, correct format is: dd/mm/yy").is(/(\d{2})\/(\d{2})\/(\d{2,4})/);
-		var duedate = req.body.date.replace(/(\d{2})\/(\d{2})\/(\d{2,4})/, "$3-$2-$1");
+		if(!!req.body.date) {
+			var duedate = req.body.date.replace(/(\d{2})\/(\d{2})\/(\d{2,4})/, "$3-$2-$1");
+		}
+
+		// check interval
+		req.checkBody('interval', "no interval selected").notNull();
+
+		// validate description if one is given
+		if(!!req.body.description) {
+			req.assert('description', "description is too long").len(1,140);
+		}
 
 
 		if(req.validationErrors()) {
 			model.error = req.validationErrors();
 			log.warn("ERROR", "Here be errors ", req.validationErrors());
 			res.send(model);
+		} else {
+			var sql = "INSERT INTO finances " +
+				"(`id`, `userid`, `created`, `active`, `name`, `type`, `amount`, `duedate`, `interval`, `description`, `disabled`) " +
+				"VALUES(null, 1, null, 1, \"" + req.body.name + "\", " + req.body.type + ", " + req.body.amount + ", \"" + duedate + "\", \"" + req.body.interval + "\", \"" + req.body.description + "\", null);";
+
+			log.info('DEBUG', sql);
+
+			db.query(sql, function(err, result) {
+				if (err) {
+					log.error("ERROR", "Something went wrong %j", err);
+					model.error = "Something went wrong: " + err;
+					res.send(model);
+				}
+
+				if(result) {
+					log.info("DEBUG", "insertion query successful", result);
+					model.success = true;
+					model.data = {"insertId": result.insertId};
+					model.message = "New finance item added";
+					res.send(model);
+				}
+			});
 		}
-
-		var sql = "INSERT INTO finances " +
-			"(`id`, `userid`, `created`, `active`, `name`, `type`, `amount`, `duedate`, `interval`, `description`, `disabled`) " +
-			"VALUES(null, 1, null, 1, \"" + req.body.name + "\", " + req.body.type + ", " + req.body.amount + ", \"" + duedate + "\", \"" + req.body.interval + "\", \"" + req.body.description + "\", null);";
-
-
-		db.query(sql, function(err, result) {
-			if (err) {
-				log.error("ERROR", "Something went wrong %j", err);
-				model.error = "Something went wrong: " + err;
-				res.send(model);
-			}
-
-			if(result) {
-				log.info("DEBUG", "insertion query successful", result);
-				model.success = true;
-				model.data = {"insertId": result.insertId};
-				model.message = "New finance item added";
-				res.send(model);
-			}
-		});
-
-
-
-
-
 	});
 
 
