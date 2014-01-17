@@ -18,17 +18,18 @@ angular.module('Savings.Controllers')
 				"name": null,
 				"amount": null,
 				"date": null,
-				"interval": null,
-				"description": null
+				"interval": 'day',
+				"description": ''
 			},
 			"expense": {
 				"name": null,
 				"amount": null,
 				"date": null,
-				"interval": null,
-				"description": null
+				"interval": 'day',
+				"description": ''
 			}
 		};
+
 		$scope.showNewExpenseForm = false;
 
 

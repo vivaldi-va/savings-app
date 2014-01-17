@@ -74,23 +74,23 @@
 		<form class="finance-form" ng-if="!!finance.edit" ng-submit="doModifyFinanceItem(finance)" ng-click="$event.stopPropagation()">
 			<div class="row">
 				<div class="input-group">
-					<label for="finance-name" class="input-label">name</label>
+					<label for="finance-name" class="input-label required">name</label>
 					<input id="finance-name" class="input" type="text" ng-model="finance.name">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-6 input-group">
-					<label for="finance-amount" class="input-label">amount</label>
+					<label for="finance-amount" class="input-label required">amount</label>
 					<input id="finance-amount" class="input" type="text" ng-model="finance.amount">
 				</div>
 				<div class="col-6 input-group">
-					<label for="finance-date" class="input-label">due date</label>
+					<label for="finance-date" class="input-label required">due date</label>
 					<input id="finance-date" class="input" type="text" ng-model="finance.duedate">
 				</div>
 			</div>
 			<div class="row">
 				<div class="input-group">
-					<label for="finance-interval" class="input-label">interval</label>
+					<label for="finance-interval" class="input-label required">interval</label>
 					<select class="input" name="interval" id="finance-interval" ng-model="finance.interval">
 						<option value="day">daily</option>
 						<option value="week">weekly</option>
@@ -124,23 +124,23 @@
 	<form class="finance-form" ng-if="!!showNewIncomeForm" ng-submit="doCreateFinance(0)">
 		<div class="row">
 			<div class="input-group">
-				<label for="finances-name" class="input-label">name</label>
+				<label for="finances-name" class="input-label required">name</label>
 				<input id="finances-name" class="input" type="text" ng-model="newFinance.income.name">
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-6 input-group">
-				<label for="finances-amount" class="input-label">amount</label>
+				<label for="finances-amount" class="input-label required">amount</label>
 				<input id="finances-amount" class="input" type="text" ng-model="newFinance.income.amount">
 			</div>
 			<div class="col-6 input-group">
-				<label for="finances-date" class="input-label">due date</label>
+				<label for="finances-date" class="input-label required">due date</label>
 				<input id="finances-date" class="input" type="text" ng-model="newFinance.income.date">
 			</div>
 		</div>
 		<div class="row">
 			<div class="input-group">
-				<label for="finances-interval" class="input-label">interval</label>
+				<label for="finances-interval" class="input-label required">interval</label>
 				<select class="input" name="interval" id="finances-interval" ng-model="newFinance.income.interval">
 					<option value="day">daily</option>
 					<option value="week">weekly</option>
@@ -190,23 +190,23 @@
 		<form class="finance-form" ng-if="!!finance.edit" ng-submit="doModifyFinanceItem(finance)" ng-click="$event.stopPropagation()">
 			<div class="row">
 				<div class="input-group">
-					<label for="finance-expense-name" class="input-label">name</label>
+					<label for="finance-expense-name" class="input-label required">name</label>
 					<input id="finance-expense-name" class="input" type="text" ng-model="finance.name">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-6 input-group">
-					<label for="finance-expense-amount" class="input-label">amount</label>
+					<label for="finance-expense-amount" class="input-label required">amount</label>
 					<input id="finance-expense-amount" class="input" type="text" ng-model="finance.amount">
 				</div>
 				<div class="col-6 input-group">
-					<label for="finance-expense-date" class="input-label">due date</label>
+					<label for="finance-expense-date" class="input-label required">due date</label>
 					<input id="finance-expense-date" class="input" type="text" ng-model="finance.duedate">
 				</div>
 			</div>
 			<div class="row">
 				<div class="input-group">
-					<label for="finance-expense-interval" class="input-label">interval</label>
+					<label for="finance-expense-interval" class="input-label required">interval</label>
 					<select class="input" name="interval" id="finance-expense-interval" ng-model="finance.interval">
 						<option value="day">daily</option>
 						<option value="week">weekly</option>
@@ -240,23 +240,23 @@
 	<form class="finance-form" ng-if="!!showNewExpenseForm" ng-submit="doCreateFinance(1)">
 		<div class="row">
 			<div class="input-group">
-				<label for="finances-expense-name" class="input-label">name</label>
+				<label for="finances-expense-name" class="input-label required">name</label>
 				<input id="finances-expense-name" class="input" type="text" ng-model="newFinance.expense.name">
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-6 input-group">
-				<label for="finances-expense-amount" class="input-label">amount</label>
+				<label for="finances-expense-amount" class="input-label required">amount</label>
 				<input id="finances-expense-amount" class="input" type="text" ng-model="newFinance.expense.amount">
 			</div>
 			<div class="col-6 input-group">
-				<label for="finances-expense-date" class="input-label">due date</label>
+				<label for="finances-expense-date" class="input-label required">due date</label>
 				<input id="finances-expense-date" class="input" type="text" ng-model="newFinance.expense.date">
 			</div>
 		</div>
 		<div class="row">
 			<div class="input-group">
-				<label for="finances-expense-interval" class="input-label">interval</label>
+				<label for="finances-expense-interval" class="input-label required">interval</label>
 				<select class="input" name="interval" id="finances-expense-interval" ng-model="newFinance.expense.interval">
 					<option value="day">daily</option>
 					<option value="week">weekly</option>

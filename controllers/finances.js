@@ -154,6 +154,7 @@ module.exports.set = function(app, db) {
 			log.warn("ERROR", "Here be errors ", req.validationErrors());
 			res.send(model);
 		} else {
+			// TODO: dont send null as a string for description if none is provided
 			var sql = "INSERT INTO finances " +
 				"(`id`, `userid`, `created`, `active`, `name`, `type`, `amount`, `duedate`, `interval`, `description`, `disabled`) " +
 				"VALUES(null, 1, null, 1, \"" + req.body.name + "\", " + req.body.type + ", " + req.body.amount + ", \"" + duedate + "\", \"" + req.body.interval + "\", \"" + req.body.description + "\", null);";
@@ -189,7 +190,7 @@ module.exports.set = function(app, db) {
 			"data": null
 		};
 
-		// validate new data values
+		// TODO: validation for updating finance details
 
 		var duedate = req.body.duedate.replace(/(\d{2})\/(\d{2})\/(\d{2,4})/, "$3-$2-$1");
 		db.query("UPDATE finances SET `name`=\""+req.body.name+"\", `amount`=" +
