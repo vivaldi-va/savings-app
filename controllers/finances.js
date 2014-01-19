@@ -2,45 +2,41 @@
  * Created by vivaldi on 01/01/14.
  */
 
+var log			= require('npmlog');
+var dateFormat	= require('dateformat');
+var moment		= require('moment');
 
+function _getTotalPerMonth(interval, amount) {
+
+	var daysThisMonth = moment().daysInMonth();
+	var multiplyBy = null;
+	switch(interval) {
+		case 'day':
+			multiplyBy = daysThisMonth;
+
+			break;
+		case 'week':
+			multiplyBy = 4;
+
+			break;
+		case 'biweekly':
+			multiplyBy = 2;
+			break;
+		case 'month':
+			multiplyBy = 1;
+			break;
+		case 'sixmonths':
+
+			break;
+		case 'year':
+
+			break;
+	}
+	//log.info('_getTotalPerMonth', "mult numbe", multiplyBy, "calc'd amount", amount * multiplyBy);
+	return amount * multiplyBy;
+}
 
 module.exports.set = function(app, db) {
-	var log			= require('npmlog');
-	var dateFormat	= require('dateformat');
-	var moment		= require('moment');
-
-
-
-
-	function _getTotalPerMonth(interval, amount) {
-
-		var daysThisMonth = moment().daysInMonth();
-		var multiplyBy = null;
-		switch(interval) {
-			case 'day':
-				multiplyBy = daysThisMonth;
-
-				break;
-			case 'week':
-				multiplyBy = 4;
-
-				break;
-			case 'biweekly':
-				multiplyBy = 2;
-				break;
-			case 'month':
-				multiplyBy = 1;
-				break;
-			case 'sixmonths':
-
-				break;
-			case 'year':
-
-				break;
-		}
-		//log.info('_getTotalPerMonth', "mult numbe", multiplyBy, "calc'd amount", amount * multiplyBy);
-		return amount * multiplyBy;
-	}
 
 	app.get('/api/finances', function(req, res) {
 
@@ -62,8 +58,6 @@ module.exports.set = function(app, db) {
 					model.error = "no results found";
 					res.send(model);
 				} else {
-					//log.info('QUERY', "getting finances successful", result);
-
 
 					model.data = {
 						"income": [],
@@ -107,6 +101,9 @@ module.exports.set = function(app, db) {
 			});
 	});
 
+	/**
+	 * Create a new finance
+	 */
 	app.post('/api/finances', function(req, res) {
 
 		log.info('DEBUG', "posting a finance");
@@ -117,23 +114,26 @@ module.exports.set = function(app, db) {
 			"data": null
 		};
 
-//		log.info("DEBUG", "Sql for inserting finance: %s", sql);
-		// input validation
+
+		// === | input validation | ===
+
+		// Make sure name is not missing and isn't too long (max 50 chars)
 		req.checkBody('name', "Name is missing").notEmpty();
+		// min-length set to 0 to avoid having multiple errors if name is empty
 		req.assert('name', "Name is too long").len(0,50);
 
-		// valdiate, generate errors
+		// Validate amount is not missing, and is a proper format (using . or , as decimal)
 		req.checkBody('amount', "Amount is missing").notEmpty();
 		req.assert('amount', "Amount needs to be a currency value").is(/\d+([,.]\d+)?/);
 
-		//convert currency to propper float decimal format.
+		// Convert currency to proper float decimal format.
 		if(req.body.amount) {
 			req.body.amount = req.body.amount.replace(',', '.');
 		}
 
 
 
-		// Validate date
+		// Validate date is not missing and it's format is correct ('dd/mm/yyyy')
 		req.checkBody('date', "date is missing").notEmpty();
 		req.assert('date', "invalid date, correct format is: dd/mm/yy").is(/(\d{2})\/(\d{2})\/(\d{2,4})/);
 		if(!!req.body.date) {
@@ -143,9 +143,9 @@ module.exports.set = function(app, db) {
 		// check interval
 		req.checkBody('interval', "no interval selected").notNull();
 
-		// validate description if one is given
+		// validate description if one is given to ensure it's length isn't greater than 140
 		if(!!req.body.description) {
-			req.assert('description', "description is too long").len(1,140);
+			req.assert('description', "description is too long").len(0,140);
 		}
 
 
@@ -180,6 +180,10 @@ module.exports.set = function(app, db) {
 	});
 
 
+	/**
+	 * Update finance item by ID
+	 *
+	 */
 	app.put('/api/finances/:id', function(req, res) {
 		log.info('HTTP', "PUT request for finance id " + req.params.id + " received");
 
@@ -212,6 +216,12 @@ module.exports.set = function(app, db) {
 			});
 	});
 
+
+	/**
+	 * Delete finance item by ID
+	 *
+	 * - set it to be disabled, with the disabled date being the timestamp of the query
+	 */
 	app.delete('/api/finances/:id', function(req, res) {
 		log.info('HTTP', "DELETE request for finance id " + req.params.id + " received");
 
