@@ -146,47 +146,30 @@ function _createTimelineData(data, past, future) {
 			case 'day':
 
 				var firstDate = _calcFirstDate(data[f], 'days', 1);
-
-				//log.info('Debug', "calculating first date", firstDate);
 				data[f].interval_dates = _calcFinanceDates(firstDate, data[f].duedate, 'days', 1, data[f].disabled);
-				//log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates);
-
 				break;
 			case 'week':
 				var firstDate = _calcFirstDate(data[f], 'weeks', 1);
-
-				//log.info('Debug', "calculating first date", firstDate);
 				data[f].interval_dates = _calcFinanceDates(firstDate, data[f].duedate, 'weeks', 1, data[f].disabled);
-				//log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
 				break;
 			case 'biweekly':
 				var firstDate = _calcFirstDate(data[f], 'weeks', 2);
-
-				//log.info('Debug', "calculating first date", firstDate);
 				data[f].interval_dates = _calcFinanceDates(firstDate, data[f].duedate, 'weeks', 2, data[f].disabled);
-				//log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
 				break;
 			case 'month':
 				var firstDate = _calcFirstDate(data[f], 'months', 1);
-
-				//log.info('Debug', "calculating first date", firstDate);
 				data[f].interval_dates = _calcFinanceDates(firstDate, data[f].duedate, 'months', 1, data[f].disabled);
-				//log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
 
 				break;
 			case 'sixmonths':
 				var firstDate = _calcFirstDate(data[f], 'months', 6);
 
-				//log.info('Debug', "calculating first date", firstDate);
 				data[f].interval_dates = _calcFinanceDates(firstDate, data[f].duedate, 'months', 6, data[f].disabled);
-				//log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
 				break;
 			case 'year':
 				var firstDate = _calcFirstDate(data[f], 'years', 1);
 
-				//log.info('Debug', "calculating first date", firstDate);
 				data[f].interval_dates = _calcFinanceDates(firstDate, data[f].duedate, 'years', 1, data[f].disabled);
-				//log.info('Debug', "Finished timeline info for", data[f].name, data[f].interval_dates)
 				break;
 		}
 
@@ -198,7 +181,6 @@ function _createTimelineData(data, past, future) {
 	// adding finances to it
 	//log.info('Debug', "today + 1", today.add('days', 1));
 	for(start; moment(start).isBefore(tomorrow) ; start.add('days', 1)) {
-		//log.info('Debug', "current date in iteration", start.calendar());
 		var timelineItemModel = {
 			"attrs": {
 				"date": start.format('L'),
@@ -217,7 +199,6 @@ function _createTimelineData(data, past, future) {
 		timeline.push(timelineItemModel);
 	}
 	for(today; moment(today).isBefore(end) ; today.add('days', 1)) {
-		//log.info('Debug', "current date in iteration", start.calendar());
 		var timelineItemModel = {
 			"attrs": {
 				"date": today.format('L'),
@@ -241,7 +222,6 @@ function _createTimelineData(data, past, future) {
 	// add it to the timeline object's relevant array
 	for(var i = 0; i<timeline.length; i++) {
 		var date = timeline[i].attrs.date;
-		////log.info('Debug', "looping timeline date objects", date);
 
 		for(var f in data) {
 			var calculatedDates = data[f].interval_dates;
@@ -276,9 +256,16 @@ exports.getTimeline = function(req, res) {
 		"message": null,
 		"data": null
 	};
+	var past;
+	var future;
 
-	var past = req.params.past,
-		future = req.params.future;
+	if(req.params.hasOwnProperty('past')) {
+		past = req.params.past;
+	}
+
+	if(req.params.hasOwnProperty('future')) {
+		past = req.params.future;
+	}
 
 
 
