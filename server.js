@@ -9,8 +9,6 @@ log.enableColor();
 
 
 if (cluster.isMaster) {
-
-
 	log.info('Cluster', "setting up master thread");
 	// Count the machine's CPUs
 	var cpuCount = require('os').cpus().length;
@@ -51,8 +49,6 @@ if (cluster.isMaster) {
 
 
 
-
-
 	var port = process.env.PORT || 3000;
 	app.listen(port);
 }
@@ -62,7 +58,7 @@ cluster.on('exit', function (worker) {
 
 	// Replace the dead worker,
 	// we're not sentimental
-	log.warn('Cluster', 'Worker has died :c', worker.id);
+	log.warn('Cluster', 'Worker $i has died :c', worker.id);
 	cluster.fork();
 
 });
