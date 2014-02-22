@@ -1,16 +1,23 @@
 /**
+ * Created by vivaldi on 22/02/14.
+ */
+
+/**
  * Created by vivaldi on 01/01/14.
  */
 
-var log			= require('npmlog');
-var dateFormat	= require('dateformat');
-var moment		= require('moment');
+var log 			= require('npmlog');
+var dateFormat 		= require('dateformat');
+var moment 			= require('moment');
+var mysql			= require('mysql');
+var dbConf			= require('../conf.json');
+var db 				= mysql.createConnection(dbConf.db);
 
 function _getTotalPerMonth(interval, amount) {
 
 	var daysThisMonth = moment().daysInMonth();
 	var multiplyBy = null;
-	switch(interval) {
+	switch (interval) {
 		case 'day':
 			multiplyBy = daysThisMonth;
 
@@ -36,217 +43,198 @@ function _getTotalPerMonth(interval, amount) {
 	return amount * multiplyBy;
 }
 
-module.exports.set = function(app, db) {
 
-	app.get('/api/finances', function(req, res) {
+exports.getFinances = function (req, res) {
+	var model = {
+		"success": false,
+		"error": null,
+		"message": null,
+		"data": null
+	};
 
-		var model = {
-			"success": false,
-			"error": null,
-			"message": null,
-			"data": null
-		};
+	db.query('SELECT `id`, `name`, `amount`, `duedate`, `type`, `interval`, `description` FROM finances WHERE userid = 1 AND active = 1',
+		function (err, result) {
+			if (err) {
+				model.error = err;
+				res.send(model);
+			}
 
-		db.query('SELECT `id`, `name`, `amount`, `duedate`, `type`, `interval`, `description` FROM finances WHERE userid = 1 AND active = 1',
-			function(err, result) {
-				if(err) {
-					model.error = err;
-					res.send(model);
-				}
+			if (!result) {
+				model.error = "no results found";
+				res.send(model);
+			} else {
 
-				if(!result) {
-					model.error = "no results found";
-					res.send(model);
-				} else {
-
-					model.data = {
-						"income": [],
-						"expenses": [],
-						"attrs": {
-							"income": {
-								"count": 0,
-								"total_per_month": 0
-							},
-							"expenses": {
-								"count": 0,
-								"total_per_month": 0
-							}
-
+				model.data = {
+					"income": [],
+					"expenses": [],
+					"attrs": {
+						"income": {
+							"count": 0,
+							"total_per_month": 0
+						},
+						"expenses": {
+							"count": 0,
+							"total_per_month": 0
 						}
-					};
 
-					for(var i = 0; i<result.length; i++) {
-						var dateTest = [result[i].duedate.getFullYear(), result[i].duedate.getMonth(), result[i].duedate.getDate()];
-						log.info('DEBUG', "date debugging", dateTest);
-						var newDate = dateFormat(result[i].duedate, 'dd/mm/yyyy');
-						result[i].duedate = newDate;
-
-						if(result[i].type === 0) {
-							model.data.income.push(result[i]);
-							model.data.attrs.income.count++;
-							model.data.attrs.income.total_per_month += _getTotalPerMonth(result[i].interval, parseFloat(result[i].amount));
-						}
-						if(result[i].type === 1) {
-							model.data.expenses.push(result[i]);
-							model.data.attrs.expenses.count++;
-							model.data.attrs.expenses.total_per_month += _getTotalPerMonth(result[i].interval, parseFloat(result[i].amount));
-						}
 					}
+				};
 
-					//model.data = result;
-					model.success = true;
-					model.message = "got some stuff";
-					res.send(model);
-				}
-			});
-	});
+				for (var i = 0; i < result.length; i++) {
+					var dateTest = [result[i].duedate.getFullYear(), result[i].duedate.getMonth(), result[i].duedate.getDate()];
+					var newDate = dateFormat(result[i].duedate, 'dd/mm/yyyy');
+					log.info('DEBUG', "date debugging", dateTest, newDate);
+					result[i].duedate = newDate;
 
-	/**
-	 * Create a new finance
-	 */
-	app.post('/api/finances', function(req, res) {
-
-		log.info('DEBUG', "posting a finance");
-		var model = {
-			"success": false,
-			"error": null,
-			"message": null,
-			"data": null
-		};
-
-
-		// === | input validation | ===
-
-		// Make sure name is not missing and isn't too long (max 50 chars)
-		req.checkBody('name', "Name is missing").notEmpty();
-		// min-length set to 0 to avoid having multiple errors if name is empty
-		req.assert('name', "Name is too long").len(0,50);
-
-		// Validate amount is not missing, and is a proper format (using . or , as decimal)
-		req.checkBody('amount', "Amount is missing").notEmpty();
-		req.assert('amount', "Amount needs to be a currency value").is(/\d+([,.]\d+)?/);
-
-		// Convert currency to proper float decimal format.
-		if(req.body.amount) {
-			req.body.amount = req.body.amount.replace(',', '.');
-		}
-
-
-
-		// Validate date is not missing and it's format is correct ('dd/mm/yyyy')
-		req.checkBody('date', "date is missing").notEmpty();
-		req.assert('date', "invalid date, correct format is: dd/mm/yy").is(/(\d{2})\/(\d{2})\/(\d{2,4})/);
-		if(!!req.body.date) {
-			var duedate = req.body.date.replace(/(\d{2})\/(\d{2})\/(\d{2,4})/, "$3-$2-$1");
-		}
-
-		// check interval
-		req.checkBody('interval', "no interval selected").notNull();
-
-		// validate description if one is given to ensure it's length isn't greater than 140
-		if(!!req.body.description) {
-			req.assert('description', "description is too long").len(0,140);
-		}
-
-
-		if(req.validationErrors()) {
-			model.error = req.validationErrors();
-			log.warn("ERROR", "Here be errors ", req.validationErrors());
-			res.send(model);
-		} else {
-			// TODO: dont send null as a string for description if none is provided
-			var sql = "INSERT INTO finances " +
-				"(`id`, `userid`, `created`, `active`, `name`, `type`, `amount`, `duedate`, `interval`, `description`, `disabled`) " +
-				"VALUES(null, 1, null, 1, \"" + req.body.name + "\", " + req.body.type + ", " + req.body.amount + ", \"" + duedate + "\", \"" + req.body.interval + "\", \"" + req.body.description + "\", null);";
-
-			log.info('DEBUG', sql);
-
-			db.query(sql, function(err, result) {
-				if (err) {
-					log.error("ERROR", "Something went wrong %j", err);
-					model.error = "Something went wrong: " + err;
-					res.send(model);
+					if (result[i].type === 0) {
+						model.data.income.push(result[i]);
+						model.data.attrs.income.count++;
+						model.data.attrs.income.total_per_month += _getTotalPerMonth(result[i].interval, parseFloat(result[i].amount));
+					}
+					if (result[i].type === 1) {
+						model.data.expenses.push(result[i]);
+						model.data.attrs.expenses.count++;
+						model.data.attrs.expenses.total_per_month += _getTotalPerMonth(result[i].interval, parseFloat(result[i].amount));
+					}
 				}
 
-				if(result) {
-					log.info("DEBUG", "insertion query successful", result);
-					model.success = true;
-					model.data = {"insertId": result.insertId};
-					model.message = "New finance item added";
-					res.send(model);
-				}
-			});
-		}
-	});
+				//model.data = result;
+				model.success = true;
+				model.message = "got some stuff";
+				res.send(model);
+			}
+		});
+};
+exports.addFinance = function (req, res) {
+
+	log.info('DEBUG', "posting a finance");
+	var model = {
+		"success": false,
+		"error": null,
+		"message": null,
+		"data": null
+	};
 
 
-	/**
-	 * Update finance item by ID
-	 *
-	 */
-	app.put('/api/finances/:id', function(req, res) {
-		log.info('HTTP', "PUT request for finance id " + req.params.id + " received");
+	// === | input validation | ===
 
-		var model = {
-			"success": false,
-			"error": null,
-			"message": null,
-			"data": null
-		};
+	// Make sure name is not missing and isn't too long (max 50 chars)
+	req.checkBody('name', "Name is missing").notEmpty();
+	// min-length set to 0 to avoid having multiple errors if name is empty
+	req.assert('name', "Name is too long").len(0, 50);
 
-		// TODO: validation for updating finance details
+	// Validate amount is not missing, and is a proper format (using . or , as decimal)
+	req.checkBody('amount', "Amount is missing").notEmpty();
+	req.assert('amount', "Amount needs to be a currency value").is(/\d+([,.]\d+)?/);
 
-		var duedate = req.body.duedate.replace(/(\d{2})\/(\d{2})\/(\d{2,4})/, "$3-$2-$1");
-		db.query("UPDATE finances SET `name`=\""+req.body.name+"\", `amount`=" +
-			req.body.amount + ", `duedate` = \"" + duedate + "\", `interval` = \"" + req.body.interval + "\", `description` = \"" + req.body.description + "\"" +
-			" WHERE id = " + req.params.id,
-			function(err, result) {
-				if(err) {
-					log.error('SQL ERR', "error updating finance item", err);
-					model.error = err;
-					res.send(model);
-				}
-				if(result) {
-					log.info('HTTP', "Finance updating successful", result);
-					model.success = true;
-					model.message = "finance id " + req.params.id + " updated";
-
-					res.send(model);
-				}
-			});
-	});
+	// Convert currency to proper float decimal format.
+	if (req.body.amount) {
+		req.body.amount = req.body.amount.replace(',', '.');
+	}
 
 
-	/**
-	 * Delete finance item by ID
-	 *
-	 * - set it to be disabled, with the disabled date being the timestamp of the query
-	 */
-	app.delete('/api/finances/:id', function(req, res) {
-		log.info('HTTP', "DELETE request for finance id " + req.params.id + " received");
+	// Validate date is not missing and it's format is correct ('dd/mm/yyyy')
+	req.checkBody('date', "date is missing").notEmpty();
+	req.assert('date', "invalid date, correct format is: dd/mm/yy").is(/(\d{2})\/(\d{2})\/(\d{2,4})/);
+	if (!!req.body.date) {
+		var duedate = req.body.date.replace(/(\d{2})\/(\d{2})\/(\d{2,4})/, "$3-$2-$1");
+	}
 
-		var model = {
-			"success": false,
-			"error": null,
-			"message": null,
-			"data": null
-		};
+	// check interval
+	req.checkBody('interval', "no interval selected").notNull();
 
-		db.query("UPDATE finances SET `active` = 0, `disabled` = CURRENT_DATE"+
-			" WHERE id = " + req.params.id,
-			function(err, result) {
-				if(err) {
-					log.error('SQL ERR', "error updating finance item", err);
-					model.error = err;
-					res.send(model);
-				}
-				if(result) {
-					log.info('HTTP', "Finance updating successful", result);
-					model.success = true;
-					model.message = "finance id " + req.params.id + " updated";
+	// validate description if one is given to ensure it's length isn't greater than 140
+	if (!!req.body.description) {
+		req.assert('description', "description is too long").len(0, 140);
+	}
 
-					res.send(model);
-				}
-			});
-	});
+
+	if (req.validationErrors()) {
+		model.error = req.validationErrors();
+		log.warn("ERROR", "Here be errors ", req.validationErrors());
+		res.send(model);
+	} else {
+		// TODO: dont send null as a string for description if none is provided
+		var sql = "INSERT INTO finances " +
+			"(`id`, `userid`, `created`, `active`, `name`, `type`, `amount`, `duedate`, `interval`, `description`, `disabled`) " +
+			"VALUES(null, 1, null, 1, \"" + req.body.name + "\", " + req.body.type + ", " + req.body.amount + ", \"" + duedate + "\", \"" + req.body.interval + "\", \"" + req.body.description + "\", null);";
+
+		log.info('DEBUG', sql);
+
+		db.query(sql, function (err, result) {
+			if (err) {
+				log.error("ERROR", "Something went wrong %j", err);
+				model.error = "Something went wrong: " + err;
+				res.send(model);
+			}
+
+			if (result) {
+				log.info("DEBUG", "insertion query successful", result);
+				model.success = true;
+				model.data = {"insertId": result.insertId};
+				model.message = "New finance item added";
+				res.send(model);
+			}
+		});
+	}
+};
+
+exports.updateFinance = function (req, res) {
+	log.info('HTTP', "PUT request for finance id " + req.params.id + " received");
+
+	var model = {
+		"success": false,
+		"error": null,
+		"message": null,
+		"data": null
+	};
+
+	// TODO: validation for updating finance details
+
+	var duedate = req.body.duedate.replace(/(\d{2})\/(\d{2})\/(\d{2,4})/, "$3-$2-$1");
+	db.query("UPDATE finances SET `name`=\"" + req.body.name + "\", `amount`=" +
+		req.body.amount + ", `duedate` = \"" + duedate + "\", `interval` = \"" + req.body.interval + "\", `description` = \"" + req.body.description + "\"" +
+		" WHERE id = " + req.params.id,
+		function (err, result) {
+			if (err) {
+				log.error('SQL ERR', "error updating finance item", err);
+				model.error = err;
+				res.send(model);
+			}
+			if (result) {
+				log.info('HTTP', "Finance updating successful", result);
+				model.success = true;
+				model.message = "finance id " + req.params.id + " updated";
+
+				res.send(model);
+			}
+		});
+};
+
+exports.removeFinance = function (req, res) {
+	log.info('HTTP', "DELETE request for finance id " + req.params.id + " received");
+
+	var model = {
+		"success": false,
+		"error": null,
+		"message": null,
+		"data": null
+	};
+
+	db.query("UPDATE finances SET `active` = 0, `disabled` = CURRENT_DATE" +
+		" WHERE id = " + req.params.id,
+		function (err, result) {
+			if (err) {
+				log.error('SQL ERR', "error updating finance item", err);
+				model.error = err;
+				res.send(model);
+			}
+			if (result) {
+				log.info('HTTP', "Finance updating successful", result);
+				model.success = true;
+				model.message = "finance id " + req.params.id + " updated";
+
+				res.send(model);
+			}
+		});
 };

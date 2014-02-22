@@ -18,7 +18,7 @@ if (cluster.isMaster) {
 	// Create a worker for each CPU
 	for (var i = 0; i < cpuCount; i += 1) {
 		cluster.fork();
-		log.info('Cluster', "Forking worker");
+		log.info('Cluster', "Forking worker " + (i+1));
 	}
 
 // Code to run if we're in a worker process
@@ -45,8 +45,9 @@ if (cluster.isMaster) {
 	});
 
 
-	var db = mysql.createConnection(conf.db);
-	var controllers = require('./controllers').set(app, db);
+	var db 			= mysql.createConnection(conf.db);
+	//var controllers = require('./controllers').set(app, db);
+	var routes		= require('./lib/routes')(app);
 
 
 
