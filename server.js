@@ -32,7 +32,7 @@ if (cluster.isMaster) {
 
 
 	app.configure(function() {
-		app.use(express.cookieParser());
+		app.use(express.cookieParser("gO0g$I3qkEWr0X&C92*P/=aiL8NAV-"));
 		app.use(express.session({secret: "gO0g$I3qkEWr0X&C92*P/=aiL8NAV-"}));
 		app.use(validator());
 		app.use(express.static(__dirname + '/public/app')); 	// set the static files location /public/img will be /img for users
