@@ -31,6 +31,11 @@ if (cluster.isMaster) {
 
 
 
+	/*
+	 * TODO: make express.static point to /app for the actual app stuff, and / point to landing page stuff
+	 * using ejs with html as view engine (google that shit, again...)
+	 * maybe use routes to indicate rendering views, or just use express.static if that works.
+	 */
 	app.configure(function() {
 		app.use(express.cookieParser("gO0g$I3qkEWr0X&C92*P/=aiL8NAV-"));
 		app.use(express.session({secret: "gO0g$I3qkEWr0X&C92*P/=aiL8NAV-"}));
