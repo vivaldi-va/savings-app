@@ -10,5 +10,34 @@ angular.module('Savings', [
 		'Savings.Services',
 		'Savings.Controllers',
 		'Savings.Filters'
-	]);
+	])
+	.run(function($rootScope, $location, $log, $userService) {
+		$rootScope.logged_in 	= false;
+		$rootScope.errors		= [];
+
+		$log.debug('DEBUG:', "check route",$location.path() !== '/login' && $location.path() !== '/register');
+
+		$log.debug('DEBUG:', "check for session");
+		$userService.session().then(
+			function(success) {
+				$log.debug('DEBUG:', "Yey there's a session");
+				$location.path('/timeline');
+				$rootScope.logged_in = true;
+
+			},
+			function(reason) {
+				$log.debug('DEBUG:', "No session :c");
+				$rootScope.errors.push(reason);
+				$location.path('/login');
+				$rootScope.logged_in = false;
+			});
+
+	})
+	.run(function($rootScope, $location, $log) {
+		$rootScope.$on('$routeChangeStart', function(next, current) {
+			if(!$rootScope.logged_in && (next != '/login' || next != '/register')) {
+				$location.path('/login');
+			}
+		});
+	});
 

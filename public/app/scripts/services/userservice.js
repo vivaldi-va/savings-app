@@ -28,6 +28,28 @@ angular.module('Savings.Services')
 
 		function _login(email, password) {
 			var dfd = $q.defer();
+
+			var data = {
+				"email": email,
+				"password": password
+			};
+
+			$http({
+				url: "/api/user/login",
+				method: 'POST',
+				data: data
+			})
+				.success(function() {
+					if(!data.success) {
+						dfd.reject(data.error);
+					}
+
+					dfd.resolve(data.data);
+				})
+				.error(function(reason) {
+					$log.warn('ERR', "user login failed", reason);
+					dfd.reject(reason);
+				});
 			return dfd.promise;
 		}
 
