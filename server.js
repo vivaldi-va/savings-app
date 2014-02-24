@@ -63,7 +63,7 @@ cluster.on('exit', function (worker) {
 
 	// Replace the dead worker,
 	// we're not sentimental
-	log.warn('Cluster', 'Worker $i has died :c', worker.id);
+	log.warn('Cluster', 'Worker ' + worker.id + ' has died', "Goodnight, sweet prince.");
 	cluster.fork();
 
 });

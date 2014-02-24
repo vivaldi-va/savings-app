@@ -83,7 +83,7 @@ exports.getFinances = function (req, res) {
 				for (var i = 0; i < result.length; i++) {
 					var dateTest = [result[i].duedate.getFullYear(), result[i].duedate.getMonth(), result[i].duedate.getDate()];
 					var newDate = dateFormat(result[i].duedate, 'dd/mm/yyyy');
-					log.info('DEBUG', "date debugging", dateTest, newDate);
+
 					result[i].duedate = newDate;
 
 					if (result[i].type === 0) {

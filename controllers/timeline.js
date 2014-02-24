@@ -34,7 +34,7 @@ function _getFinances() {
 			if(!result) {
 				dfd.reject("no finances found");
 			} else {
-				log.info('QUERY', "getting finances successful");
+				//log.info('QUERY', "getting finances successful");
 
 				dfd.resolve(result);
 			}
@@ -82,7 +82,7 @@ function _createTimelineData(data, past, future) {
 
 	var _calcFirstDate = function(finance, interval, intervalCount) {
 		var firstDate = null;
-		log.info(finance.name, "start");
+		//log.info(finance.name, "start");
 		//log.info('Debug', "finance start date", start.format('L'));
 
 		var due = moment(finance.duedate);
@@ -97,19 +97,19 @@ function _createTimelineData(data, past, future) {
 				firstDate = due.subtract(interval, 1);
 			}
 		}
-		log.info('Debug', "Done finding first date for", finance.name);
+		//log.info('Debug', "Done finding first date for", finance.name);
 		return firstDate;
 	};
 
 
 
 	var _calcFinanceDates = function(startDate, dueDate, interval, intervalCount, disabledDate) {
-		log.info('Debug', "Calculating timeline item dates");
+		//log.info('Debug', "Calculating timeline item dates");
 		var financeDates = [];
 		var disabledDate = disabledDate || null;
 
 		for(startDate;startDate.isBefore(end);startDate.add(interval, intervalCount)) {
-			log.info('_calcFinanceDates', "Date in iteration", startDate.format('L'));
+			//log.info('_calcFinanceDates', "Date in iteration", startDate.format('L'));
 			if(!!disabledDate) {
 				if(startDate.isBefore(moment(disabledDate))) {
 					financeDates.push(startDate.format('L'));
@@ -123,7 +123,7 @@ function _createTimelineData(data, past, future) {
 				}
 			}
 		}
-		log.info('Debug', "Done finding timeline dates", financeDates);
+		//log.info('Debug', "Done finding timeline dates", financeDates);
 
 		return financeDates;
 	};
