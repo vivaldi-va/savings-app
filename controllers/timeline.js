@@ -9,7 +9,6 @@ var os		= require('os');
 var mysql	= require('mysql');
 var dbConf	= require('../conf.json');
 var user	= require('./users');
-var db 		= mysql.createConnection(dbConf.db);
 var load	= os.loadavg();
 moment.lang('en-gb');
 
@@ -23,21 +22,24 @@ moment.lang('en-gb');
  * @returns {promise} database result
  * @private
  */
-function _getFinances() {
+function _getFinances(userId) {
 	var dfd = q.defer();
-	var userId = user.ident();
+	var db 		= mysql.createConnection(dbConf.db);
 	db.query('SELECT `id`, `name`, `amount`, `duedate`, `type`, `interval`, `description`, `created`, `disabled` FROM finances WHERE userid = '+userId,
 		function(err, result) {
 			if(err) {
 				dfd.reject(err);
+				db.end();
 			}
 
 			if(!result) {
 				dfd.reject("no finances found");
+				db.end();
 			} else {
 				//log.info('QUERY', "getting finances successful");
 
 				dfd.resolve(result);
+				db.end();
 			}
 		});
 
@@ -270,7 +272,7 @@ exports.getTimeline = function(req, res) {
 
 
 
-	_getFinances().then(
+	_getFinances(req.signedCookies.saIdent).then(
 		function(success) {
 			model.success = true;
 			model.data = _createTimelineData(success);

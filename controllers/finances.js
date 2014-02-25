@@ -12,7 +12,7 @@ var moment 			= require('moment');
 var mysql			= require('mysql');
 var dbConf			= require('../conf.json');
 var user			= require('./users');
-var db 				= mysql.createConnection(dbConf.db);
+
 
 function _getTotalPerMonth(interval, amount) {
 
@@ -53,18 +53,20 @@ exports.getFinances = function (req, res) {
 		"data": null
 	};
 
-	var userId = req.signedCookies.saIdent;
-
+	var userId 	= req.signedCookies.saIdent;
+	var db 		= mysql.createConnection(dbConf.db);
 	db.query('SELECT `id`, `name`, `amount`, `duedate`, `type`, `interval`, `description` FROM finances WHERE userid = '+userId+' AND active = 1',
 		function (err, result) {
 			if (err) {
 				model.error = err;
 				res.send(model);
+				db.end();
 			}
 
 			if (!result) {
 				model.error = "no results found";
 				res.send(model);
+				db.end();
 			} else {
 
 				model.data = {
@@ -105,6 +107,7 @@ exports.getFinances = function (req, res) {
 				model.success = true;
 				model.message = "got some stuff";
 				res.send(model);
+				db.end();
 			}
 		});
 };
@@ -118,7 +121,8 @@ exports.addFinance = function (req, res) {
 		"data": null
 	};
 
-	var userId = req.signedCookies.saIdent;
+	var userId 	= req.signedCookies.saIdent;
+	var db 		= mysql.createConnection(dbConf.db);
 
 
 	// === | input validation | ===
@@ -172,6 +176,7 @@ exports.addFinance = function (req, res) {
 				log.error("ERROR", "Something went wrong %j", err);
 				model.error = "Something went wrong: " + err;
 				res.send(model);
+				db.end();
 			}
 
 			if (result) {
@@ -180,6 +185,7 @@ exports.addFinance = function (req, res) {
 				model.data = {"insertId": result.insertId};
 				model.message = "New finance item added";
 				res.send(model);
+				db.end();
 			}
 		});
 	}
@@ -198,6 +204,7 @@ exports.updateFinance = function (req, res) {
 	// TODO: validation for updating finance details
 
 	var duedate = req.body.duedate.replace(/(\d{2})\/(\d{2})\/(\d{2,4})/, "$3-$2-$1");
+	var db 		= mysql.createConnection(dbConf.db);
 	db.query("UPDATE finances SET `name`=\"" + req.body.name + "\", `amount`=" +
 		req.body.amount + ", `duedate` = \"" + duedate + "\", `interval` = \"" + req.body.interval + "\", `description` = \"" + req.body.description + "\"" +
 		" WHERE id = " + req.params.id,
@@ -206,6 +213,7 @@ exports.updateFinance = function (req, res) {
 				log.error('SQL ERR', "error updating finance item", err);
 				model.error = err;
 				res.send(model);
+				db.end();
 			}
 			if (result) {
 				log.info('HTTP', "Finance updating successful", result);
@@ -213,6 +221,7 @@ exports.updateFinance = function (req, res) {
 				model.message = "finance id " + req.params.id + " updated";
 
 				res.send(model);
+				db.end();
 			}
 		});
 };
@@ -226,7 +235,7 @@ exports.removeFinance = function (req, res) {
 		"message": null,
 		"data": null
 	};
-
+	var db = mysql.createConnection(dbConf.db);
 	db.query("UPDATE finances SET `active` = 0, `disabled` = CURRENT_DATE" +
 		" WHERE id = " + req.params.id,
 		function (err, result) {
@@ -234,6 +243,7 @@ exports.removeFinance = function (req, res) {
 				log.error('SQL ERR', "error updating finance item", err);
 				model.error = err;
 				res.send(model);
+				db.end();
 			}
 			if (result) {
 				log.info('HTTP', "Finance updating successful", result);
@@ -241,6 +251,7 @@ exports.removeFinance = function (req, res) {
 				model.message = "finance id " + req.params.id + " updated";
 
 				res.send(model);
+				db.end();
 			}
 		});
 };
