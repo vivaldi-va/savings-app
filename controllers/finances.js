@@ -11,6 +11,7 @@ var dateFormat 		= require('dateformat');
 var moment 			= require('moment');
 var mysql			= require('mysql');
 var dbConf			= require('../conf.json');
+var user			= require('./users');
 var db 				= mysql.createConnection(dbConf.db);
 
 function _getTotalPerMonth(interval, amount) {
@@ -52,7 +53,9 @@ exports.getFinances = function (req, res) {
 		"data": null
 	};
 
-	db.query('SELECT `id`, `name`, `amount`, `duedate`, `type`, `interval`, `description` FROM finances WHERE userid = 1 AND active = 1',
+	var userId = req.signedCookies.saIdent;
+
+	db.query('SELECT `id`, `name`, `amount`, `duedate`, `type`, `interval`, `description` FROM finances WHERE userid = '+userId+' AND active = 1',
 		function (err, result) {
 			if (err) {
 				model.error = err;
@@ -115,6 +118,8 @@ exports.addFinance = function (req, res) {
 		"data": null
 	};
 
+	var userId = req.signedCookies.saIdent;
+
 
 	// === | input validation | ===
 
@@ -154,10 +159,11 @@ exports.addFinance = function (req, res) {
 		log.warn("ERROR", "Here be errors ", req.validationErrors());
 		res.send(model);
 	} else {
+
 		// TODO: dont send null as a string for description if none is provided
 		var sql = "INSERT INTO finances " +
 			"(`id`, `userid`, `created`, `active`, `name`, `type`, `amount`, `duedate`, `interval`, `description`, `disabled`) " +
-			"VALUES(null, 1, null, 1, \"" + req.body.name + "\", " + req.body.type + ", " + req.body.amount + ", \"" + duedate + "\", \"" + req.body.interval + "\", \"" + req.body.description + "\", null);";
+			"VALUES(null, "+userId+", null, 1, \"" + req.body.name + "\", " + req.body.type + ", " + req.body.amount + ", \"" + duedate + "\", \"" + req.body.interval + "\", \"" + req.body.description + "\", null);";
 
 		log.info('DEBUG', sql);
 

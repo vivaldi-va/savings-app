@@ -11,14 +11,21 @@ var mysql	= require('mysql');
 var bcrypt	= require('bcryptjs');
 var dbConf	= require('../conf.json');
 var db 		= mysql.createConnection(dbConf.db);
+var _uid	= false;
 
-
-
-function _getUserInfo(email) {
+function _getUserInfo(id) {
 
 	var dfd = q.defer();
+	var sql	= "";
 	log.info('DEBUG:', "getting user info");
-	db.query('SELECT email, username, passhash, salt, verified FROM users WHERE email="' + email +'"',
+
+	if(typeof id === 'number') {
+		sql = 'SELECT id, email, username, passhash, salt, verified FROM users WHERE id=' + id;
+	} else {
+		sql = 'SELECT id, email, username, passhash, salt, verified FROM users WHERE email="' + id + '"';
+	}
+
+	db.query(sql,
 		function(err, result) {
 			if(err) {
 				log.info('ERR:', "Getting user info failed", err);
@@ -27,8 +34,8 @@ function _getUserInfo(email) {
 
 			log.info('DEBUG:', "Get user info result", result);
 
-			if(!result.length) {
-				log.info('NOTE:', "No results found for user ", email);
+			if(!result) {
+				log.info('NOTE:', "No results found for user ", id);
 				dfd.reject('NO_RESULTS');
 			}
 
@@ -50,8 +57,12 @@ exports.session = function(req, res) {
 	};
 
 	// check for cookie
-	if(!!req.signedCookies.saEmail) {
-		_getUserInfo(req.signedCookies.saEmail)
+
+	if(!!req.signedCookies.saIdent) {
+
+		_uid = req.signedCookies.saIdent;
+
+		_getUserInfo(parseInt(req.signedCookies.saIdent))
 			.then(
 				function(success) {
 					model.success 	= true;
@@ -125,12 +136,14 @@ exports.login = function(req, res) {
 					res.send(model);
 				}
 
-				user.email 		= req.body.email;
+				log.info('DEBUG', "pass is ok");
+
+				user.email 		= data.email;
 				user.username 	= data.username;
+				_uid 			= data.id;
 
 				// create cookie/cookies
-				res.cookie('saEmail', req.body.email, { maxAge: 60*60*24*180, signed: true });
-
+				res.cookie('saIdent', data.id, { maxAge: 60*60*24*180, signed: true });
 				model.success 	= true;
 				model.data 		= {"user": user};
 
@@ -215,4 +228,8 @@ exports.resetPass = function(req, res) {
 
 exports.changeDetails = function(req, res) {
 
+};
+
+exports.ident = function() {
+	return _uid;
 };

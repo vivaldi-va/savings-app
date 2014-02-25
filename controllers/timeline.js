@@ -8,6 +8,7 @@ var moment	= require('moment');
 var os		= require('os');
 var mysql	= require('mysql');
 var dbConf	= require('../conf.json');
+var user	= require('./users');
 var db 		= mysql.createConnection(dbConf.db);
 var load	= os.loadavg();
 moment.lang('en-gb');
@@ -24,8 +25,8 @@ moment.lang('en-gb');
  */
 function _getFinances() {
 	var dfd = q.defer();
-
-	db.query('SELECT `id`, `name`, `amount`, `duedate`, `type`, `interval`, `description`, `created`, `disabled` FROM finances WHERE userid = 1',
+	var userId = user.ident();
+	db.query('SELECT `id`, `name`, `amount`, `duedate`, `type`, `interval`, `description`, `created`, `disabled` FROM finances WHERE userid = '+userId,
 		function(err, result) {
 			if(err) {
 				dfd.reject(err);
