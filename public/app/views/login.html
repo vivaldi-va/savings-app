@@ -1,14 +1,18 @@
 
 <div class="row">
 
-	<form name="loginForm" ng-submit="submit()" class="offset-3 span-6">
+	<form name="loginForm" ng-submit="submit()" class="offset-3 col-6">
 		<h2>Log In:</h2>
-		<label for="email">Email:</label>
-		<input id="email" type="email" ng-model="email">
+		<div class="input-group">
+			<label for="email" class="input-label">Email:</label>
+			<input id="email" type="email" class="input" ng-model="email">
+		</div>
+		<div class="input-group">
+			<label for="password" class="input-label">Password:</label>
+			<input id="password" type="password" class="input" ng-model="password">
+		</div>
 
-		<label for="password">Password:</label>
-		<input id="password" type="password" ng-model="password">
-
-		<button type="submit">Submit</button>
+		<a href="#/register">Don't have an account?</a>
+		<button type="submit" class="button primary">Submit</button>
 	</form>
 </div>

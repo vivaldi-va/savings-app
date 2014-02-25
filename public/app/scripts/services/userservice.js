@@ -39,7 +39,7 @@ angular.module('Savings.Services')
 				method: 'POST',
 				data: data
 			})
-				.success(function() {
+				.success(function(data) {
 					if(!data.success) {
 						dfd.reject(data.error);
 					}
