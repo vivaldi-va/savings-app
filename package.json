@@ -65,6 +65,7 @@
     "express": "~3.4.7",
     "express-validator": "~1.0.1",
     "npmlog": "0.0.6",
-    "bower": "~1.2.8"
+    "bower": "~1.2.8",
+    "ejs": "~0.8.5"
   }
 }

@@ -40,12 +40,17 @@ if (cluster.isMaster) {
 		app.use(express.cookieParser("gO0g$I3qkEWr0X&C92*P/=aiL8NAV-"));
 		app.use(express.session({secret: "gO0g$I3qkEWr0X&C92*P/=aiL8NAV-"}));
 		app.use(validator());
+		app.set('views', './public');
+		app.engine('html', require('ejs').renderFile);
 		app.use(express.static(__dirname + '/public')); 	// set the static files location /public/img will be /img for users
+		log.info('DEBUG:', "static path", __dirname + '/public');
 		app.use(express.logger('dev')); 						// log every request to the console
 		app.use(express.json());
 		app.use(express.urlencoded());							// pull information from html in POST
 		app.use(express.methodOverride()); 						// simulate DELETE and PUT
 	});
+
+	log.info('DEBUG:', "static path", __dirname + '/public');
 
 
 	var db 			= mysql.createConnection(conf.db);
