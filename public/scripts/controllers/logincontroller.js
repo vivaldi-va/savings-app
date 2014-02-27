@@ -8,10 +8,11 @@ angular.module('Savings.Controllers')
 			$userService.login($scope.email, $scope.password)
 				.then(
 					function(success) {
-						$location.path('/timeline');
+						$log.info('Login:', "login success");
+						$location.path('/timeline')
 					},
 					function(reason) {
-						$log.warn("FAIL", reason);
+						$log.warn('ERR', "Login:", reason);
 					});
 		};
 	});

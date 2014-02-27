@@ -4,7 +4,7 @@
 
 
 angular.module('Savings.Services')
-	.factory('$userService', function($http, $q, $log) {
+	.factory('$userService', function($http, $q, $log, $rootScope) {
 
 		function _session() {
 			var dfd = $q.defer();
@@ -43,7 +43,7 @@ angular.module('Savings.Services')
 					if(!data.success) {
 						dfd.reject(data.error);
 					}
-
+					$rootScope.logged_in = true;
 					dfd.resolve(data.data);
 				})
 				.error(function(reason) {

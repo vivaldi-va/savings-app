@@ -21,8 +21,8 @@ angular.module('Savings', [
 		$userService.session().then(
 			function(success) {
 				$log.debug('DEBUG:', "Yey there's a session");
-				$location.path('/timeline');
 				$rootScope.logged_in = true;
+				$location.path('/timeline');
 
 			},
 			function(reason) {
@@ -35,7 +35,7 @@ angular.module('Savings', [
 	})
 	.run(function($rootScope, $location, $log) {
 		$rootScope.$on('$routeChangeStart', function(e, next, current) {
-
+			$log.info('ROUTE:', "Changing route to", next.$$route.originalPath);
 			if(!$rootScope.logged_in && next.$$route.originalPath != '/login' && next.$$route.originalPath != '/register') {
 				$location.path('/login');
 			}
