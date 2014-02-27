@@ -351,9 +351,17 @@ module.exports = function (grunt) {
 				configFile: 'karma.conf.js',
 				singleRun: true
 			}
+		},
+		sass: {
+			dist: {
+				files: {
+					'./public/styles/app.css': './public/styles/app.scss'
+				}
+			}
 		}
 	});
 
+	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
 		this.async();
 	});
@@ -400,6 +408,10 @@ module.exports = function (grunt) {
 		'uglify',
 		'rev',
 		'usemin'
+	]);
+
+	grunt.registerTask('sass', [
+		'sass:dist'
 	]);
 
 	grunt.registerTask('heroku', function () {

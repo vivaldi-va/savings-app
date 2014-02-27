@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "postinstall": "./node_modules/bower/bin/bower install; ./node_modules/grunt/lib/grunt.js sass"
   },
   "repository": {
     "type": "git",
@@ -54,7 +54,8 @@
     "karma": "~0.10.8",
     "karma-ng-html2js-preprocessor": "~0.1.0",
     "grunt-express": "~1.2.1",
-    "grunt-open": "~0.2.3"
+    "grunt-open": "~0.2.3",
+    "grunt-contrib-sass": "~0.7.2"
   },
   "dependencies": {
     "dateformat": "~1.0.7-1.2.3",
