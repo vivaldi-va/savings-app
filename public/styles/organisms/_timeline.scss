@@ -32,7 +32,7 @@
 		margin: 0 0 0 -5px;
 		padding: 0 0 15px;
 
-		background: $muted;
+		background: #ccc;
 	}
 
 	&.today {
@@ -75,11 +75,11 @@
 			width: 30px;
 			height: 30px;
 			margin: 0 0 0 -15px;
-			background: #ccc;
+			background: $muted;
 
 			font-size: 1.2em;
 			font-weight: 700;
-			color: $muted;
+			color: #666;
 			text-align: center;
 			line-height: 35px;
 
@@ -109,7 +109,7 @@
 
 		// make the timeline grey in the future
 		&:before {
-			background: #ccc;
+			background: $muted;
 		}
 	}
 
@@ -188,9 +188,9 @@
 		right: 110px;
 
 		.item {
-			background: #38AEDD;
+			background: $blueLight;
 
-			&:before {background: #38AEDD;}
+			&:before {background: $blueLight;}
 		}
 	}
 
@@ -198,9 +198,33 @@
 		left: 110px;
 
 		.item {
-			background: #E22E07;
+			background: $redLight;
 
-			&:before {background: #E22E07;}
+			&:before {background: $redLight;}
+		}
+	}
+}
+
+.future {
+	.item-wrapper {
+		&.blue {
+			right: 110px;
+
+			.item {
+				background: $blue;
+
+				&:before {background: $blue;}
+			}
+		}
+
+		&.red {
+			left: 110px;
+
+			.item {
+				background: $red;
+
+				&:before {background: $red;}
+			}
 		}
 	}
 }
