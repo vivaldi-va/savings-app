@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('Savings.Controllers')
-	.controller('TimelineCtrl', ['$scope', '$rootScope', '$log', '$timelineService', function ($scope, $rootScope, $log, $timelineService) {
+	.controller('TimelineCtrl', ['$scope', '$rootScope', '$log', '$location', '$anchorScroll', '$timeout', '$timelineService', function ($scope, $rootScope, $log, $location, $anchorScroll, $timeout, $timelineService) {
 		$log.info("DEBUG: Timeline controller");
 
 		// reset errors and successes
@@ -15,6 +15,12 @@ angular.module('Savings.Controllers')
 				$rootScope.successes.push("timeline synced");
 				$log.info("DEBUG: Timeline data received");
 				$scope.timeline = success;
+				$timeout(function(){
+					$location.hash('today');
+					$anchorScroll();
+
+				});
+
 			},
 			function(reason) {
 				$log.info("DEBUG: error getting timeline data", reason);
