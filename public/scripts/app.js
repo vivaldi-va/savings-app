@@ -34,8 +34,9 @@ angular.module('Savings', [
 
 	})
 	.run(function($rootScope, $location, $log) {
-		$rootScope.$on('$routeChangeStart', function(next, current) {
-			if(!$rootScope.logged_in && (next != '/login' || next != '/register')) {
+		$rootScope.$on('$routeChangeStart', function(e, next, current) {
+
+			if(!$rootScope.logged_in && next.$$route.originalPath != '/login' && next.$$route.originalPath != '/register') {
 				$location.path('/login');
 			}
 		});
