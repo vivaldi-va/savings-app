@@ -26,7 +26,6 @@ if (cluster.isMaster) {
 	var mysql 		= require('mysql');
 	var q 			= require('q');
 	var validator	= require('express-validator');
-	var conf		= require('./conf.json');
 	var app 		= express();
 
 
@@ -52,8 +51,6 @@ if (cluster.isMaster) {
 
 	log.info('DEBUG:', "static path", __dirname + '/public');
 
-
-	var db 			= mysql.createConnection(conf.db);
 	//var controllers = require('./controllers').set(app, db);
 	var routes		= require('./lib/routes')(app);
 
