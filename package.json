@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "./node_modules/bower/bin/bower install; ./node_modules/grunt/lib/grunt.js sass"
+    "postinstall": "./node_modules/bower/bin/bower install; grunt sass"
   },
   "repository": {
     "type": "git",
