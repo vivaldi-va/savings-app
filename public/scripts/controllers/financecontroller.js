@@ -30,6 +30,8 @@ angular.module('Savings.Controllers')
 			}
 		};
 
+		$scope.creatingNewFinance = false;
+
 		$scope.showNewExpenseForm = false;
 
 
@@ -46,7 +48,7 @@ angular.module('Savings.Controllers')
 
 
 		$scope.doCreateFinance = function(type) {
-
+			$scope.creatingNewFinance = true;
 			var data = {
 				"type": type,
 				"name": type===0 ? $scope.newFinance.income.name : $scope.newFinance.expense.name,
@@ -63,7 +65,7 @@ angular.module('Savings.Controllers')
 				function(success) {
 					// create a new finance item based on the info supplied to the function
 					// so as to avoid getting new data to update it
-
+					$scope.creatingNewFinance = false;
 					data.id = success.data.insertId;
 					if(type===0) $scope.finances.income.push(data);
 					if(type===1) $scope.finances.expenses.push(data);
@@ -72,6 +74,7 @@ angular.module('Savings.Controllers')
 
 				},
 				function(reason) {
+					$scope.creatingNewFinance = false;
 					$scope.errors.push(reason);
 				}
 			);
@@ -79,11 +82,14 @@ angular.module('Savings.Controllers')
 
 		$scope.doModifyFinanceItem = function(item) {
 			$log.info("DEBUG: update finance item", item);
+			item.updating = true;
 			$financeService.modifyFinance(item).then(
 				function(success) {
+					item.updating = false;
 					$log.info("DEBUG: modifying finance item successful");
 				},
 				function(reason) {
+					item.updating = false;
 					$scope.errors.push(reason);
 				}
 			);
