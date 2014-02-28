@@ -68,7 +68,7 @@
 
 	&.first {
 		&:after {
-			content: "^";
+			content: "\f0d8";
 			position: absolute;
 			left: 50%;
 			top: -28px;
@@ -77,11 +77,12 @@
 			margin: 0 0 0 -15px;
 			background: $muted;
 
+			font-family: FontAwesome;
 			font-size: 1.2em;
 			font-weight: 700;
-			color: #666;
+			color: #4f4f4f;
 			text-align: center;
-			line-height: 35px;
+			line-height: 28px;
 
 			-webkit-border-radius: 15px;
 			-moz-border-radius: 15px;

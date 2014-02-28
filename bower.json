@@ -8,7 +8,8 @@
     "angular-route": "1.2.6",
     "ftscroller": "~0.3.0",
     "angular-datepicker": "~1.0.3",
-    "normalize-scss": "~3.0.0"
+    "normalize-scss": "~3.0.0",
+    "font-awesome": "~4.0.3"
   },
   "devDependencies": {
     "angular-mocks": "1.2.6",
