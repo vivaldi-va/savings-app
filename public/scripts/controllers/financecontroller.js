@@ -30,9 +30,9 @@ angular.module('Savings.Controllers')
 			}
 		};
 
-		$scope.creatingNewFinance = false;
-
-		$scope.showNewExpenseForm = false;
+		$scope.creatingNewFinance 	= false;
+		$scope.showNewExpenseForm 	= false;
+		$scope.openFinance 			= null;
 
 
 
@@ -114,16 +114,26 @@ angular.module('Savings.Controllers')
 
 		$scope.doToggleNewIncomeForm = function() {
 			$log.info('DEBUG: Toggle income form');
+			$scope.showNewExpenseForm = false;
+			$scope.openFinance = null;
 			$scope.showNewIncomeForm = !$scope.showNewIncomeForm;
 		};
 
 		$scope.doToggleNewExpenseForm = function() {
 			$log.info('DEBUG: Toggle expenses form');
+			$scope.showNewIncomeForm = false;
+			$scope.openFinance = null;
 			$scope.showNewExpenseForm = !$scope.showNewExpenseForm;
 		};
 
 		$scope.doToggleFinanceForm = function(finance) {
-			finance.edit = !finance.edit;
+			//finance.edit = !finance.edit;
+			if(finance === $scope.openFinance) {
+				$scope.openFinance = null;
+			} else {
+				$scope.openFinance = finance;
+			}
+
 			$log.info('DEBUG: Toggle expenses form', finance);
 		};
 	}]);

@@ -63,7 +63,7 @@
 
 
 	<div class="finance-item-wrapper" ng-repeat="finance in finances.income | hideDeleted" ng-click="doToggleFinanceForm(finance)">
-		<div class="finance-item blue" ng-class="{active: !!finance.edit}">
+		<div class="finance-item blue" ng-class="{active: openFinance===finance}">
 			<div class="finance-item-amount-wrapper">
 				<div class="finance-item-amount">{{ finance.amount }}&euro;</div>
 				<div class="finance-item-time-meta">every {{ finance.interval }}</div>
@@ -71,7 +71,7 @@
 			<div class="finance-item-name">{{ finance.name }}</div>
 		</div>
 
-		<form class="finance-form" ng-if="!!finance.edit" ng-submit="doModifyFinanceItem(finance)" ng-click="$event.stopPropagation()">
+		<form class="finance-form" ng-if="openFinance===finance" ng-submit="doModifyFinanceItem(finance)" ng-click="$event.stopPropagation()">
 			<div class="row">
 				<div class="input-group">
 					<label for="finance-name" class="input-label required">name</label>
@@ -179,7 +179,7 @@
 		expenses
 	</div>
 	<div class="finance-item-wrapper" ng-repeat="finance in finances.expenses | hideDeleted" ng-click="doToggleFinanceForm(finance)">
-		<div class="finance-item red" ng-class="{active: !!finance.edit}">
+		<div class="finance-item red" ng-class="{active: openFinance===finance}">
 			<div class="finance-item-amount-wrapper">
 				<div class="finance-item-amount">{{ finance.amount }}&euro;</div>
 				<div class="finance-item-time-meta">every {{ finance.interval }}</div>
@@ -187,7 +187,7 @@
 			<div class="finance-item-name">{{ finance.name }}</div>
 		</div>
 
-		<form class="finance-form" ng-if="!!finance.edit" ng-submit="doModifyFinanceItem(finance)" ng-click="$event.stopPropagation()">
+		<form class="finance-form" ng-if="openFinance===finance" ng-submit="doModifyFinanceItem(finance)" ng-click="$event.stopPropagation()">
 			<div class="row">
 				<div class="input-group">
 					<label for="finance-expense-name" class="input-label required">name</label>
