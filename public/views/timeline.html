@@ -15,7 +15,7 @@
 				<div class="item-wrapper blue">
 					<div class="item">
 						<div class="item-amount-wrapper">
-							<div class="item-amount">{{ finance.amount }}&euro;</div>
+							<div class="item-amount">{{ finance.amount | currency }}</div>
 						</div>
 						<div class="item-name-wrapper">
 							<div class="item-name">{{ finance.name }}</div>
@@ -34,7 +34,7 @@
 				<div class="item-wrapper red">
 					<div class="item">
 						<div class="item-amount-wrapper">
-							<div class="item-amount">{{ finance.amount }}&euro;</div>
+							<div class="item-amount">{{ finance.amount | currency }}</div>
 						</div>
 						<div class="item-name-wrapper">
 							<div class="item-name">{{ finance.name }}</div>
@@ -53,4 +53,3 @@
 
 <div ng-include="'views/column-income.html'"></div>
 <div ng-include="'views/column-expenses.html'"></div>
-

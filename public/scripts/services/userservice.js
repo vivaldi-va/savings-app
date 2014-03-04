@@ -17,6 +17,8 @@ angular.module('Savings.Services')
 						dfd.reject(data.error);
 					}
 
+					$rootScope.user = data.data;
+
 					dfd.resolve();
 				})
 				.error(function(reason) {
@@ -44,6 +46,7 @@ angular.module('Savings.Services')
 						dfd.reject(data.error);
 					}
 					$rootScope.logged_in = true;
+					$rootScope.user = data.data;
 					dfd.resolve(data.data);
 				})
 				.error(function(reason) {
@@ -79,6 +82,24 @@ angular.module('Savings.Services')
 				})
 				.error(function(reason) {
 					$log.warn('ERR', "user registration failed", reason);
+					dfd.reject(reason);
+				});
+
+			return dfd.promise;
+		}
+
+		function _changeCurrencyFormat(currency) {
+			var dfd = $q.defer();
+
+			$http({
+				"url": '/api/user/currency/' + currenct,
+				"method": 'put'
+			})
+				.success(function(status) {
+					if(!status.success) dfd.reject(status.error);
+					dfd.resolve();
+				})
+				.error(function(reason) {
 					dfd.reject(reason);
 				});
 

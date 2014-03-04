@@ -5,5 +5,19 @@
 	padding: 0 0.5em;
 
 	border: 1px solid #ddd;
+
+	color: $black;
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
 	border-radius: 3px;
+
+	&.input-small {
+		display: inline;
+		width: auto;
+		min-height: 22px;
+		-webkit-border-radius: 2px;
+		-moz-border-radius: 2px;
+		border-radius: 2px;
+	}
 }

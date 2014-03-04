@@ -300,6 +300,14 @@ module.exports = function (grunt) {
 				cwd: '<%= yeoman.app %>/styles',
 				dest: '.tmp/styles/',
 				src: '{,*/}*.css'
+			},
+			fonts: {
+				expand: true,
+				dest: './public/fonts/',
+				src: [
+					'./public/bower_components/font-awesome/fonts/*'
+				]
+
 			}
 		},
 
@@ -410,8 +418,9 @@ module.exports = function (grunt) {
 		'usemin'
 	]);
 
-	grunt.registerTask('sass', [
-		'sass:dist'
+	grunt.registerTask('deploy', [
+		'sass:dist',
+		'bower-install'
 	]);
 
 	grunt.registerTask('heroku', function () {

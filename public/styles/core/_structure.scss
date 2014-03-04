@@ -24,6 +24,10 @@
 	-moz-box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.25);
 	box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.25);
 
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
 	&.left {
 		left: 0;
 	}

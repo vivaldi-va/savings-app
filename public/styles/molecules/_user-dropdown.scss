@@ -1,0 +1,32 @@
+.user-dropdown-wrapper {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.user-dropdown-link {
+	padding: 0 1em;
+	height: $headerHeight;
+	font-weight: 600;
+	line-height: $headerHeight;
+	text-align: center;
+
+	&.active {
+		background: #4f4f4f;
+	}
+}
+
+.user-dropdown-container {
+	position: absolute;
+	top: $headerHeight;
+	right: 0;
+	z-index: 1001;
+	width: 200px;
+	padding: 1em;
+	background: #4f4f4f;
+}
+
+.user-dropdown-item {
+	width: 100%;
+	height: 35px;
+}

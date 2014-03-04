@@ -31,7 +31,26 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<div class="header-bar"></div>
+<div class="header-bar">
+	<h1 class="site-title">finance app</h1>
+
+	<div class="user-dropdown-wrapper" ng-controller="UserMenuCtrl" ng-if="logged_in">
+		<div class="user-dropdown-link" ng-click="toggleDropdown()" ng-class="{active: !!dropdown}">Account settings <i class="fa fa-caret-down"></i></div>
+		<div class="user-dropdown-container" ng-if="dropdown">
+			<div class="user-dropdown-item">
+				<span class="user-dropdown-item-label">Currency format</span>
+				<select ng-model="currency" class="input input-small pull-right">
+					<option value="0">&euro;</option>
+					<option value="1">$</option>
+					<option value="2">£</option>
+				</select>
+			</div>
+			<div class="user-dropdown-item">
+				<button class="button red">log out</button>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="container" ng-view=""></div>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -62,6 +81,7 @@
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/ftscroller/lib/ftscroller.js"></script>
+<script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -77,6 +97,7 @@
 <script src="scripts/controllers/financecontroller.js"></script>
 <script src="scripts/controllers/registercontroller.js"></script>
 <script src="scripts/controllers/logincontroller.js"></script>
+<script src="scripts/controllers/usermenucontroller.js"></script>
 
 <script src="scripts/filters/reversefilter.js"></script>
 <script src="scripts/filters/deletefinancefilter.js"></script>

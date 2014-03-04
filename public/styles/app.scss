@@ -2,25 +2,27 @@
 @import '../bower_components/font-awesome/scss/font-awesome';
 
 // core
-@import "core/_variables";
-@import "core/_structure";
-@import "core/_grid";
+@import "core/variables";
+@import "core/structure";
+@import "core/grid";
 
-@import "core/_colours";
-@import "core/_typography";
+@import "core/colours";
+@import "core/typography";
 
 // atoms
-@import "atoms/_input";
-@import "atoms/_input-label";
-@import "atoms/_button";
-@import "atoms/_new-finance-button";
+@import "atoms/title";
+@import "atoms/input";
+@import "atoms/input-label";
+@import "atoms/button";
+@import "atoms/new-finance-button";
 
 // molecules
 
-@import "molecules/_column-heading";
-@import "molecules/_finance-item";
-@import "molecules/_finance-form";
+@import "molecules/column-heading";
+@import "molecules/finance-item";
+@import "molecules/finance-form";
+@import "molecules/user-dropdown";
 
 // organisms
-@import "organisms/_header";
-@import "organisms/_timeline";
+@import "organisms/header";
+@import "organisms/timeline";

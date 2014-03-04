@@ -9,9 +9,13 @@ angular.module('Savings', [
 		'Savings.Config',
 		'Savings.Services',
 		'Savings.Controllers',
-		'Savings.Filters'
+		'Savings.Filters',
+		'tmh.dynamicLocale'
 	])
-	.run(function($rootScope, $location, $log, $userService) {
+	.run(function($rootScope, $location, $log, $userService, $locale) {
+		$log.info('Locale:', $locale.id);
+
+
 		$rootScope.logged_in 	= false;
 		$rootScope.errors		= [];
 
