@@ -9,4 +9,5 @@ conf.json
 public/bower_components
 public/styles/*.css
 !public/styles/app.css
+public/fonts/*
 .idea

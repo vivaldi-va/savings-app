@@ -303,11 +303,9 @@ module.exports = function (grunt) {
 			},
 			fonts: {
 				expand: true,
-				dest: './public/fonts/',
-				src: [
-					'./public/bower_components/font-awesome/fonts/*'
-				]
-
+				cwd: '<%= yeoman.app %>/bower_components/font-awesome/fonts',
+				dest: '<%= yeoman.app %>/fonts/',
+				src: '*'
 			}
 		},
 
@@ -419,8 +417,7 @@ module.exports = function (grunt) {
 	]);
 
 	grunt.registerTask('deploy', [
-		'sass:dist',
-		'bower-install'
+		'copy:fonts'
 	]);
 
 	grunt.registerTask('heroku', function () {
