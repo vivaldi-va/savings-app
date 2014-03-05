@@ -35,4 +35,11 @@
 	&.right {
 		right: 0;
 	}
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+	&::-moz-scrollbar {
+		display: none;
+	}
 }
