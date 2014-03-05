@@ -304,6 +304,12 @@ module.exports = function (grunt) {
 			fonts: {
 				expand: true,
 				cwd: '<%= yeoman.app %>/bower_components/font-awesome/fonts',
+				dest: '<%= yeoman.dist %>/fonts/',
+				src: '*'
+			},
+			"fontsdev": {
+				expand: true,
+				cwd: '<%= yeoman.app %>/bower_components/font-awesome/fonts',
 				dest: '<%= yeoman.app %>/fonts/',
 				src: '*'
 			}
@@ -367,7 +373,7 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.loadNpmTasks('grunt-contrib-sass');
+
 	grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
 		this.async();
 	});
@@ -402,13 +408,13 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('build', [
 		'clean:dist',
-		'bower-install',
 		'useminPrepare',
 		'concurrent:dist',
 		'autoprefixer',
 		'concat',
 		'ngmin',
 		'copy:dist',
+		'copy:fonts',
 		'cdnify',
 		'cssmin',
 		'uglify',
@@ -416,13 +422,13 @@ module.exports = function (grunt) {
 		'usemin'
 	]);
 
-	grunt.registerTask('deploy', [
-		'copy:fonts'
+	grunt.registerTask('devbuild', [
+		'copy:fontsdev'
 	]);
 
-	grunt.registerTask('heroku', function () {
-		grunt.log.warn('The `heroku` task has been deprecated. Use `grunt build` to build for deployment.');
-		grunt.task.run(['build']);
+	grunt.registerTask('heroku', function (target) {
+		//grunt.task.run(['build']);
+		grunt.task.run(['devbuild']);
 	});
 
 	grunt.registerTask('default', [
