@@ -4,6 +4,7 @@ node_modules
 .editorconfig
 .project
 conf.json
+dbconf.json
 .tmp
 .sass-cache
 public/bower_components
