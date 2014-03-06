@@ -3,13 +3,19 @@
  */
 
 angular.module('Savings.Controllers')
-	.controller('UserMenuCtrl', function($scope, $rootScope) {
+	.controller('UserMenuCtrl', function($scope, $rootScope, $location, $userService) {
 		$scope.dropdown = false;
 		console.log($rootScope.user);
 		$scope.currency = $rootScope.user.currency;
 
 		$scope.toggleDropdown = function() {
 			$scope.dropdown = !$scope.dropdown;
+		};
+
+		$scope.logout = function() {
+			$userService.logout();
+			$rootScope.logged_in = false;
+			$location.path('/login');
 		};
 
 	});

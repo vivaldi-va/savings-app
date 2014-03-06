@@ -88,11 +88,21 @@ angular.module('Savings.Services')
 			return dfd.promise;
 		}
 
+		function _logout() {
+			$http({
+				url: '/api/user/logout',
+				method: 'get'
+			})
+				.error(function(err) {
+					$log.error('ERR', err);
+				});
+		}
+
 		function _changeCurrencyFormat(currency) {
 			var dfd = $q.defer();
 
 			$http({
-				"url": '/api/user/currency/' + currenct,
+				"url": '/api/user/currency/' + currency,
 				"method": 'put'
 			})
 				.success(function(status) {
@@ -110,6 +120,7 @@ angular.module('Savings.Services')
 		return {
 			session: _session,
 			login: _login,
-			register: _register
+			register: _register,
+			logout: _logout
 		}
 	});
