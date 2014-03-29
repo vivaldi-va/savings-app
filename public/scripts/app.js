@@ -9,8 +9,7 @@ angular.module('Savings', [
 		'Savings.Config',
 		'Savings.Services',
 		'Savings.Controllers',
-		'Savings.Filters',
-		'tmh.dynamicLocale'
+		'Savings.Filters'
 	])
 	.run(function($rootScope, $location, $log, $userService, $locale) {
 		$log.info('Locale:', $locale.id);
