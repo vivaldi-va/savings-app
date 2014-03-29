@@ -1,0 +1,118 @@
+<div id="expenses" class="column right expenses">
+	<div class="column-heading">
+		<span class="column-totals expenses">
+			<em>{{ finances.attrs.expenses.count }}</em>
+			item<span ng-if="finances.attrs.expenses.count>1">s</span> totaling
+			<em>{{ finances.attrs.expenses.total_per_month }}&euro;</em> per month
+		</span>
+		expenses
+	</div>
+	<div class="finance-item-wrapper" ng-repeat="finance in finances.expenses | hideDeleted" ng-click="doToggleFinanceForm(finance)">
+		<div class="finance-item red" ng-class="{active: openFinance===finance}">
+			<div class="finance-item-amount-wrapper">
+				<div class="finance-item-amount">{{ finance.amount }}&euro;</div>
+				<div class="finance-item-time-meta">every {{ finance.interval }}</div>
+			</div>
+			<div class="finance-item-name">{{ finance.name }}</div>
+		</div>
+
+		<form class="finance-form" ng-if="openFinance===finance" ng-submit="doModifyFinanceItem(finance)" ng-click="$event.stopPropagation()">
+			<div class="row">
+				<div class="input-group">
+					<label for="finance-expense-name" class="input-label required">name</label>
+					<input id="finance-expense-name" class="input" type="text" ng-model="finance.name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6 input-group">
+					<label for="finance-expense-amount" class="input-label required">amount</label>
+					<input id="finance-expense-amount" class="input" type="text" ng-model="finance.amount">
+				</div>
+				<div class="col-6 input-group">
+					<label for="finance-expense-date" class="input-label required">due date</label>
+					<input id="finance-expense-date" class="input" type="text" ng-model="finance.duedate">
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-group">
+					<label for="finance-expense-interval" class="input-label required">interval</label>
+					<select class="input" name="interval" id="finance-expense-interval" ng-model="finance.interval">
+						<option value="0">one time</option>
+						<option value="day">daily</option>
+						<option value="week">weekly</option>
+						<option value="biweekly">every other week</option>
+						<option value="month">each month</option>
+						<option value="sixmonths">every 6 months</option>
+						<option value="year">yearly</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-group">
+					<label for="finance-expense-description" class="input-label">description</label>
+					<textarea id="finance-expense-description" class="input" name="description" cols="10" rows="10" ng-model="finance.description"></textarea>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-2">
+					<button type="button" class="button red" ng-click="doDisableFinance(finance); $event.stopPropagation();"><i class="fa fa-trash-o"></i></button>
+				</div>
+				<div class="col-10">
+					<button class="button" type="submit" ng-disabled="!!finance.updating">save<span ng-if="finance.updating">ing...</span></button>
+				</div>
+			</div>
+		</form>
+
+	</div>
+	<button class="button new-finance-button" ng-click="doToggleNewExpenseForm()">track a new expense</button>
+
+	<form class="finance-form" ng-if="!!showNewExpenseForm" ng-submit="doCreateFinance(1)">
+		<div class="row">
+			<div class="input-group">
+				<label for="finances-expense-name" class="input-label required">name</label>
+				<input id="finances-expense-name" class="input" type="text" ng-model="newFinance.expense.name">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-6 input-group">
+				<label for="finances-expense-amount" class="input-label required">amount</label>
+				<input id="finances-expense-amount" class="input" type="text" ng-model="newFinance.expense.amount">
+			</div>
+			<div class="col-6 input-group">
+				<label for="finances-expense-date" class="input-label required">due date</label>
+				<input id="finances-expense-date" class="input" type="text" ng-model="newFinance.expense.date">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-group">
+				<label for="finances-expense-interval" class="input-label required">interval</label>
+				<select class="input" name="interval" id="finances-expense-interval" ng-model="newFinance.expense.interval">
+					<option value="0">one time</option>
+					<option value="day">daily</option>
+					<option value="week">weekly</option>
+					<option value="biweekly">every other week</option>
+					<option value="month">each month</option>
+					<option value="sixmonths">every 6 months</option>
+					<option value="year">yearly</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-group">
+				<label for="finances-expense-interval" class="input-label">description</label>
+				<textarea id="finances-expense-description" class="input" name="description" id="" cols="10" rows="10" ng-model="newFinance.expense.description"></textarea>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-6">
+				<button class="button">cancel</button>
+			</div>
+			<div class="col-6">
+				<button class="button" type="submit" ng-click="$event.stopPropagation()" ng-disabled="!!creatingNewFinance">create<span ng-if="!!creatingNewFinance">ing...</span></button>
+			</div>
+		</div>
+	</form>
+
+</div>
