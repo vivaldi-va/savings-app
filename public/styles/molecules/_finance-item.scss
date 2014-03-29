@@ -33,7 +33,8 @@
 .finance-item-amount-wrapper {
 	float: left;
 	width: 35%;
-	text-align: center;
+	padding: 0 0 0 0.5em;
+	text-align: left;
 }
 
 .finance-item-amount {
@@ -42,12 +43,17 @@
 }
 
 .finance-item-time-meta {
-	font-size: 0.85em;
+	font-size: 0.75em;
+	font-weight: 600;
+	text-transform: uppercase;
+	opacity: 0.75;
 }
 
 .finance-item-name {
 	float: left;
 	width: 65%;
+	font-weight: 600;
+	text-transform: capitalize;
 }
 
 .finance-form {
