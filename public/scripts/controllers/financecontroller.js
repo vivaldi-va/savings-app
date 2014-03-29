@@ -49,6 +49,9 @@ angular.module('Savings.Controllers')
 
 		$scope.doCreateFinance = function(type) {
 			$scope.creatingNewFinance = true;
+
+
+
 			var data = {
 				"type": type,
 				"name": type===0 ? $scope.newFinance.income.name : $scope.newFinance.expense.name,

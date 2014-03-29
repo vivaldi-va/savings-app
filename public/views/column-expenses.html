@@ -11,7 +11,7 @@
 		<div class="finance-item red" ng-class="{active: openFinance===finance}">
 			<div class="finance-item-amount-wrapper">
 				<div class="finance-item-amount">{{ finance.amount }}&euro;</div>
-				<div class="finance-item-time-meta">every {{ finance.interval }}</div>
+				<div class="finance-item-time-meta"><span ng-if="finance.interval !== 'once'">every</span> {{ finance.interval }}</div>
 			</div>
 			<div class="finance-item-name">{{ finance.name }}</div>
 		</div>
@@ -37,7 +37,7 @@
 				<div class="input-group">
 					<label for="finance-expense-interval" class="input-label required">interval</label>
 					<select class="input" name="interval" id="finance-expense-interval" ng-model="finance.interval">
-						<option value="0">one time</option>
+						<option value="once">one time</option>
 						<option value="day">daily</option>
 						<option value="week">weekly</option>
 						<option value="biweekly">every other week</option>
@@ -88,7 +88,7 @@
 			<div class="input-group">
 				<label for="finances-expense-interval" class="input-label required">interval</label>
 				<select class="input" name="interval" id="finances-expense-interval" ng-model="newFinance.expense.interval">
-					<option value="0">one time</option>
+					<option value="once">one time</option>
 					<option value="day">daily</option>
 					<option value="week">weekly</option>
 					<option value="biweekly">every other week</option>
