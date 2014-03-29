@@ -3,14 +3,14 @@
 		<span class="column-totals expenses">
 			<em>{{ finances.attrs.expenses.count }}</em>
 			item<span ng-if="finances.attrs.expenses.count>1">s</span> totaling
-			<em>{{ finances.attrs.expenses.total_per_month }}&euro;</em> per month
+			<em>{{ finances.attrs.expenses.total_per_month | currency }}</em> per month
 		</span>
 		expenses
 	</div>
 	<div class="finance-item-wrapper" ng-repeat="finance in finances.expenses | hideDeleted" ng-click="doToggleFinanceForm(finance)">
 		<div class="finance-item red" ng-class="{active: openFinance===finance}">
 			<div class="finance-item-amount-wrapper">
-				<div class="finance-item-amount">{{ finance.amount }}&euro;</div>
+				<div class="finance-item-amount">{{ finance.amount | currency }}</div>
 				<div class="finance-item-time-meta"><span ng-if="finance.interval !== 'once'">every</span> {{ finance.interval }}</div>
 			</div>
 			<div class="finance-item-name">{{ finance.name }}</div>
