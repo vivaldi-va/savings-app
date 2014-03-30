@@ -38,14 +38,6 @@
 		<div class="user-dropdown-link" ng-click="toggleDropdown()" ng-class="{active: !!dropdown}">Account settings <i class="fa fa-caret-down"></i></div>
 		<div class="user-dropdown-container" ng-if="dropdown">
 			<div class="user-dropdown-item">
-				<span class="user-dropdown-item-label">Currency format</span>
-				<select ng-model="currency" class="input input-small pull-right">
-					<option value="0">&euro;</option>
-					<option value="1">$</option>
-					<option value="2">£</option>
-				</select>
-			</div>
-			<div class="user-dropdown-item">
 				<button class="button red" ng-click="logout()">log out</button>
 			</div>
 		</div>
