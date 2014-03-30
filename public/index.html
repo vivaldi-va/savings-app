@@ -85,9 +85,17 @@
 <!-- endbower -->
 <!-- endbuild -->
 
+<script>
+	var locale = localStorage.getItem('locale');
+	if (locale) {
+		document.write('<script src="bower_components/angular-i18n/angular-locale_'+locale+'.js"><\/script>');
+	}
+</script>
+
 <!-- build:js({.tmp,app}) scripts/app.js -->
 <script src="scripts/app.js"></script>
 <script src="scripts/config/route.js"></script>
+
 
 <script src="scripts/services/financeservice.js"></script>
 <script src="scripts/services/timelineservice.js"></script>

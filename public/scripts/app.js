@@ -11,7 +11,7 @@ angular.module('Savings', [
 		'Savings.Controllers',
 		'Savings.Filters'
 	])
-	.run(function($rootScope, $location, $log, $userService, $locale, $http) {
+	.run(function($rootScope, $location, $log, $userService, $locale, $timeout, $http) {
 		$log.info('Locale:', $locale.id);
 
 
@@ -27,12 +27,23 @@ angular.module('Savings', [
 				$http.get('http://ipinfo.io/json')
 					.success(function(data) {
 						var countryCode = data.country.toLowerCase();
+						if(window.localStorage.locale) {
+							window.localStorage.locale = countryCode;
+						} else {
+							window.localStorage.setItem('locale', countryCode);
+						}
 
-						$script('/bower_components/angular-i18n/angular-locale_' + countryCode, function() {
-							$log.debug('DEBUG:', "Yey there's a session");
-							$rootScope.logged_in = true;
+						$log.info('DEBUG:', "country code", countryCode);
+						$log.info('DEBUG:', "country script", '/bower_components/angular-i18n/angular-locale_' + countryCode + '.js');
+						$log.debug('DEBUG:', "Loaded locale script");
+						$log.debug('DEBUG:', "Yey there's a session");
+						$rootScope.logged_in = true;
+						$timeout(function() {
+							$log.info('Locale:', $locale.id);
 							$location.path('/timeline');
 						});
+						/*$script('/bower_components/angular-i18n/angular-locale_' + countryCode + '.js', function() {
+						});*/
 					});
 
 
