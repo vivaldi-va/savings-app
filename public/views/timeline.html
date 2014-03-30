@@ -1,7 +1,24 @@
 
 
 <div class="timeline" id="timeline" ng-controller="TimelineCtrl">
-	<div class="timeline-segment" ng-repeat="timelineSegment in timeline | reverse" ng-class="{today: timelineSegment.attrs.today==true, first: $index===0 && !timelineSegment.attrs.today, future: timelineSegment.attrs.future === true}" id="{{!!timelineSegment.attrs.today ? 'today' : ''}}">
+	<div class="timeline-balance">
+		<div class="timeline-balance-item">
+			<div class="income pill blue">{{ timeline.attrs.finance_sums.income | currency }}</div>
+		</div>
+		<div class="timeline-balance-item middle">
+			<div class="sum" ng-class="{'red': timeline.attrs.finance_sums.income<timeline.attrs.finance_sums.expense, 'blue': timeline.attrs.finance_sums.income>timeline.attrs.finance_sums.expense}">
+				<strong>{{ timelineBalance | currency }}</strong>
+				<span ng-if="timeline.attrs.finance_sums.income<timeline.attrs.finance_sums.expense">loss</span>
+				<span ng-if="timeline.attrs.finance_sums.income>timeline.attrs.finance_sums.expense">surplus</span>
+				over the next month
+			</div>
+		</div>
+		<div class="timeline-balance-item">
+			<div class="expense pill red">{{ timeline.attrs.finance_sums.expense | currency }}</div>
+		</div>
+
+	</div>
+	<div class="timeline-segment" ng-repeat="timelineSegment in timeline.items | reverse" ng-class="{today: timelineSegment.attrs.today==true, first: $index===0 && !timelineSegment.attrs.today, future: timelineSegment.attrs.future === true}" id="{{!!timelineSegment.attrs.today ? 'today' : ''}}">
 
 
 		<div class="item-container income" ng-if="timelineSegment.finances.income.length">

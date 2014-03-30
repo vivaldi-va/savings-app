@@ -5,16 +5,18 @@ angular.module('Savings.Controllers')
 		$log.info("DEBUG: Timeline controller");
 
 		// reset errors and successes
-		$rootScope.errors = [];
-		$rootScope.successes = [];
-
-		$scope.timeline = null;
+		$rootScope.errors		= [];
+		$rootScope.successes	= [];
+		$scope.timeline			= null;
+		$scope.timelineBalance = false;
 
 		$timelineService.getTimeline.then(
 			function(success) {
 				$rootScope.successes.push("timeline synced");
 				$log.info("DEBUG: Timeline data received");
+
 				$scope.timeline = success;
+				$scope.timelineBalance = Math.abs(success.attrs.finance_sums.income - success.attrs.finance_sums.expense);
 				$timeout(function(){
 					$location.hash('today');
 					$anchorScroll();

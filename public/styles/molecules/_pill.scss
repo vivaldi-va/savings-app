@@ -1,0 +1,22 @@
+.pill {
+	display: inline-block;
+	height: 35px;
+	padding: 0 2em;
+
+	border: 1.5px solid $muted;
+	color: $muted;
+	line-height: 35px;
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+
+	&.red {
+		color: $red;
+		border-color: $red;
+	}
+	&.blue {
+		color: $blue;
+		border-color: $blue;
+	}
+}
