@@ -11,7 +11,7 @@ angular.module('Savings', [
 		'Savings.Controllers',
 		'Savings.Filters'
 	])
-	.run(function($rootScope, $location, $log, $userService, $locale) {
+	.run(function($rootScope, $location, $log, $userService, $locale, $http) {
 		$log.info('Locale:', $locale.id);
 
 
@@ -23,9 +23,18 @@ angular.module('Savings', [
 		$log.debug('DEBUG:', "check for session");
 		$userService.session().then(
 			function(success) {
-				$log.debug('DEBUG:', "Yey there's a session");
-				$rootScope.logged_in = true;
-				$location.path('/timeline');
+
+				$http.get('http://ipinfo.io/json')
+					.success(function(data) {
+						var countryCode = data.country.toLowerCase();
+
+						$script('/bower_components/angular-i18n/angular-locale_' + countryCode, function() {
+							$log.debug('DEBUG:', "Yey there's a session");
+							$rootScope.logged_in = true;
+							$location.path('/timeline');
+						});
+					});
+
 
 			},
 			function(reason) {
