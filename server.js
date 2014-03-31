@@ -26,7 +26,11 @@ if (cluster.isMaster) {
 	var mysql 		= require('mysql');
 	var q 			= require('q');
 	var validator	= require('express-validator');
+	var dbConf		= require('./lib/conf.json');
 	var app 		= express();
+	var pool		= mysql.createPool(dbConf.db);
+
+
 
 
 
@@ -57,7 +61,7 @@ if (cluster.isMaster) {
 
 	//var controllers = require('./controllers').set(app, db);
 	var routes		= require('./lib/routes')(app);
-
+	var dbConn		= require('./lib/config/dbConnection')(pool);
 
 
 	var port = process.env.PORT || 3000;
