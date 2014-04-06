@@ -26,7 +26,7 @@ if (cluster.isMaster) {
 	var mysql 		= require('mysql');
 	var q 			= require('q');
 	var validator	= require('express-validator');
-	var dbConf		= require('./lib/conf.json');
+	var dbConf		= require('./lib/config/conf.json');
 	var app 		= express();
 	var pool		= mysql.createPool(dbConf.db);
 
