@@ -57,7 +57,7 @@ if (cluster.isMaster) {
 		app.use(express.methodOverride()); 						// simulate DELETE and PUT
 	});
 
-	log.info('DEBUG:', "static path", __dirname + '/public');
+	//log.info('DEBUG:', "static path", __dirname + '/public');
 
 	//var controllers = require('./controllers').set(app, db);
 	var routes		= require('./lib/routes')(app);
@@ -66,6 +66,7 @@ if (cluster.isMaster) {
 
 	var port = process.env.PORT || 3000;
 	app.listen(port);
+	log.info('SERVER', "Listening on port", port);
 }
 
 // Listen for dying workers
