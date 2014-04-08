@@ -1,0 +1,38 @@
+<div class='quickdate'>
+	<input ng-focus='toggleCalendar()' class='input date-picker-input' value="{{mainButtonStr |date:'shortDate'}}">
+
+	<div class='quickdate-popup' ng-class='{open: calendarShown}'>
+		<table class='quickdate-calendar'>
+			<thead>
+				<tr>
+					<th>
+						<button class='button no-style quickdate-prev-month quickdate-action-link' ng-click='prevMonth()'>
+							<i class="fa fa-fw fa-chevron-left"></i>
+						</button>
+					</th>
+					<th colspan="5" style="width: auto">
+						<span class='quickdate-month'>{{calendarDate | date:'MMMM yyyy'}}</span>
+					</th>
+					<th>
+						<button class='button no-style quickdate-next-month quickdate-action-link' ng-click='nextMonth()'>
+							<i class="fa fa-fw fa-chevron-right"></i>
+						</button>
+					</th>
+
+				</tr>
+				<tr>
+					<th ng-repeat='day in dayAbbreviations'>{{day}}</th>
+				</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat='week in weeks'>
+				<td ng-repeat='day in week'>
+					<button class="button" type="button" ng-click='selectDate(day.date, true, true)' ng-disabled="day.other || day.disabled" ng-class='{"red": day.selected, "enhanced": day.today, "no-style": !day.today && !day.selected}'>
+						{{day.date | date:'d'}}
+					</button>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

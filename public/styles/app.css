@@ -1714,6 +1714,7 @@ th {
   position: absolute;
   top: 0;
   bottom: 0;
+  z-index: 1002;
   width: 300px;
   padding: 0 5px 2em;
   overflow-y: scroll;
@@ -1879,10 +1880,13 @@ body {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px; }
-  .button:active, .button:hover, .button:focus {
+  .button:active, .button:hover, .button:focus, .button.enhanced {
     background: #595959; }
   .button.red {
     background: #e22e07; }
+  .button.no-style {
+    background: none;
+    color: inherit; }
 
 .new-finance-button {
   margin: 32px 0 0; }
@@ -1977,7 +1981,7 @@ body {
   position: absolute;
   top: 35px;
   right: 0;
-  z-index: 1001;
+  z-index: 1003;
   width: 200px;
   padding: 1em;
   background: #4f4f4f; }
@@ -2009,7 +2013,7 @@ body {
   right: 300px;
   left: 300px;
   z-index: 1001;
-  padding: 1em 0;
+  padding: 1em 0 0;
   background: #dfdfdf; }
   .timeline-balance:after {
     content: "";
@@ -2049,6 +2053,14 @@ body {
   font-weight: 600; }
   .timeline-balance-item.middle {
     width: 50%; }
+
+.drop {
+  z-index: 9999; }
+
+.quickdate-calendar td, .quickdate-calendar th {
+  width: 30px;
+  height: 20px;
+  padding: 0.25em; }
 
 .header-bar {
   position: relative;

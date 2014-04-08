@@ -11,7 +11,8 @@
     "normalize-scss": "~3.0.0",
     "font-awesome": "~4.0.3",
     "angular-i18n": "~1.2.15",
-    "scriptjs": "~2.5.2"
+    "scriptjs": "~2.5.2",
+    "drop": "~0.5.4"
   },
   "devDependencies": {
     "angular-mocks": "1.2.6",

@@ -3,7 +3,7 @@
  */
 
 angular.module('Savings.Controllers')
-	.controller('FinanceCtrl', ['$scope', '$financeService', '$log', function($scope, $financeService, $log) {
+	.controller('FinanceCtrl', ['$scope', '$financeService', '$log', '$timeout', function($scope, $financeService, $log, $timeout) {
 
 
 		$scope.errors = [];
@@ -33,7 +33,6 @@ angular.module('Savings.Controllers')
 		$scope.creatingNewFinance 	= false;
 		$scope.showNewExpenseForm 	= false;
 		$scope.openFinance 			= null;
-
 
 
 		$financeService.getFinances.then(

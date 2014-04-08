@@ -12,11 +12,16 @@
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 
-	&:active,&:hover,&:focus {
+	&:active,&:hover,&:focus,&.enhanced {
 		background: darken($muted, 25%);
 	}
 
 	&.red {
 		background: $red;
+	}
+
+	&.no-style {
+		background: none;
+		color: inherit;
 	}
 }
