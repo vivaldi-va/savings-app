@@ -116,7 +116,7 @@
 						content: angular.element(element[0].querySelector(".quickdate-popup"))[0],
 						position: 'bottom center',
 						openOn: 'click',
-						classes: 'drop-theme-arrows-bounce-dark',
+						classes: 'drop-theme-arrows-bounce',
 						tetherOptions: {
 							constraints: [
 								{

@@ -33,7 +33,7 @@
 				</div>
 				<div class="col-6 input-group">
 					<label for="finance-expense-date" class="input-label required">due date</label>
-					<input id="finance-expense-date" class="input" type="text" ng-model="finance.duedate">
+					<quick-datepicker id="finance-expense-date" ng-model='finance.duedate'></quick-datepicker>
 				</div>
 			</div>
 			<div class="row">
@@ -84,7 +84,7 @@
 			</div>
 			<div class="col-6 input-group">
 				<label for="finances-expense-date" class="input-label required">due date</label>
-				<quick-datepicker ng-model='newFinance.expense.date'></quick-datepicker>
+				<quick-datepicker id="finances-expense-date" ng-model='newFinance.expense.date'></quick-datepicker>
 				<!--<input id="finances-expense-date" class="input" type="text" ng-model="newFinance.expense.date">-->
 			</div>
 		</div>

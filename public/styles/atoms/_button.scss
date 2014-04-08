@@ -24,4 +24,8 @@
 		background: none;
 		color: inherit;
 	}
+
+	&:disabled {
+		color: $muted;
+	}
 }
