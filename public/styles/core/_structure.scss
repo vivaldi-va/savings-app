@@ -5,19 +5,15 @@
 }
 
 .container {
-	position: absolute;
-	top: 35px;
-	right: 0;
-	bottom: 0;
-	left: 0;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
 }
 
 .column {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	z-index: 1002;
-	width: 300px;
+	min-width: 300px;
 	padding: 0 5px 2em;
 	overflow-y: scroll;
 
@@ -30,11 +26,11 @@
 	}
 
 	&.left {
-		left: 0;
+		order: 1;
 	}
 
 	&.right {
-		right: 0;
+		order: 3;
 	}
 
 	&::-webkit-scrollbar {
