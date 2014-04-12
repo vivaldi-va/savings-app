@@ -4,7 +4,8 @@
 	font-size: 1.15em;
 
 	small {
+		display: inline;
 		font-size: 0.85em;
-		color: $muted;
+		color: rgba(255,255,255,0.5);
 	}
 }

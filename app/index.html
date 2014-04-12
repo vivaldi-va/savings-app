@@ -93,6 +93,42 @@
 		</section>
 
 		<script type="text/javascript">
+
+			var addEvent = function(elem, type, eventHandle) {
+				if(elem == null ||typeof(elem) == 'undefined') return;
+				if(elem.addEventListener) {
+					elem.addEventListener(type, eventHandle, false);
+				} else if(elem.attachEvent) {
+					elem.attachEvent("on" + type, eventHandle);
+				} else {
+					elem["on" + type] = eventHandle;
+				}
+			};
+
+			function setWindow() {
+				var container	= document.getElementById('hero');
+				var imgRatio	= 1280/800;
+				var screenRatio = window.innerWidth/window.innerHeight;
+
+				container.style.height = window.innerHeight + 'px';
+
+				if(screenRatio > imgRatio) {
+					container.style['background-size'] = "100% auto";
+				} else {
+					container.style['background-size'] = "auto 100%";
+				}
+
+
+			}
+
+			(function() {
+				setWindow();
+				addEvent(window, "resize", setWindow);
+			})();
+
+		</script>
+
+		<script type="text/javascript">
 			WebFontConfig = {
 				google: { families: [ 'Source+Sans+Pro:400,300,600,400italic:latin' ] }
 			};
