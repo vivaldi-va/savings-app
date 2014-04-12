@@ -47,11 +47,30 @@
 </div>
 <div id="window" class="container" ng-view=""></div>
 <script type="text/javascript">
-	(function() {
+
+	var addEvent = function(elem, type, eventHandle) {
+		if(elem == null ||typeof(elem) == 'undefined') return;
+		if(elem.addEventListener) {
+			elem.addEventListener(type, eventHandle, false);
+		} else if(elem.attachEvent) {
+			elem.attachEvent("on" + type, eventHandle);
+		} else {
+			elem["on" + type] = eventHandle;
+		}
+	};
+
+	function setWindow() {
+		console.log('set window');
 		var container	= document.getElementById('window');
 		var header		= document.getElementById('header');
 		container.style.height = window.innerHeight - header.clientHeight + 'px';
+
+	}
+	(function() {
+		setWindow();
+		addEvent(window, "resize", setWindow);
 	})();
+
 </script>
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 <script>
