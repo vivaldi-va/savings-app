@@ -28,6 +28,6 @@ angular.module('Savings.Services')
 		}
 
 		return {
-			getTimeline: _getTimelineData()
+			getTimeline: _getTimelineData
 		}
 	});

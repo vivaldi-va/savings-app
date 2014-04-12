@@ -20,7 +20,6 @@ angular.module('Savings.Controllers')
 				$timeout(function(){
 					$location.hash('today');
 					$anchorScroll();
-
 				});
 
 			},

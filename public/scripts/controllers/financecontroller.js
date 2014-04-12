@@ -11,8 +11,12 @@ angular.module('Savings.Controllers')
 			"income": [],
 			"expenses": []
 		};
-		$scope.showNewIncomeForm = false;
-		$scope.showNewExpenseForm = false;
+
+		$scope.showNewIncomeForm	= false;
+		$scope.showNewExpenseForm	= false;
+		$scope.creatingNewFinance 	= false;
+		$scope.openFinance 			= null;
+
 		$scope.newFinance = {
 			"income": {
 				"name": null,
@@ -30,19 +34,17 @@ angular.module('Savings.Controllers')
 			}
 		};
 
-		$scope.creatingNewFinance 	= false;
-		$scope.showNewExpenseForm 	= false;
-		$scope.openFinance 			= null;
 
 
-		$financeService.getFinances.then(
-			function(success) {
-				$scope.finances = success;
-			},
-			function(reason) {
-				$scope.errors.push(reason);
-			}
-		);
+		$financeService.getFinances
+			.then(
+				function(success) {
+					$scope.finances = success;
+				},
+				function(reason) {
+					$scope.errors.push(reason);
+				}
+			);
 
 
 
@@ -63,23 +65,26 @@ angular.module('Savings.Controllers')
 
 
 
-			$financeService.createFinance(data).then(
-				function(success) {
-					// create a new finance item based on the info supplied to the function
-					// so as to avoid getting new data to update it
-					$scope.creatingNewFinance = false;
-					data.id = success.data.insertId;
-					if(type===0) $scope.finances.income.push(data);
-					if(type===1) $scope.finances.expenses.push(data);
-					$log.info("DEBUG: inserting finance item", data);
+			$financeService.createFinance(data)
+				.then(
+					function(success) {
+						// create a new finance item based on the info supplied to the function
+						// so as to avoid getting new data to update it
+						$scope.creatingNewFinance	= false;
+						$scope.showNewIncomeForm	= false;
+						$scope.showNewExpenseForm	= false;
+						data.id						= success.data.insertId;
 
+						if(type===0) $scope.finances.income.push(data);
+						if(type===1) $scope.finances.expenses.push(data);
+						$log.info("DEBUG: inserting finance item", data);
 
-				},
-				function(reason) {
-					$scope.creatingNewFinance = false;
-					$scope.errors.push(reason);
-				}
-			);
+					},
+					function(reason) {
+						$scope.creatingNewFinance = false;
+						$scope.errors.push(reason);
+					}
+				);
 		};
 
 		$scope.doModifyFinanceItem = function(item) {
@@ -101,15 +106,16 @@ angular.module('Savings.Controllers')
 
 
 			//$log.info()
-			$financeService.disableFinance(finance.id).then(
-				function(success) {
-					$log.info("DEBUG: disabling finance item successful");
-					finance.disabled = true;
-				},
-				function(reason) {
-					$scope.errors.push(reason);
-				}
-			);
+			$financeService.disableFinance(finance.id)
+				.then(
+					function(success) {
+						$log.info("DEBUG: disabling finance item successful");
+						finance.disabled = true;
+					},
+					function(reason) {
+						$scope.errors.push(reason);
+					}
+				);
 			$log.info("DEBUG: disable finance item", finance);
 
 		};
