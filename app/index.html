@@ -12,7 +12,6 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <!-- build:css styles/vendor.css -->
         <!-- bower:css -->
-
         <!-- endbower -->
         <!-- endbuild -->
         <!-- build:css(.tmp) styles/main.css -->
@@ -30,7 +29,8 @@
 
 		<header id="header" class="full-width black-trans navbar">
 			<div class="wrapper">
-				<h1 class="site-title">savings app</h1>
+				<h1 class="site-title">PennyJar <small class="hidden-mobile">Coming Soon</small></h1>
+				<button type="button" class="navigation-dropdown-link only-mobile"></button>
 				<nav class="navigation">
 					<a class="navigation-link" href="#">about</a>
 					<a class="navigation-link" href="#">get news</a>
@@ -92,6 +92,20 @@
 			</div>
 		</section>
 
+		<script type="text/javascript">
+			WebFontConfig = {
+				google: { families: [ 'Source+Sans+Pro:400,300,600,400italic:latin' ] }
+			};
+			(function() {
+				var wf = document.createElement('script');
+				wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+						'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+				wf.type = 'text/javascript';
+				wf.async = 'true';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(wf, s);
+			})();
+		</script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

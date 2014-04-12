@@ -1,0 +1,14 @@
+.navigation-link {
+	display: block;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+
+@media screen and (min-width: $mobileWidth) {
+	.navigation-link {
+		display: inline;
+		margin: 0 0 0 2em;
+		text-align: left;
+	}
+}

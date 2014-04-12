@@ -1,0 +1,23 @@
+body {
+	background: $offWhite;
+}
+
+.full-width {
+	float: left;
+	width: 100%;
+
+	&.black {
+		background: $black;
+		color: $white;
+	}
+
+	&.subdued {
+		background: $beige;
+	}
+}
+
+.wrapper {
+	max-width: 1140px;
+	margin: 0 auto;
+	padding: 0 1em;
+}

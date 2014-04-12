@@ -1,0 +1,16 @@
+
+
+.hidden-mobile {
+	display: none;
+}
+
+@media screen and (min-width: $mobileWidth) {
+
+	.hidden-mobile {
+		display: block;
+	}
+
+	.only-mobile {
+		display: none;
+	}
+}

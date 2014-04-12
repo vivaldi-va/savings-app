@@ -1,0 +1,14 @@
+.navbar {
+	$height: 57px;
+	position: relative;
+	height: $height;
+	line-height: $height;
+}
+
+
+@media screen and (min-width: $mobileWidth) {
+	.navbar {
+		background: rgba($black, 0.25);
+		color: $white;
+	}
+}
