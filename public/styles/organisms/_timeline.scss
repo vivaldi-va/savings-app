@@ -2,18 +2,31 @@
 	position: relative;
 	height: 100%;
 
-	padding: 120px 300px 0;
-	overflow-y: scroll;
+	//padding: 120px 300px 0;
+	overflow-y: hidden;
 	flex-grow: 1;
 	order: 2;
 
+
 }
 
-/*.timeline {
+.timeline-scroll {
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
-	background: #f7f7f7;
-	font-size: 10px;
-}*/
+	height: 100%;
+	padding: 120px 0 0;
+	overflow-y: scroll;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+	&::-moz-scrollbar {
+		display: none;
+	}
+}
+
+
 
 .timeline-segment {
 	position: relative;

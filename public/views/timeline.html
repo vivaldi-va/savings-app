@@ -18,51 +18,54 @@
 		</div>
 
 	</div>
-	<div class="timeline-segment" ng-repeat="timelineSegment in timeline.items | reverse" ng-class="{today: timelineSegment.attrs.today==true, first: $index===0 && !timelineSegment.attrs.today, future: timelineSegment.attrs.future === true}" id="{{!!timelineSegment.attrs.today ? 'today' : ''}}">
+	<div class="timeline-scroll">
+
+		<div class="timeline-segment" ng-repeat="timelineSegment in timeline.items | reverse" ng-class="{today: timelineSegment.attrs.today==true, first: $index===0 && !timelineSegment.attrs.today, future: timelineSegment.attrs.future === true}" id="{{!!timelineSegment.attrs.today ? 'today' : ''}}">
 
 
-		<div class="item-container income" ng-if="timelineSegment.finances.income.length">
-			<div class="timeline-segment-meta" ng-switch="timelineSegment.attrs.future">
+			<div class="item-container income" ng-if="timelineSegment.finances.income.length">
+				<div class="timeline-segment-meta" ng-switch="timelineSegment.attrs.future">
 
-				<span ng-switch-when="true">expected</span>
-				<span ng-switch-default>received</span>
-				{{ timelineSegment.attrs.date }}
-			</div>
-			<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.income">
-				<div class="item-wrapper blue">
-					<div class="item">
-						<div class="item-amount-wrapper">
-							<div class="item-amount">{{ finance.amount | currency }}</div>
-						</div>
-						<div class="item-name-wrapper">
-							<div class="item-name">{{ finance.name }}</div>
+					<span ng-switch-when="true">expected</span>
+					<span ng-switch-default>received</span>
+					{{ timelineSegment.attrs.date }}
+				</div>
+				<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.income">
+					<div class="item-wrapper blue">
+						<div class="item">
+							<div class="item-amount-wrapper">
+								<div class="item-amount">{{ finance.amount | currency }}</div>
+							</div>
+							<div class="item-name-wrapper">
+								<div class="item-name">{{ finance.name }}</div>
+							</div>
 						</div>
 					</div>
-				</div>
 
+				</div>
 			</div>
-		</div>
-		<div class="item-container expenses" ng-if="timelineSegment.finances.expenses.length">
-			<div class="timeline-segment-meta" ng-switch="timelineSegment.attrs.future">
-				<span ng-switch-when="true">due</span>
-				<span ng-switch-default>paid</span>
-				{{ timelineSegment.attrs.date }}</div>
-			<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.expenses">
-				<div class="item-wrapper red">
-					<div class="item">
-						<div class="item-amount-wrapper">
-							<div class="item-amount">{{ finance.amount | currency }}</div>
-						</div>
-						<div class="item-name-wrapper">
-							<div class="item-name">{{ finance.name }}</div>
+			<div class="item-container expenses" ng-if="timelineSegment.finances.expenses.length">
+				<div class="timeline-segment-meta" ng-switch="timelineSegment.attrs.future">
+					<span ng-switch-when="true">due</span>
+					<span ng-switch-default>paid</span>
+					{{ timelineSegment.attrs.date }}</div>
+				<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.expenses">
+					<div class="item-wrapper red">
+						<div class="item">
+							<div class="item-amount-wrapper">
+								<div class="item-amount">{{ finance.amount | currency }}</div>
+							</div>
+							<div class="item-name-wrapper">
+								<div class="item-name">{{ finance.name }}</div>
+							</div>
 						</div>
 					</div>
+
 				</div>
-
 			</div>
+
+
 		</div>
-
-
 	</div>
 
 
