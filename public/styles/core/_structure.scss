@@ -13,8 +13,9 @@
 }
 
 .column {
-	width: 300px;
-	min-width: 300px;
+	$colWidth: 300px;
+	width: $colWidth;
+	min-width: $colWidth;
 	padding: 0 5px 2em;
 	overflow-y: scroll;
 
