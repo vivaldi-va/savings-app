@@ -18,7 +18,7 @@
 		</div>
 
 	</div>
-	<div class="timeline-scroll">
+	<div id="timeline-scroll" class="timeline-scroll">
 
 		<div class="timeline-segment" ng-repeat="timelineSegment in timeline.items | reverse" ng-class="{today: timelineSegment.attrs.today==true, first: $index===0 && !timelineSegment.attrs.today, future: timelineSegment.attrs.future === true}" id="{{!!timelineSegment.attrs.today ? 'today' : ''}}">
 

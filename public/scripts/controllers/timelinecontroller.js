@@ -18,8 +18,7 @@ angular.module('Savings.Controllers')
 				$scope.timeline = success;
 				$scope.timelineBalance = Math.abs(success.attrs.finance_sums.income - success.attrs.finance_sums.expense);
 				$timeout(function(){
-					$location.hash('today');
-					$anchorScroll();
+					document.getElementById('timeline-scroll').scrollTop = document.getElementById('today').offsetTop-(window.innerHeight/2);
 				});
 
 			},
