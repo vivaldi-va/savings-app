@@ -6,6 +6,26 @@
 
 	background: $black;
 	color: $white;
+
+	-webkit-transform: translate3d(0, -100%, 0);
+	-moz-transform: translate3d(0, -100%, 0);
+	-ms-transform: translate3d(0, -100%, 0);
+	-o-transform: translate3d(0, -100%, 0);
+	transform: translate3d(0, -100%, 0);
+
+	-webkit-transition: 0.1s all cubic-bezier(0.45,1.37,0.73,1.01);
+	-moz-transition: 0.1s all cubic-bezier(0.45,1.37,0.73,1.01);
+	-ms-transition: 0.1s all cubic-bezier(0.45,1.37,0.73,1.01);
+	-o-transition: 0.1s all cubic-bezier(0.45,1.37,0.73,1.01);
+	transition: 0.1s all cubic-bezier(0.45,1.37,0.73,1.01);
+	
+	&.open {
+		-webkit-transform: translate3d(0, 0, 0);
+		-moz-transform: translate3d(0, 0, 0);
+		-ms-transform: translate3d(0, 0, 0);
+		-o-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
 }
 
 
