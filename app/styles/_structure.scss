@@ -23,7 +23,7 @@ body {
 	}
 
 	&.padded {
-		padding: 128px 0;
+		padding: 64px 0;
 	}
 }
 
@@ -31,4 +31,12 @@ body {
 	max-width: 1140px;
 	margin: 0 auto;
 	padding: 0 1em;
+}
+
+@media screen and (min-width: $mobileWidth) {
+	.full-width {
+		&.padded {
+			padding: 128px 0;
+		}
+	}
 }
