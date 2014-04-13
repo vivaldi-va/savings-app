@@ -48,9 +48,10 @@ if (cluster.isMaster) {
 		if(process.env.NODE_ENV === 'production') {
 			app.use(express.static(__dirname + 'dist/public')); 	// set the static files location /public/img will be /img for users
 		} else {
-			app.use(express.static(__dirname + '/public')); 	// set the static files location /public/img will be /img for users
+			app.use('/', express.static(__dirname + '/public/landing')); 	// set the static files location /public/img will be /img for users
+			app.use('/app', express.static(__dirname + '/public')); 	// set the static files location /public/img will be /img for users
 		}
-		log.info('DEBUG:', "static path", __dirname + '/public');
+		//log.info('DEBUG:', "static path", __dirname + '/public');
 		app.use(express.logger('dev')); 						// log every request to the console
 		app.use(express.json());
 		app.use(express.urlencoded());							// pull information from html in POST

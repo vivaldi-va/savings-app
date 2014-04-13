@@ -350,7 +350,7 @@
 					};
 					return initialize();
 				},
-				templateUrl: '/views/ngquickdatetemplate.html'
+				templateUrl: 'views/ngquickdatetemplate.html'
 				//template: "<div class='quickdate'><input ng-focus='toggleCalendar()' class='input' value=\"{{mainButtonStr}}\"><div class='quickdate-popup' ng-class='{open: calendarShown}'><a href='' tabindex='-1' class='quickdate-close' ng-click='toggleCalendar()'><div ng-bind-html='closeButtonHtml'></div></a><div class='quickdate-calendar-header'><a href='' class='quickdate-prev-month quickdate-action-link' tabindex='-1' ng-click='prevMonth()'><div ng-bind-html='prevLinkHtml'></div></a><span class='quickdate-month'>{{calendarDate | date:'MMMM yyyy'}}</span><a href='' class='quickdate-next-month quickdate-action-link' ng-click='nextMonth()' tabindex='-1'><div ng-bind-html='nextLinkHtml'></div></a></div><table class='quickdate-calendar'><thead><tr><th ng-repeat='day in dayAbbreviations'>{{day}}</th></tr></thead><tbody><tr ng-repeat='week in weeks'><td ng-mousedown='selectDate(day.date, true, true)' ng-class='{\"other-month\": day.other, \"disabled-date\": day.disabled, \"selected\": day.selected, \"is-today\": day.today}' ng-repeat='day in week'>{{day.date | date:'d'}}</td></tr></tbody></table></div></div>"
 			};
 
