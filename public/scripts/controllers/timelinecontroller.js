@@ -10,23 +10,24 @@ angular.module('Savings.Controllers')
 		$scope.timeline			= null;
 		$scope.timelineBalance = false;
 
-		$timelineService.getTimeline.then(
-			function(success) {
-				$rootScope.successes.push("timeline synced");
-				$log.info("DEBUG: Timeline data received");
+		$timelineService.getTimeline
+			.then(
+				function(success) {
+					$rootScope.successes.push("timeline synced");
+					$log.info("DEBUG: Timeline data received");
 
-				$scope.timeline = success;
-				$scope.timelineBalance = Math.abs(success.attrs.finance_sums.income - success.attrs.finance_sums.expense);
-				$timeout(function(){
-					document.getElementById('timeline-scroll').scrollTop = document.getElementById('today').offsetTop-(window.innerHeight/2);
-				});
+					$scope.timeline = success;
+					$scope.timelineBalance = Math.abs(success.attrs.finance_sums.income - success.attrs.finance_sums.expense);
+					$timeout(function(){
+						document.getElementById('timeline-scroll').scrollTop = document.getElementById('today').offsetTop-(window.innerHeight/2);
+					});
 
-			},
-			function(reason) {
-				$log.info("DEBUG: error getting timeline data", reason);
-				$rootScope.errors.push(reason);
-			}
-		);
+				},
+				function(reason) {
+					$log.info("DEBUG: error getting timeline data", reason);
+					$rootScope.errors.push(reason);
+				}
+			);
 
 	}]);
 
