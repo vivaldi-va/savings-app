@@ -1,11 +1,23 @@
+
 .site-title {
-	float: left;
+	display: block;
 	margin: 0;
 	font-size: 1.15em;
+	text-align: center;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.5);
+}
 
-	small {
-		display: inline;
-		font-size: 0.85em;
-		color: rgba(255,255,255,0.5);
+
+@media screen and (min-width: $mobileWidth) {
+
+	.site-title {
+		float: left;
+		text-shadow: none;
+
+		small {
+			display: inline;
+			font-size: 0.85em;
+			color: rgba($white, 0.5);
+		}
 	}
 }
