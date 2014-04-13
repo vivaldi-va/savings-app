@@ -3,12 +3,32 @@
 	font-size: 2.15em;
 	font-weight: 300;
 
+
 	&:first-letter {
 		text-transform: uppercase;
+	}
+
+	&.no-margin {
+		margin: 0;
+	}
+
+	&.centered {
+		display: block;
+		margin: 0 auto;
+		text-align: center;
+
 	}
 }
 
 .description-text {
 	max-width: 33em;
 	font-size: 1.15em;
+
+
+	&.centered {
+		display: block;
+		margin: 0 auto;
+		text-align: center;
+
+	}
 }
