@@ -6,6 +6,7 @@
 @import "variables";
 @import "typography";
 @import "structure";
+@import "grid";
 @import "helpers";
 
 @import "molecules/site-title";
@@ -13,8 +14,10 @@
 @import "molecules/navigation-link";
 @import "molecules/navigation-dropdown-button";
 @import "molecules/hero-title";
+@import "molecules/about-image";
 
 @import "organs/navbar-nav";
+@import "organs/about-description";
 
 @import "organisms/nav-bar";
 @import "organisms/hero";

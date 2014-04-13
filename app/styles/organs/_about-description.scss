@@ -1,0 +1,14 @@
+.description-title {
+	margin: 64px 0 0;
+	font-size: 2.15em;
+	font-weight: 300;
+
+	&:first-letter {
+		text-transform: uppercase;
+	}
+}
+
+.description-text {
+	max-width: 33em;
+	font-size: 1.15em;
+}

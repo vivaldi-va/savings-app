@@ -1,5 +1,11 @@
 body {
 	background: $offWhite;
+
+	* {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
 }
 
 .full-width {
@@ -13,6 +19,11 @@ body {
 
 	&.subdued {
 		background: $beige;
+		border-top: 1px solid rgba(0,0,0,0.05);
+	}
+
+	&.padded {
+		padding: 128px 0;
 	}
 }
 

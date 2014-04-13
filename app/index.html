@@ -44,11 +44,13 @@
 			</div>
 		</section>
 		<section id="about">
-			<article class="full-width">
+			<article class="full-width padded">
 				<div class="wrapper">
 					<div class="row">
-						<div class="col-5"></div>
-						<div class="col-7">
+						<div class="col-4">
+							<img class="about-image" src="/images/wallet.png" alt="wallet"/>
+						</div>
+						<div class="col-8">
 							<h2 class="description-title">know where your money is going.</h2>
 
 							<p class="description-text">This simple tool will allow you to plan and map your personal
@@ -58,7 +60,7 @@
 					</div>
 				</div>
 			</article>
-			<article class="full-width">
+			<article class="full-width subdued padded">
 				<div class="wrapper">
 					<div class="row">
 						<div class="col-6 offset-2">
@@ -70,6 +72,9 @@
 								expenses when they happen and in no time be able to see precisely where to
 								start cutting down or when to indulge yourself.
 							</p>
+						</div>
+						<div class="col-4">
+							<img class="about-image" src="/images/wallet.png" alt="wallet"/>
 						</div>
 					</div>
 				</div>
@@ -107,7 +112,7 @@
 
 			function setWindow() {
 				var container	= document.getElementById('hero');
-				var imgRatio	= 1280/800;
+				var imgRatio	= 1920/1280;
 				var screenRatio = window.innerWidth/window.innerHeight;
 
 				container.style.height = window.innerHeight + 'px';
