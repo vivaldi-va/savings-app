@@ -3,7 +3,7 @@
  */
 
 angular.module('Savings.Controllers')
-	.controller('FinanceCtrl', ['$scope', '$financeService', '$log', '$timeout', function($scope, $financeService, $log, $timeout) {
+	.controller('FinanceCtrl', ['$scope', '$financeService', '$log', '$timeout', '$locale', function($scope, $financeService, $log, $timeout, $locale) {
 
 
 		$scope.errors = [];
@@ -34,6 +34,8 @@ angular.module('Savings.Controllers')
 			}
 		};
 
+		$scope.currencySymbol = $locale.NUMBER_FORMATS.CURRENCY_SYM;
+		$log.info('Currency Symbol', $locale.NUMBER_FORMATS.CURRENCY_SYM);
 
 
 		$financeService.getFinances
