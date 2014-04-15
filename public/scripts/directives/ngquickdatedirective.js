@@ -121,11 +121,8 @@
 							constraints: [
 								{
 									to: 'scrollParent',
+									attachment: 'together',
 									pin: true
-								},
-								{
-									to: 'window',
-									attachment: 'together'
 								}
 							]
 						}
