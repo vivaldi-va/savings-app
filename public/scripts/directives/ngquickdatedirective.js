@@ -114,15 +114,14 @@
 					var datePickerDrop = new Drop({
 						target: angular.element(element[0].querySelector(".date-picker-input"))[0],
 						content: angular.element(element[0].querySelector(".quickdate-popup"))[0],
-						position: 'bottom center',
+						position: 'left middle',
 						openOn: 'click',
 						classes: 'drop-theme-arrows-bounce',
 						tetherOptions: {
 							constraints: [
 								{
 									to: 'scrollParent',
-									attachment: 'together',
-									pin: true
+									attachment: 'together'
 								}
 							]
 						}
