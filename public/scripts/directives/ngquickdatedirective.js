@@ -122,6 +122,10 @@
 								{
 									to: 'scrollParent',
 									attachment: 'together'
+								},
+								{
+									to: 'window',
+									pin: true
 								}
 							]
 						}
