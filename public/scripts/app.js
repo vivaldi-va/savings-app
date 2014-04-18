@@ -23,30 +23,34 @@ angular.module('Savings', [
 		$log.debug('DEBUG:', "check route",$location.path() !== '/login' && $location.path() !== '/register');
 
 		$log.debug('DEBUG:', "check for session");
+		function _trueLogin() {
+			$log.debug('DEBUG:', "Yey there's a session");
+			$rootScope.logged_in = true;
+			$timeout(function() {
+				$log.info('Locale:', $locale.id);
+				$location.path('/timeline');
+			});
+			window.localStorage.locale = countryCode;
+		}
 		$userService.session().then(
 			function(success) {
 
-				$http.get('http://ipinfo.io/json')
-					.success(function(data) {
-						var countryCode = data.country.toLowerCase();
-						if(window.localStorage.locale) {
-							window.localStorage.locale = countryCode;
-						} else {
+				if(!window.localStorage.locale) {
+					$http.get('http://ipinfo.io/json')
+						.success(function(data) {
+							var countryCode = data.country.toLowerCase();
 							window.localStorage.setItem('locale', countryCode);
-						}
 
-						$log.info('DEBUG:', "country code", countryCode);
-						$log.info('DEBUG:', "country script", '/bower_components/angular-i18n/angular-locale_' + countryCode + '.js');
-						$log.debug('DEBUG:', "Loaded locale script");
-						$log.debug('DEBUG:', "Yey there's a session");
-						$rootScope.logged_in = true;
-						$timeout(function() {
-							$log.info('Locale:', $locale.id);
-							$location.path('/timeline');
+							$log.info('DEBUG:', "country code", countryCode);
+							$log.info('DEBUG:', "country script", '/bower_components/angular-i18n/angular-locale_' + countryCode + '.js');
+							$log.debug('DEBUG:', "Loaded locale script");
+							_trueLogin();
 						});
-						/*$script('/bower_components/angular-i18n/angular-locale_' + countryCode + '.js', function() {
-						});*/
+				} else {
+					$timeout(function() {
+						_trueLogin();
 					});
+				}
 
 
 			},
