@@ -31,7 +31,7 @@
 					{{ timelineSegment.attrs.date }}
 				</div>
 				<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.income">
-					<div timeline-item ng-model="finance"></div>
+					<div timeline-item ng-model="finance" date="timelineSegment.attrs.date"></div>
 
 				</div>
 			</div>
@@ -41,7 +41,7 @@
 					<span ng-switch-default>paid</span>
 					{{ timelineSegment.attrs.date }}</div>
 				<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.expenses">
-					<div timeline-item ng-model="finance"></div>
+					<div timeline-item ng-model="finance" date="{{timelineSegment.attrs.date}}"></div>
 				</div>
 			</div>
 

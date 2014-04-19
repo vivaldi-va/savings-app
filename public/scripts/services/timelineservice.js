@@ -27,7 +27,30 @@ angular.module('Savings.Services')
 			return dfd.promise;
 		}
 
+		function _updateTimelineItem(finance, date) {
+
+			var data = {
+				id: finance.id,
+				name: finance.name,
+				amount: finance.amount,
+				type: finance.type,
+				interval: finance.interval,
+				duedate: finance.duedate,
+				description: finance.description,
+				disabled: finance.disabled,
+				interval_dates: finance.interval_dates,
+				date: date
+			};
+
+			return $http({
+				url: '/api/timeline/update',
+				method: 'post',
+				data: data
+			});
+		}
+
 		return {
-			getTimeline: _getTimelineData()
+			getTimeline: _getTimelineData(),
+			updateItem: _updateTimelineItem
 		}
 	});

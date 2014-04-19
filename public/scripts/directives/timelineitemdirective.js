@@ -3,14 +3,12 @@
  */
 
 angular.module('Savings.Directives')
-	.directive('timelineItem', function($timeout, $log) {
+	.directive('timelineItem', function($timeout, $log, $timelineService) {
 		return {
 			restrict: "EA",
 			require: "?ngModel",
 			scope: {
-				dateFilter: '=?',
-				onChange: "&",
-				required: '@'
+				date: '@'
 			},
 			replace: true,
 			templateUrl: 'views/timelineitemtemplate.html',
@@ -19,11 +17,24 @@ angular.module('Savings.Directives')
 				if (typeof attrs.initValue === 'string') {
 					ngModelCtrl.$setViewValue(attrs.initValue);
 				}
+
 				$timeout(function(){
 					$log.info('Timeline item directive', "model value", ngModelCtrl.$modelValue);
 					$log.info('Timeline item directive', "scope value", scope);
+					$log.info('Timeline item directive', "scope value", attrs.date);
 					scope.item = ngModelCtrl.$modelValue;
 				});
+				scope.updateItem = function() {
+					$timelineService.updateItem(scope.item, attrs.date)
+						.then(
+						function(response) {
+							$log.info('HTTP', "Update timeline item", response.data, response.status);
+						},
+						function(err) {
+							$log.warn('HTTP', "Update timeline item failed", err.data, err.status);
+						});
+				};
+
 
 				var datePickerDrop = new Drop({
 					target: angular.element(element)[0],
@@ -42,6 +53,8 @@ angular.module('Savings.Directives')
 						]
 					}
 				});
+
+
 			}
 		}
 	});
