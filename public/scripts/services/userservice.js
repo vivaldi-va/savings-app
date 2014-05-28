@@ -13,10 +13,6 @@ angular.module('Savings.Services')
 				method: 'get'
 			})
 				.success(function(data) {
-					if(!data.success) {
-						dfd.reject(data.error);
-					}
-
 					$rootScope.user = data.data;
 
 					dfd.resolve();
@@ -42,9 +38,6 @@ angular.module('Savings.Services')
 				data: data
 			})
 				.success(function(data) {
-					if(!data.success) {
-						dfd.reject(data.error);
-					}
 					$rootScope.logged_in = true;
 					$rootScope.user = data.data;
 					dfd.resolve(data.data);
