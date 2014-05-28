@@ -22,20 +22,28 @@ if (cluster.isMaster) {
 // Code to run if we're in a worker process
 } else {
 	log.info('Cluster', "Setting up worker");
+	var fs			= require('fs');
+	var path		= require('path');
 	var express 	= require('express');
-	var mysql 		= require('mysql');
+	var mongoose	= require('mongoose');
 	var q 			= require('q');
-	var dbConf		= require('./lib/config/conf.json');
+	var config		= require('./lib/config/config');
 	var app 		= express();
-	var pool		= mysql.createPool(dbConf.db);
+	var port		= process.env.PORT || 3000;
 
+	var db			= mongoose.connect(config.mongo.uri);
+	var modelsPath	= path.join(__dirname, 'lib/models');
+
+	fs.readdirSync(modelsPath).forEach(function (file) {
+		if (/(.*)\.(js$|coffee$)/.test(file)) {
+			require(modelsPath + '/' + file);
+		}
+	});
 
 	require('./lib/config/express')(app);
 	require('./lib/routes')(app);
-	require('./lib/config/dbConnection')(pool);
 
 
-	var port = process.env.PORT || 3000;
 	app.listen(port, function() {
 		log.info('SERVER', "Listening on port", port);
 	});
