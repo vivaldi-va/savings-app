@@ -22,14 +22,14 @@ angular.module('Savings.Controllers')
 				"name": null,
 				"amount": null,
 				"date": null,
-				"interval": 'day',
+				"interval": 0,
 				"description": ''
 			},
 			"expense": {
 				"name": null,
 				"amount": null,
 				"date": null,
-				"interval": 'day',
+				"interval": 0,
 				"description": ''
 			}
 		};
@@ -75,7 +75,7 @@ angular.module('Savings.Controllers')
 						$scope.creatingNewFinance	= false;
 						$scope.showNewIncomeForm	= false;
 						$scope.showNewExpenseForm	= false;
-						data.id						= success.data.insertId;
+						data.id						= success._id;
 
 						if(type===0) $scope.finances.income.push(data);
 						if(type===1) $scope.finances.expenses.push(data);

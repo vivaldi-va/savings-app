@@ -15,8 +15,7 @@ angular.module('Savings.Services')
 			})
 				.success(function(status) {
 					$log.info("DEBUG: create finance ", status);
-					if(status.error) dfd.reject(status);
-					else dfd.resolve(status);
+					dfd.resolve(status);
 				})
 				.error(function(reason) {
 					dfd.reject(reason);
@@ -33,8 +32,7 @@ angular.module('Savings.Services')
 			})
 				.success(function(data) {
 					$log.warn('DEBUG: finances data ', data);
-					if(data.error) dfd.reject(data.error);
-					if(data.success) dfd.resolve(data.data);
+					dfd.resolve(data);
 				})
 				.error(function(reason) {
 					$log.warn('ERROR: ' + reason);
@@ -54,8 +52,6 @@ angular.module('Savings.Services')
 			})
 				.success(function(status) {
 					$log.info('DEBUG: finance item modified');
-					if(!status.success) dfd.reject(status.error);
-					if(status.success) dfd.resolve(status.message);
 				})
 				.error(
 					function(reason) {
@@ -75,8 +71,6 @@ angular.module('Savings.Services')
 			})
 				.success(function(status) {
 					$log.info('DEBUG: finance item disabled');
-					if(!status.success) dfd.reject(status.error);
-					if(status.success) dfd.resolve(status.message);
 				})
 				.error(
 					function(reason) {

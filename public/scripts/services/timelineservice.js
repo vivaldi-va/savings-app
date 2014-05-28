@@ -13,11 +13,13 @@ angular.module('Savings.Services')
 				url: '/api/timeline',
 				method: 'get'
 			})
-				.success(function(data) {
+				.success(function(data, status) {
 					$log.info('DEBUG: getTimeline HTTP request received');
-
-					if(!data.success) dfd.reject(data.error);
-					if(!!data.success) dfd.resolve(data.data);
+					if(status === 204) {
+						dfd.reject('ERR_NO_TIMELINE');
+					} else {
+						dfd.resolve(data);
+					}
 				})
 				.error(function(reason) {
 					$log.info('DEBUG: getTimeline HTTP request failed', reason);
