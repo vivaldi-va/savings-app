@@ -116,6 +116,8 @@
     "morgan": "^1.1.1",
     "body-parser": "^1.2.2",
     "express-session": "^1.2.1",
-    "mongoose": "^3.8.11"
+    "mongoose": "^3.8.11",
+    "express-domain-middleware": "^0.1.0",
+    "okay": "^0.3.0"
   }
 }
