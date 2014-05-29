@@ -28,12 +28,13 @@ if (cluster.isMaster) {
 	var mongoose	= require('mongoose');
 	var q 			= require('q');
 	var config		= require('./lib/config/config');
+	var dbConf		= require('./lib/config/conf.json');
 	var app 		= express();
-	var port		= process.env.PORT || 3000;
 
-	var db			= mongoose.connect(config.mongo.uri);
+	var db			= mongoose.connect("mongodb://" + dbConf.db.user + ":" + dbConf.db.password + "@" + dbConf.db.host);
 	var modelsPath	= path.join(__dirname, 'lib/models');
 
+	// Load and require all the mongoose schemas
 	fs.readdirSync(modelsPath).forEach(function (file) {
 		if (/(.*)\.(js$|coffee$)/.test(file)) {
 			require(modelsPath + '/' + file);
@@ -44,7 +45,7 @@ if (cluster.isMaster) {
 	require('./lib/routes')(app);
 
 
-	app.listen(port, function() {
+	app.listen(config.port, function() {
 		log.info('SERVER', "Listening on port", port);
 	});
 
@@ -58,5 +59,4 @@ cluster.on('exit', function (worker) {
 	// we're not sentimental
 	log.warn('Cluster', 'Worker ' + worker.id + ' has died', "Goodnight, sweet prince.");
 	cluster.fork();
-
 });
