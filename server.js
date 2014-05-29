@@ -46,7 +46,7 @@ if (cluster.isMaster) {
 
 
 	app.listen(config.port, function() {
-		log.info('SERVER', "Listening on port", port);
+		log.info('SERVER', "Listening on port", config.port);
 	});
 
 	exports = module.exports = app;
