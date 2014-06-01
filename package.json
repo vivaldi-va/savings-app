@@ -108,7 +108,7 @@
     "karma-ng-html2js-preprocessor": "~0.1.0",
     "grunt-express": "~1.2.1",
     "grunt-open": "~0.2.3",
-    "grunt-contrib-sass": "~0.7.2",
+    "grunt-contrib-sass": "^0.7.3",
     "errorhandler": "^1.0.1",
     "method-override": "^1.0.2",
     "compression": "^1.0.2",
@@ -118,6 +118,7 @@
     "express-session": "^1.2.1",
     "mongoose": "^3.8.11",
     "express-domain-middleware": "^0.1.0",
-    "okay": "^0.3.0"
+    "okay": "^0.3.0",
+    "grunt-manifest": "^0.4.0"
   }
 }
