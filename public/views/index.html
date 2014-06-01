@@ -14,17 +14,16 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<!-- build:css styles/vendor.css -->
-	<!-- bower:css -->
-	<link rel="stylesheet" href="bower_components/normalize-css/normalize.css" />
-	<link rel="stylesheet" href="bower_components/drop/css/drop-theme-arrows-bounce.css" />
-	<!-- endbower -->
-	<!-- endbuild -->
-	<!-- build:css({.tmp,app}) styles/main.css -->
-	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css' async>
 
-	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
-	<link rel="stylesheet" href="styles/app.css">
+
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
+
+	<!-- build:css styles/app.css -->
+
+	<link rel="stylesheet" href="../bower_components/normalize-css/normalize.css" />
+	<link rel="stylesheet" href="../styles/app.css">
+	<link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css">
+	<link rel="stylesheet" href="../bower_components/drop/css/drop-theme-arrows-bounce.css" />
 	<!-- endbuild -->
 
 </head>
@@ -93,17 +92,17 @@
 </script>
 
 <!--[if lt IE 9]>
-<script src="bower_components/es5-shim/es5-shim.js"></script>
-<script src="bower_components/json3/lib/json3.min.js"></script>
+<script src="../bower_components/es5-shim/es5-shim.js"></script>
+<script src="../bower_components/json3/lib/json3.min.js"></script>
 <![endif]-->
 
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="bower_components/ftscroller/lib/ftscroller.js"></script>
-<script src="bower_components/scriptjs/dist/script.js"></script>
-<script src="bower_components/drop/drop.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-route/angular-route.js"></script>
+<script src="../bower_components/ftscroller/lib/ftscroller.js"></script>
+<script src="../bower_components/scriptjs/dist/script.js"></script>
+<script src="../bower_components/drop/drop.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -111,29 +110,29 @@
 
 	var locale = localStorage.getItem('locale');
 	if (locale) {
-		document.write('<script src="bower_components/angular-i18n/angular-locale_'+locale+'.js"><\/script>');
+		document.write('<script src="../bower_components/angular-i18n/angular-locale_'+locale+'.js"><\/script>');
 	}
 </script>
 
-<!-- build:js({.tmp,app}) scripts/app.js -->
-<script src="scripts/app.js"></script>
-<script src="scripts/config/route.js"></script>
+<!-- build:js scripts/app.js -->
+<script src="../scripts/app.js"></script>
+<script src="../scripts/config/route.js"></script>
 
 
-<script src="scripts/services/financeservice.js"></script>
-<script src="scripts/services/timelineservice.js"></script>
-<script src="scripts/services/userservice.js"></script>
+<script src="../scripts/services/financeservice.js"></script>
+<script src="../scripts/services/timelineservice.js"></script>
+<script src="../scripts/services/userservice.js"></script>
 
-<script src="scripts/directives/ngquickdatedirective.js"></script>
+<script src="../scripts/directives/ngquickdatedirective.js"></script>
 
-<script src="scripts/controllers/timelinecontroller.js"></script>
-<script src="scripts/controllers/financecontroller.js"></script>
-<script src="scripts/controllers/registercontroller.js"></script>
-<script src="scripts/controllers/logincontroller.js"></script>
-<script src="scripts/controllers/usermenucontroller.js"></script>
+<script src="../scripts/controllers/timelinecontroller.js"></script>
+<script src="../scripts/controllers/financecontroller.js"></script>
+<script src="../scripts/controllers/registercontroller.js"></script>
+<script src="../scripts/controllers/logincontroller.js"></script>
+<script src="../scripts/controllers/usermenucontroller.js"></script>
 
-<script src="scripts/filters/reversefilter.js"></script>
-<script src="scripts/filters/deletefinancefilter.js"></script>
+<script src="../scripts/filters/reversefilter.js"></script>
+<script src="../scripts/filters/deletefinancefilter.js"></script>
 <!-- endbuild -->
 </body>
 </html>
