@@ -27,11 +27,38 @@ if (cluster.isMaster) {
 	var express 	= require('express');
 	var mongoose	= require('mongoose');
 	var q 			= require('q');
+	var ok			= require('okay');
 	var config		= require('./lib/config/config');
 	var dbConf		= require('./lib/config/conf.json');
 	var app 		= express();
 
-	var db			= mongoose.connect("mongodb://" + dbConf.db.user + ":" + dbConf.db.password + "@" + dbConf.db.host);
+	//var db			= mongoose.connect("mongodb://" + dbConf.db.user + ":" + dbConf.db.password + "@" + dbConf.db.host);
+	var db = mongoose.connect("mongodb://localhost/savings", ok(function() {
+		log.info('MONGODB', "Connected to database");
+	}));
+
+	mongoose.connection.on('connected', function () {
+		log.info('MONGODB', 'Mongoose connected');
+	});
+
+// If the connection throws an error
+	mongoose.connection.on('error', function (err) {
+		log.error('MONGODB', 'Mongoose default connection error: ' + err);
+	});
+
+// When the connection is disconnected
+	mongoose.connection.on('disconnected', function () {
+		log.info('MONGODB', 'Mongoose default connection disconnected');
+	});
+
+// If the Node process ends, close the Mongoose connection
+	process.on('SIGINT', function() {
+		mongoose.connection.close(function () {
+			log.info('MONGODB', 'Mongoose default connection disconnected through app termination');
+			process.exit(0);
+		});
+	});
+
 	var modelsPath	= path.join(__dirname, 'lib/models');
 
 	// Load and require all the mongoose schemas
