@@ -185,8 +185,7 @@ module.exports = function (grunt) {
 		// concat, minify and revision files. Creates configurations in memory so
 		// additional tasks can operate on them
 		useminPrepare: {
-			html: ['<%= yeoman.app %>/views/index.html',
-				'<%= yeoman.app %>/views/index.jade'],
+			html: ['<%= yeoman.app %>/index.html'],
 			options: {
 				dest: '<%= yeoman.dist %>/public'
 			}
@@ -194,8 +193,7 @@ module.exports = function (grunt) {
 
 		// Performs rewrites based on rev and the useminPrepare configuration
 		usemin: {
-			html: ['<%= yeoman.dist %>/public/views/{,*/}*.html',
-				'<%= yeoman.dist %>/public/views/{,*/}*.jade'],
+			html: ['<%= yeoman.dist %>/public/index.html', '<%= yeoman.dist %>/public/views/{,*/}*.html'],
 			css: ['<%= yeoman.dist %>/public/styles/{,*/}*.css'],
 			options: {
 				assetsDirs: ['<%= yeoman.dist %>/public']
@@ -243,9 +241,9 @@ module.exports = function (grunt) {
 				files: [
 					{
 						expand: true,
-						cwd: '<%= yeoman.app %>/views',
-						src: ['*.html', 'partials/**/*.html'],
-						dest: '<%= yeoman.dist %>/public/views'
+						cwd: '<%= yeoman.app %>',
+						src: ['index.html', 'views/*.html', 'partials/**/*.html'],
+						dest: '<%= yeoman.dist %>/public'
 					}
 				]
 			}
