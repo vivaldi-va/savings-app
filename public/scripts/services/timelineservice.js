@@ -7,7 +7,7 @@ angular.module('Savings.Services')
 		function _getTimelineData(past) {
 			$log.info('DEBUG: getTimeline');
 			var dfd = $q.defer();
-			var past = past || null;
+			past = past || null;
 
 			$http({
 				url: '/api/timeline',
@@ -32,21 +32,13 @@ angular.module('Savings.Services')
 		function _updateTimelineItem(finance, date) {
 
 			var data = {
-				id: finance.id,
-				name: finance.name,
 				amount: finance.amount,
-				type: finance.type,
-				interval: finance.interval,
-				duedate: finance.duedate,
-				description: finance.description,
-				disabled: finance.disabled,
-				interval_dates: finance.interval_dates,
 				date: date
 			};
 
 			return $http({
-				url: '/api/timeline/update',
-				method: 'post',
+				url: '/api/timeline/modify',
+				method: 'PUT',
 				data: data
 			});
 		}

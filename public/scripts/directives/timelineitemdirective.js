@@ -19,9 +19,6 @@ angular.module('Savings.Directives')
 				}
 
 				$timeout(function(){
-					$log.info('Timeline item directive', "model value", ngModelCtrl.$modelValue);
-					$log.info('Timeline item directive', "scope value", scope);
-					$log.info('Timeline item directive', "scope value", attrs.date);
 					scope.item = ngModelCtrl.$modelValue;
 				});
 				scope.updateItem = function() {
