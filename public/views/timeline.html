@@ -28,7 +28,7 @@
 
 					<span ng-switch-when="true">expected</span>
 					<span ng-switch-default>received</span>
-					{{ timelineSegment.attrs.date }}
+					{{ timelineSegment.attrs.date | date}}
 				</div>
 				<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.income">
 					<div class="item-wrapper blue">
@@ -48,7 +48,8 @@
 				<div class="timeline-segment-meta" ng-switch="timelineSegment.attrs.future">
 					<span ng-switch-when="true">due</span>
 					<span ng-switch-default>paid</span>
-					{{ timelineSegment.attrs.date }}</div>
+					{{ timelineSegment.attrs.date | date}}
+				</div>
 				<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.expenses">
 					<div class="item-wrapper red">
 						<div class="item">
