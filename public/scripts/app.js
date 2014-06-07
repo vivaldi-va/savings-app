@@ -31,7 +31,6 @@ angular.module('Savings', [
 				$log.info('Locale:', $locale.id);
 				$location.path('/timeline');
 			});
-			window.localStorage.locale = countryCode;
 		}
 		$userService.session().then(
 			function(success) {
