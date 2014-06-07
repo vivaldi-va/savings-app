@@ -46,7 +46,7 @@ angular.module('Savings.Services')
 			var dfd = $q.defer();
 
 			$http({
-				url: '/api/finances/' + item.id,
+				url: '/api/finances/' + item._id,
 				method: 'put',
 				data: item
 			})

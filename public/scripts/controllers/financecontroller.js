@@ -108,7 +108,7 @@ angular.module('Savings.Controllers')
 
 
 			//$log.info()
-			$financeService.disableFinance(finance.id)
+			$financeService.disableFinance(finance._id)
 				.then(
 					function(success) {
 						$log.info("DEBUG: disabling finance item successful");
