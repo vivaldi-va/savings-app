@@ -29,7 +29,7 @@ if (cluster.isMaster) {
 	var q 			= require('q');
 	var ok			= require('okay');
 	var config		= require('./lib/config/config');
-	var dbConf		= require('./lib/config/conf.json');
+	//var dbConf		= require('./lib/config/conf.json');
 	var app 		= express();
 
 	//var db			= mongoose.connect("mongodb://" + dbConf.db.user + ":" + dbConf.db.password + "@" + dbConf.db.host);
