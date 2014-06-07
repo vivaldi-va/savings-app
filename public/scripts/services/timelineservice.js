@@ -32,6 +32,7 @@ angular.module('Savings.Services')
 		function _updateTimelineItem(finance, date) {
 
 			var data = {
+				id: finance._id,
 				amount: finance.amount,
 				date: date
 			};
