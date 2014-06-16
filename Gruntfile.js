@@ -509,7 +509,7 @@ module.exports = function (grunt) {
 	//	'manifest'
 	]);
 
-	grunt.registerTask('sass', ['sass']);
+	grunt.registerTask('css', ['sass:dist']);
 
 	grunt.registerTask('heroku', function () {
 		grunt.log.warn('The `heroku` task has been deprecated. Use `grunt build` to build for deployment.');
