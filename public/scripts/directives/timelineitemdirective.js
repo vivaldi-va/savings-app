@@ -20,17 +20,17 @@ angular.module('Savings.Directives')
 
 				$timeout(function(){
 					scope.item = ngModelCtrl.$modelValue;
+					scope.updateItem = function() {
+						$timelineService.updateItem(scope.item, attrs.date)
+							.then(
+							function(response) {
+								$log.info('HTTP', "Update timeline item", response.data, response.status);
+							},
+							function(err) {
+								$log.warn('HTTP', "Update timeline item failed", err.data, err.status);
+							});
+					};
 				});
-				scope.updateItem = function() {
-					$timelineService.updateItem(scope.item, attrs.date)
-						.then(
-						function(response) {
-							$log.info('HTTP', "Update timeline item", response.data, response.status);
-						},
-						function(err) {
-							$log.warn('HTTP', "Update timeline item failed", err.data, err.status);
-						});
-				};
 
 
 				var datePickerDrop = new Drop({

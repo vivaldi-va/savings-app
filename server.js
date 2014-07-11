@@ -41,17 +41,17 @@ if (cluster.isMaster) {
 		log.info('MONGODB', 'Mongoose connected');
 	});
 
-// If the connection throws an error
+	// If the connection throws an error
 	mongoose.connection.on('error', function (err) {
 		log.error('MONGODB', 'Mongoose default connection error: ' + err);
 	});
 
-// When the connection is disconnected
+	// When the connection is disconnected
 	mongoose.connection.on('disconnected', function () {
 		log.info('MONGODB', 'Mongoose default connection disconnected');
 	});
 
-// If the Node process ends, close the Mongoose connection
+	// If the Node process ends, close the Mongoose connection
 	process.on('SIGINT', function() {
 		mongoose.connection.close(function () {
 			log.info('MONGODB', 'Mongoose default connection disconnected through app termination');
