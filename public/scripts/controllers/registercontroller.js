@@ -2,7 +2,7 @@
  * Created by vivaldi on 23/02/14.
  */
 
-
+'use strict';
 angular.module('Savings.Controllers')
 	.controller('RegisterCtrl', function($scope, $location, $log, $userService) {
 
@@ -31,7 +31,7 @@ angular.module('Savings.Controllers')
 				$scope.errors.password = "One or more passwords are missing";
 				$scope.errors.has_errors = true;
 			}
-			if(!($scope.password === $scope.passwordRepeat)) {
+			if($scope.password !== $scope.passwordRepeat) {
 				$scope.errors.password = "Passwords don't match";
 				$scope.errors.has_errors = true;
 			}
@@ -58,5 +58,5 @@ angular.module('Savings.Controllers')
 						});
 
 			}
-		}
+		};
 	});

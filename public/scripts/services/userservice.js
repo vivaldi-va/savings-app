@@ -50,7 +50,7 @@ angular.module('Savings.Services')
 		}
 
 		function _register(email, password, username) {
-			var dfd 	= $q.defer();
+			var dfd	= $q.defer();
 
 			$log.debug([email, password, username]);
 
@@ -67,11 +67,11 @@ angular.module('Savings.Services')
 				data: data
 			})
 				.success(function(data) {
-					if(!data.success) {
-						dfd.reject(data.error);
+					if(!data) {
+						dfd.reject();
 					}
 
-					dfd.resolve(data.data);
+					dfd.resolve(data);
 				})
 				.error(function(reason) {
 					$log.warn('ERR', "user registration failed", reason);
