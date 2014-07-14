@@ -2,13 +2,15 @@
  * Created by vivaldi on 15/04/2014.
  */
 
+'use strict';
+
 angular.module('Savings.Directives')
 	.directive('timelineItem', function($timeout, $log, $timelineService) {
 		return {
 			restrict: "EA",
 			require: "?ngModel",
 			scope: {
-				date: '@'
+				date: '@date'
 			},
 			replace: true,
 			templateUrl: 'views/timelineitemtemplate.html',

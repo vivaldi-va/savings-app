@@ -77,8 +77,14 @@ angular.module('Savings.Controllers')
 						$scope.showNewExpenseForm	= false;
 						data.id						= success._id;
 
-						if(type===0) $scope.finances.income.push(data);
-						if(type===1) $scope.finances.expenses.push(data);
+						if(type===0) {
+							$scope.finances.income.push(data);
+						}
+
+						if(type===1) {
+							$scope.finances.expenses.push(data);
+						}
+
 						$log.info("DEBUG: inserting finance item", data);
 
 					},
