@@ -3,25 +3,27 @@
  */
 'use strict';
 var cluster 	= require('cluster');
-var log			= require('npmlog');
+var log4js		= require('log4js');
+log4js.configure('./lib/config/log4js.json');
 
-log.enableColor();
+var log			= log4js.getLogger('app');
+var dbLog		= log4js.getLogger('db');
 
 
 if (cluster.isMaster) {
-	log.info('Cluster', "setting up master thread");
+	log.info("setting up master thread");
 	// Count the machine's CPUs
 	var cpuCount = require('os').cpus().length;
 
 	// Create a worker for each CPU
 	for (var i = 0; i < cpuCount; i += 1) {
 		cluster.fork();
-		log.info('Cluster', "Forking worker " + (i+1));
+		log.info("Forking worker " + (i+1));
 	}
 
 // Code to run if we're in a worker process
 } else {
-	log.info('Cluster', "Setting up worker");
+	log.info("Setting up worker");
 	var fs			= require('fs');
 	var path		= require('path');
 	var express 	= require('express');
@@ -34,27 +36,27 @@ if (cluster.isMaster) {
 
 	//var db			= mongoose.connect("mongodb://" + dbConf.db.user + ":" + dbConf.db.password + "@" + dbConf.db.host);
 	var db = mongoose.connect("mongodb://localhost/savings", ok(function() {
-		log.info('MONGODB', "Connected to database");
+		log.info("Connected to database");
 	}));
 
 	mongoose.connection.on('connected', function () {
-		log.info('MONGODB', 'Mongoose connected');
+		dbLog.info('Mongoose connected');
 	});
 
 	// If the connection throws an error
 	mongoose.connection.on('error', function (err) {
-		log.error('MONGODB', 'Mongoose default connection error: ' + err);
+		dbLog.error('MONGODB', 'Mongoose default connection error: ' + err);
 	});
 
 	// When the connection is disconnected
 	mongoose.connection.on('disconnected', function () {
-		log.info('MONGODB', 'Mongoose default connection disconnected');
+		dbLog.info('Mongoose default connection disconnected');
 	});
 
 	// If the Node process ends, close the Mongoose connection
 	process.on('SIGINT', function() {
 		mongoose.connection.close(function () {
-			log.info('MONGODB', 'Mongoose default connection disconnected through app termination');
+			dbLog.info('Mongoose default connection disconnected through app termination');
 			process.exit(0);
 		});
 	});
@@ -73,7 +75,7 @@ if (cluster.isMaster) {
 
 
 	app.listen(config.port, function() {
-		log.info('SERVER', "Listening on port", config.port);
+		log.info("Listening on port", config.port);
 	});
 
 	exports = module.exports = app;
