@@ -3,7 +3,6 @@
  */
 (function() {
 	var app;
-	console.log('datepicker');
 
 	app = angular.module("ngQuickDate", []);
 

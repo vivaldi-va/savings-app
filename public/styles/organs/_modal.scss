@@ -1,0 +1,23 @@
+
+.modal_background {
+	position: relative;
+	z-index: 2000;
+
+	float: left;
+	width: 100%;
+	height: 100%;
+	background: $black50;
+
+	text-align: center;
+}
+
+.modal {
+	display: inline-block;
+	width: 90%;
+	margin: 6.4rem 0 0;
+	padding: 1em;
+
+	background: lighten($black, 72%);
+	text-align: left;
+
+}
