@@ -13,11 +13,11 @@
 @import "atoms/title";
 @import "atoms/input";
 @import "atoms/input-label";
-@import "atoms/button";
 @import "atoms/new-finance-button";
 
 // molecules
 
+@import "molecules/button";
 @import "molecules/column-heading";
 @import "molecules/finance-item";
 @import "molecules/finance-form";

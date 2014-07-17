@@ -1,0 +1,45 @@
+.button {
+	display: inline-block;
+	//width: 100%;
+	padding: 0.15em 0.5em;
+	line-height: 1.5em;
+
+	border: none;
+	background: $black28;
+	color: $white;
+	font-size: 1.3rem;
+	font-weight: 400;
+	letter-spacing: 0.1em;
+	text-transform: capitalize;
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+
+	-webkit-box-shadow: 0 1px 0 $black50;
+	-moz-box-shadow: 0 1px 0 $black50;
+	box-shadow: 0 1px 0 $black50;
+
+	text-shadow: 0 1px $black28;
+
+
+	&:active,&:hover,&:focus,&.enhanced {
+		background: rgba($black28, 0.35);
+
+		box-shadow: 0 1px 0 $black85;
+	}
+
+	&.red {
+		background: $red;
+	}
+
+	&.no-style {
+		background: none;
+		color: inherit;
+	}
+
+	&:disabled {
+		color: $muted;
+	}
+}
+

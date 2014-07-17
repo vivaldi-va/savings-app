@@ -3,24 +3,37 @@
 	position: relative;
 	display: inline-block;
 	width: 100%;
-	margin: 1em 0;
+	margin: 1em 0 2em;
 
 	font-size: 1.14em;
-	font-weight: 700;
-	text-align: right;
+	font-weight: 600;
+}
+
+.column-title-wrapper {
+	display: inline-block;
+	width: 100%;
+	margin: 0 0 0.5em 0;
+}
+
+.column-title {
 	text-transform: uppercase;
-	
-	
+	line-height: 2rem;
+}
+
+.column-title-button {
+	float: right;
 }
 
 .column-totals {
-	position: absolute;
-	left: 0;
-	font-size: 0.7em;
+	//position: absolute;
+	//left: 0;
+	float: left;
+	width: 100%;
+	font-size: 0.8em;
 	line-height: 1.4em;
 
 	em {
-		font-size: 1.3em;
+		font-size: 1.15em;
 		font-style: normal;
 	}
 }

@@ -2,9 +2,13 @@ $headerHeight: 35px;
 
 $white: #FFFFFF;
 $offWhite: #F7F7F7;
-$grey: #DFDFDF;
 
-$black: #333333;
+$grey: #DFDFDF;
+$black: rgba(0,0,0,1);
+$black85: rgba($black, 0.85);
+$black50: rgba($black, 0.5);
+$black28: rgba($black, 0.28);
+
 
 $muted: #999999;
 

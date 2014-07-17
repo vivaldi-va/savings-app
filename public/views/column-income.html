@@ -1,9 +1,12 @@
 <div class="column-heading">
-		<span class="column-totals income">
-			<em>{{ finances.attrs.income.count }}</em> item<span ng-if="finances.attrs.income.count>1">s</span> totaling <em>
-			{{ finances.attrs.income.total_per_month | currency }}</em> per month
-		</span>
-	income
+    <div class="column-title-wrapper">
+	    <span class="column-title">income</span>
+        <button class="button column-title-button" type="button" ng-click="doToggleNewIncomeForm()">track new income</button>
+    </div>
+    <span class="column-totals income">
+        <em>{{ finances.attrs.income.count }}</em> item<span ng-if="finances.attrs.income.count>1">s</span> totaling <em>
+        {{ finances.attrs.income.total_per_month | currency }}</em> per month
+    </span>
 </div>
 
 
@@ -70,7 +73,6 @@
 	</form>
 
 </div>
-<button class="button new-finance-button" ng-click="doToggleNewIncomeForm()">track a new income source</button>
 
 <form class="finance-form" ng-if="!!showNewIncomeForm" ng-submit="doCreateFinance(0)">
 	<div class="row">
