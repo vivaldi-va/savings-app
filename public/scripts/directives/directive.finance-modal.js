@@ -9,16 +9,19 @@ angular.module('Savings.Directives')
 		return {
 			restrict: "EA",
 			require: "?ngModel",
+			scope: {
+				"finance": "=finance",
+				"active": "=active"
+			},
 			replace: true,
 			templateUrl: 'views/template.finance-modal.html',
 			link: function(scope, element, attrs, ngModelCtrl) {
 
-				if (typeof attrs.initValue === 'string') {
-					ngModelCtrl.$setViewValue(attrs.initValue);
-				}
+				//scope.finance = ngModelCtrl.$modelValue;
 
+
+				$log.info('Finance Modal', scope.finance);
 				$timeout(function(){
-					scope.finance = ngModelCtrl.$modelValue;
 
 				});
 			}

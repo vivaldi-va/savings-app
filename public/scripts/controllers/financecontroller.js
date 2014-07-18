@@ -3,7 +3,7 @@
  */
 
 angular.module('Savings.Controllers')
-	.controller('FinanceCtrl', ['$scope', '$financeService', '$log', '$timeout', '$locale', function($scope, $financeService, $log, $timeout, $locale) {
+	.controller('FinanceCtrl', ['$scope', '$rootScope', '$financeService', '$log', '$timeout', '$locale', function($scope, $rootScope, $financeService, $log, $timeout, $locale) {
 
 
 		$scope.errors = [];
@@ -33,6 +33,17 @@ angular.module('Savings.Controllers')
 				"description": ''
 			}
 		};
+
+		$scope.activeFinance = {
+			"type": 0,
+			"name": null,
+			"amount": null,
+			"date": null,
+			"interval": 0,
+			"description": ''
+		};
+
+		$scope.financeModalActive = false;
 
 		$scope.currencySymbol = $locale.NUMBER_FORMATS.CURRENCY_SYM;
 		$log.info('Currency Symbol', $locale.NUMBER_FORMATS.CURRENCY_SYM);
@@ -151,5 +162,18 @@ angular.module('Savings.Controllers')
 			}
 
 			$log.info('DEBUG: Toggle expenses form', finance);
+		};
+
+
+		$scope.doOpenEditFinanceModal = function(finance) {
+			$log.info('Open edit finance modal', finance);
+			$scope.financeModalActive = true;
+			$scope.activeFinance = finance;
+
+		};
+
+		$scope.doOpenNewFinanceModal = function(type) {
+			$scope.financeModalActive = true;
+			$scope.activeFinance.type = type;
 		};
 	}]);
