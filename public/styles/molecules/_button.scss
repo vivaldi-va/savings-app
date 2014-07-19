@@ -41,5 +41,13 @@
 	&:disabled {
 		color: $muted;
 	}
+
+	&.big {
+		font-size: 1.6em;
+	}
+
+	&.block {
+		display: block;
+	}
 }
 

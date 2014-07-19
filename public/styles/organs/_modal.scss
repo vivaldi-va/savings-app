@@ -6,18 +6,34 @@
 	float: left;
 	width: 100%;
 	height: 100%;
-	background: $black50;
+	background: rgba($black, 0.15);
 
 	text-align: center;
 }
 
+
+
 .modal {
 	display: inline-block;
-	width: 90%;
+	width: 400px;
 	margin: 6.4rem 0 0;
 	padding: 1em;
 
-	background: lighten($black, 72%);
+	background: lighten($black, 89%);
 	text-align: left;
 
+	border: 1px solid $black28;
+
+	-webkit-box-shadow: 0 0 10px 4px rgba($black, 0.15);
+	-moz-box-shadow: 0 0 10px 4px rgba($black, 0.15);
+	box-shadow: 0 0 10px 4px rgba($black, 0.15);
+
+	&_finance-header {
+
+	}
+
+	&_finance-footer {
+		text-align: right;
+	}
 }
+

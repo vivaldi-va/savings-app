@@ -12,12 +12,14 @@
 // atoms
 @import "atoms/title";
 @import "atoms/input";
+@import "atoms/textarea";
 @import "atoms/input-label";
 @import "atoms/new-finance-button";
 
 // molecules
 
 @import "molecules/button";
+@import "molecules/input-group";
 @import "molecules/column-heading";
 @import "molecules/finance-item";
 @import "molecules/finance-form";

@@ -2,12 +2,15 @@
 <div class="modal_background">
     <div id="finance-modal" class="modal modal_finance">
         <div class="row modal_finance-header">
-            <span class="modal_finance-title">Edit finance {{ finance.name }}</span>
+            <span class="modal_finance-title">
+				<span ng-if="!!finance">Edit finance {{ finance.name }}</span>
+				<span ng-if="!finance">Create new finance</span>
+			</span>
         </div>
 
         <form>
             <div class="row">
-                <div class="col-6">
+                <div class="col-10">
                     <div class="input-group">
                         <label for="finances-name" class="input-label required">name</label>
                         <input id="finances-name" class="input" type="text" ng-model="newFinance.income.name">
@@ -37,11 +40,11 @@
                         <textarea id="finances-description" class="input" name="description" cols="10" rows="10" ng-model="newFinance.income.description"></textarea>
                     </div>
                 </div>
-                <div class="col-6"></div>
+                <div class="col-2"></div>
             </div>
             <div class="row modal_finance-footer">
-                <button class="button" type="submit">Save</button>
                 <button class="button" type="button">Cancel</button>
+                <button class="button" type="submit">Save</button>
             </div>
         </form>
 
