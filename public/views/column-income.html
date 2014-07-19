@@ -1,7 +1,7 @@
 <div class="column-heading">
     <div class="column-title-wrapper">
 	    <span class="column-title">income</span>
-        <button class="button column-title-button" type="button" ng-click="doToggleNewIncomeForm()">track new income</button>
+        <button class="button column-title-button" type="button" ng-click="doOpenNewFinanceModal(0)">track new income</button>
     </div>
     <span class="column-totals income">
         <em>{{ finances.attrs.income.count }}</em> item<span ng-if="finances.attrs.income.count>1">s</span> totaling <em>
@@ -10,7 +10,7 @@
 </div>
 
 
-<div class="finance-item-wrapper" ng-repeat="finance in finances.income | hideDeleted" ng-click="doToggleFinanceForm(finance)">
+<div class="finance-item-wrapper" ng-repeat="finance in finances.income | hideDeleted" ng-click="doOpenEditFinanceModal(finance)">
 	<div class="finance-item blue" ng-class="{active: openFinance===finance}">
 		<div class="finance-item-amount-wrapper">
 			<div class="finance-item-amount">{{ finance.amount | currency }}</div>
