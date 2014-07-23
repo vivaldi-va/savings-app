@@ -169,6 +169,7 @@ angular.module('Savings.Controllers')
 			$log.info('Open edit finance modal', finance);
 			$scope.financeModalActive = true;
 			$scope.activeFinance = finance;
+			$log.info("is modal active?", $scope.financeModalActive);
 
 		};
 
@@ -176,4 +177,9 @@ angular.module('Savings.Controllers')
 			$scope.financeModalActive = true;
 			$scope.activeFinance.type = type;
 		};
+
+
+		$scope.$watch('financeModalActive', function(active) {
+			$log.info("is modal active", active);
+		});
 	}]);

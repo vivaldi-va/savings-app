@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('Savings.Directives')
-	.directive('financeModal', function($timeout, $log, $timelineService) {
+	.directive('financeModal', function($timeout, $log, $timelineService, $document) {
 		return {
 			restrict: "EA",
 			require: "?ngModel",
@@ -17,6 +17,16 @@ angular.module('Savings.Directives')
 			templateUrl: 'views/template.finance-modal.html',
 			link: function(scope, element, attrs, ngModelCtrl) {
 
+
+				scope.hideModal = function() {
+					scope.active = false;
+					$log.info(scope.active);
+				};
+
+
+
+
+
 				//scope.finance = ngModelCtrl.$modelValue;
 
 
@@ -25,5 +35,5 @@ angular.module('Savings.Directives')
 
 				});
 			}
-		}
+		};
 	});

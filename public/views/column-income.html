@@ -9,7 +9,7 @@
     </span>
 </div>
 
-
+{{ financeModalActive }}
 <div class="finance-item-wrapper" ng-repeat="finance in finances.income | hideDeleted" ng-click="doOpenEditFinanceModal(finance)">
 	<div class="finance-item blue" ng-class="{active: openFinance===finance}">
 		<div class="finance-item-amount-wrapper">
