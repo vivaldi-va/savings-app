@@ -164,6 +164,16 @@ module.exports = function (grunt) {
 						dest: '.tmp/styles/'
 					}
 				]
+			},
+			test: {
+				files: [
+					{
+						expand: true,
+						cwd: '.tmp/styles/',
+						src: '{,*/}*.css',
+						dest: '<%= yeoman.app %>/styles/'
+					}
+				]
 			}
 		},
 
@@ -360,6 +370,14 @@ module.exports = function (grunt) {
 				files: {
 					'<%= yeoman.app %>/styles/app.css': '<%= yeoman.app %>/styles/app.scss'
 				}
+			},
+			test: {
+				options: {
+					style: 'expanded'
+				},
+				files: {
+					'.tmp/styles/app.css': '<%= yeoman.app %>/styles/app.scss'
+				}
 			}
 		},
 
@@ -509,7 +527,7 @@ module.exports = function (grunt) {
 	//	'manifest'
 	]);
 
-	grunt.registerTask('css', ['sass:dist']);
+	grunt.registerTask('css', ['sass:test', 'autoprefixer:test']);
 
 	grunt.registerTask('heroku', function () {
 		grunt.log.warn('The `heroku` task has been deprecated. Use `grunt build` to build for deployment.');
