@@ -35,6 +35,7 @@ angular.module('Savings.Controllers')
 		};
 
 		$scope.activeFinance = {
+			"active": false,
 			"type": 0,
 			"name": null,
 			"amount": null,
@@ -167,19 +168,26 @@ angular.module('Savings.Controllers')
 
 		$scope.doOpenEditFinanceModal = function(finance) {
 			$log.info('Open edit finance modal', finance);
-			$scope.financeModalActive = true;
 			$scope.activeFinance = finance;
-			$log.info("is modal active?", $scope.financeModalActive);
+			$scope.activeFinance.active = true;
+			$log.info("is modal active?", $scope.activeFinance.active);
 
 		};
 
 		$scope.doOpenNewFinanceModal = function(type) {
-			$scope.financeModalActive = true;
-			$scope.activeFinance.type = type;
+			$scope.activeFinance = {
+				"active": true,
+				"type": type,
+				"name": null,
+				"amount": null,
+				"date": null,
+				"interval": 0,
+				"description": ''
+			};
 		};
 
 
-		$scope.$watch('financeModalActive', function(active) {
-			$log.info("is modal active", active);
+		$scope.$watch('activeFinance', function(oldVal, newVal) {
+			$log.info('FinanceCtrl', "is modal active?", oldVal, newVal);
 		});
 	}]);

@@ -1,6 +1,5 @@
 
-<div class="modal_background" ng-show="active">
-    <div id="finance-modal" class="modal modal_finance" modal-blur="hideFinanceModal()" ng-show="active">
+    <div id="finance-modal" class="modal modal_finance" ng-show="finance.active">
         <div class="row modal_finance-header">
             <span class="modal_finance-title">
 				<span ng-if="!!finance">Edit finance {{ finance.name }}</span>
@@ -48,4 +47,3 @@
         </form>
 
     </div>
-</div>
