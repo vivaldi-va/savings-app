@@ -7,7 +7,7 @@ angular.module('Savings.Controllers')
 
 
 		$scope.errors = [];
-		$scope.finances = {
+		$rootScope.finances = {
 			"income": [],
 			"expenses": []
 		};
