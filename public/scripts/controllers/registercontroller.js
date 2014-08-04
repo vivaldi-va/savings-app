@@ -6,7 +6,8 @@
 angular.module('Savings.Controllers')
 	.controller('RegisterCtrl', function($scope, $location, $log, $userService) {
 
-		$scope.registering = false;
+		$scope.registering		= false;
+		$scope.registerSuccess	= false;
 
 
 
@@ -23,15 +24,16 @@ angular.module('Savings.Controllers')
 				$scope.errors.email = "Email is missing";
 				$scope.errors.has_errors = true;
 			}
+
 			if(!$scope.username) {
 				$scope.errors.username = "Username is missing";
 				$scope.errors.has_errors = true;
 			}
+
 			if(!$scope.password || !$scope.passwordRepeat) {
 				$scope.errors.password = "One or more passwords are missing";
 				$scope.errors.has_errors = true;
-			}
-			if($scope.password !== $scope.passwordRepeat) {
+			} else if($scope.password !== $scope.passwordRepeat) {
 				$scope.errors.password = "Passwords don't match";
 				$scope.errors.has_errors = true;
 			}
@@ -41,6 +43,7 @@ angular.module('Savings.Controllers')
 				$userService.register($scope.email, $scope.password, $scope.username)
 					.then(
 						function(success) {
+							$scope.registerSuccess = true;
 
 							$userService.login($scope.email, $scope.password)
 								.then(
