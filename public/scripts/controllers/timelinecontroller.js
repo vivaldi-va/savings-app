@@ -7,11 +7,10 @@ angular.module('Savings.Controllers')
 		// reset errors and successes
 		$rootScope.errors		= [];
 		$rootScope.successes	= [];
-		$scope.timeline			= null;
-		$scope.timelineBalance = false;
+		$scope.timelineBalance	= false;
 
-		$timelineService.getTimeline
-			.then(
+		$timelineService.getTimeline();
+			/*.then(
 				function(success) {
 					$rootScope.successes.push("timeline synced");
 					$log.info("DEBUG: Timeline data received");
@@ -27,7 +26,7 @@ angular.module('Savings.Controllers')
 					$log.info("DEBUG: error getting timeline data", reason);
 					$rootScope.errors.push(reason);
 				}
-			);
+			);*/
 
 
 

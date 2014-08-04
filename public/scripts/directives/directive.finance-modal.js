@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('Savings.Directives')
-	.directive('financeModal', function($timeout, $log, $financeService, $document, $rootScope) {
+	.directive('financeModal', function($timeout, $log, $financeService, $document, $rootScope, $timelineService) {
 		return {
 			restrict: "EA",
 			require: "?ngModel",
@@ -41,6 +41,8 @@ angular.module('Savings.Directives')
 
 				scope.hideModal = function() {
 					_hideModal();
+
+					$log.debug('Finances', $rootScope.finances);
 				};
 
 				function _hideModal() {
@@ -57,7 +59,14 @@ angular.module('Savings.Directives')
 					} else {
 						_modifyFinance();
 					}
+
+					$timelineService.getTimeline();
+						/*.then(function(success) {
+							$rootScope.timeline = success;
+						});*/
+
 				};
+
 
 				function _createNewFinance() {
 					scope.errors = false; // reset errors on each try
@@ -71,11 +80,11 @@ angular.module('Savings.Directives')
 							scope.showNewExpenseForm	= false;
 							scope.finance['_id']		= success._id;
 
-							if(type===0) {
+							if(success.type===0) {
 								$rootScope.finances.income.push(scope.finance);
 							}
 
-							if(type===1) {
+							if(success.type===1) {
 								$rootScope.finances.expenses.push(scope.finance);
 							}
 

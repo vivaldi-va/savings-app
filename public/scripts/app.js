@@ -19,6 +19,11 @@ angular.module('Savings', [
 
 		$rootScope.logged_in 	= false;
 		$rootScope.errors		= [];
+		$rootScope.timeline		= null;
+		$rootScope.finances		= {
+			"income": [],
+			"expenses": []
+		};
 
 		$log.debug('DEBUG:', "check route",$location.path() !== '/login' && $location.path() !== '/register');
 

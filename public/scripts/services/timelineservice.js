@@ -3,7 +3,7 @@
  */
 
 angular.module('Savings.Services')
-	.factory('$timelineService', function($http, $q, $log) {
+	.factory('$timelineService', function($http, $q, $log, $rootScope) {
 		function _getTimelineData(past) {
 			$log.info('DEBUG: getTimeline');
 			var dfd = $q.defer();
@@ -16,10 +16,12 @@ angular.module('Savings.Services')
 				.success(function(data, status) {
 					$log.info('DEBUG: getTimeline HTTP request received');
 					if(status === 204) {
-						dfd.reject('ERR_NO_TIMELINE');
+						dfd.resolve(null);
 					} else {
 						dfd.resolve(data);
 					}
+
+					$rootScope.timeline = data;
 				})
 				.error(function(reason) {
 					$log.info('DEBUG: getTimeline HTTP request failed', reason);
@@ -45,7 +47,7 @@ angular.module('Savings.Services')
 		}
 
 		return {
-			getTimeline: _getTimelineData(),
+			getTimeline: _getTimelineData,
 			updateItem: _updateTimelineItem
 		}
 	});

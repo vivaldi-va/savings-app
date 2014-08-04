@@ -7,10 +7,6 @@ angular.module('Savings.Controllers')
 
 
 		$scope.errors = [];
-		$rootScope.finances = {
-			"income": [],
-			"expenses": []
-		};
 
 		$scope.showNewIncomeForm	= false;
 		$scope.showNewExpenseForm	= false;
@@ -53,7 +49,7 @@ angular.module('Savings.Controllers')
 		$financeService.getFinances
 			.then(
 				function(success) {
-					$scope.finances = success;
+					$rootScope.finances = success;
 				},
 				function(reason) {
 					$scope.errors.push(reason);
@@ -62,7 +58,7 @@ angular.module('Savings.Controllers')
 
 
 
-		$scope.doCreateFinance = function(type) {
+		/*$scope.doCreateFinance = function(type) {
 			$scope.creatingNewFinance = true;
 
 
@@ -164,7 +160,7 @@ angular.module('Savings.Controllers')
 
 			$log.info('DEBUG: Toggle expenses form', finance);
 		};
-
+*/
 
 		$scope.doOpenEditFinanceModal = function(finance) {
 			$log.info('Open edit finance modal', finance);
