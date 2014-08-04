@@ -28,6 +28,11 @@
                     </div>
 
                     <div class="input-group">
+                        <label for="finances-date" class="input-label required">first due date</label>
+                        <quick-datepicker id="finances-date" ng-model='finance.duedate'></quick-datepicker>
+                    </div>
+
+                    <div class="input-group">
                         <label for="finances-interval" class="input-label required">interval</label>
                         <select class="input" name="interval" id="finances-interval" ng-model="finance.interval" tabindex="3">
                             <option value="0">one time</option>
@@ -50,7 +55,7 @@
             <div class="row modal_finance-footer">
                 <button class="button" type="button" ng-click="hideModal()">Cancel</button>
                 <button class="button" type="submit" tabindex="5">Save</button>
-                <button class="button red modal_finance-deleteButton" type="button" ng-if="!!finance._id">delete</button>
+                <button class="button red modal_finance-deleteButton" type="button" ng-if="!!finance._id" ng-click="doDisableFinance(finance)">delete</button>
             </div>
         </form>
 

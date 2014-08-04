@@ -59,7 +59,7 @@ angular.module('Savings.Directives')
 				};
 
 				function _createNewFinance() {
-					$financeService.createFinance(data)
+					$financeService.createFinance(scope.finance)
 						.then(
 						function(success) {
 							// create a new finance item based on the info supplied to the function
@@ -67,17 +67,18 @@ angular.module('Savings.Directives')
 							scope.creatingNewFinance	= false;
 							scope.showNewIncomeForm		= false;
 							scope.showNewExpenseForm	= false;
-							data.id						= success._id;
+							scope.finance._id			= success._id;
 
 							if(type===0) {
-								$rootScope.finances.income.push(data);
+								$rootScope.finances.income.push(scope.finance);
 							}
 
 							if(type===1) {
-								$rootScope.finances.expenses.push(data);
+								$rootScope.finances.expenses.push(scope.finance);
 							}
 
-							$log.info("DEBUG: inserting finance item", data);
+							_hideModal();
+							$log.info("DEBUG: inserting finance item", scope.finance);
 
 						},
 						function(reason) {
@@ -94,6 +95,7 @@ angular.module('Savings.Directives')
 						.then(
 							function (success) {
 								scope.updating = false;
+								_hideModal();
 								$log.info("DEBUG: modifying finance item successful");
 							},
 							function (reason) {
@@ -102,6 +104,26 @@ angular.module('Savings.Directives')
 							}
 						);
 				}
+
+
+				scope.doDisableFinance = function(finance) {
+
+
+					//$log.info()
+					$financeService.disableFinance(finance._id)
+						.then(
+						function(success) {
+							$log.info("DEBUG: disabling finance item successful");
+							finance.disabled = true;
+							_hideModal();
+						},
+						function(reason) {
+							scope.errors.push(reason);
+						}
+					);
+					$log.debug("DEBUG: disable finance item", finance);
+
+				};
 
 
 			}
