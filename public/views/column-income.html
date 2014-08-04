@@ -8,8 +8,6 @@
         {{ finances.attrs.income.total_per_month | currency }}</em> per month
     </span>
 </div>
-
-{{ financeModalActive }}
 <div class="finance-item-wrapper" ng-repeat="finance in finances.income | hideDeleted" ng-click="doOpenEditFinanceModal(finance)">
 	<div class="finance-item blue" ng-class="{active: openFinance===finance}">
 		<div class="finance-item-amount-wrapper">
@@ -21,104 +19,4 @@
 		</div>
 		<div class="finance-item-name">{{ finance.name }}</div>
 	</div>
-
-	<form class="finance-form" ng-if="openFinance===finance" ng-submit="doModifyFinanceItem(finance)" ng-click="$event.stopPropagation()">
-		<div class="row">
-			<div class="input-group">
-				<label for="finance-name" class="input-label required">name</label>
-				<input id="finance-name" class="input" type="text" ng-model="finance.name">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-6 input-group">
-				<label for="finance-amount" class="input-label required">amount</label>
-				<input id="finance-amount" class="input" type="text" ng-model="finance.amount">
-			</div>
-			<div class="col-6 input-group">
-				<label for="finance-date" class="input-label required">due date</label>
-				<quick-datepicker id="finance-date" ng-model='finance.duedate'></quick-datepicker>
-			</div>
-		</div>
-		<div class="row">
-			<div class="input-group">
-				<label for="finance-interval" class="input-label required">interval</label>
-				<select class="input" name="interval" id="finance-interval" ng-model="finance.interval">
-					<option value="0">one time</option>
-					<option value="24">daily</option>
-					<option value="168">weekly</option>
-					<option value="336">every other week</option>
-					<option value="744">each month</option>
-					<option value="4464">every 6 months</option>
-					<option value="8628">yearly</option>
-				</select>
-			</div>
-		</div>
-		<div class="row">
-			<div class="input-group">
-				<label for="finance-description" class="input-label">description</label>
-				<textarea id="finance-description" class="input" name="description" cols="10" rows="10" ng-model="finance.description"></textarea>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-2">
-				<button type="button" class="button red" ng-click="doDisableFinance(finance); $event.stopPropagation();">
-					<i class="fa fa-trash-o"></i></button>
-			</div>
-			<div class="col-10">
-				<button class="button" type="submit" ng-disabled="!!finance.updating">
-					save<span ng-if="finance.updating">ing...</span></button>
-			</div>
-		</div>
-	</form>
-
 </div>
-
-<form class="finance-form" ng-if="!!showNewIncomeForm" ng-submit="doCreateFinance(0)">
-	<div class="row">
-		<div class="input-group">
-			<label for="finances-name" class="input-label required">name</label>
-			<input id="finances-name" class="input" type="text" ng-model="newFinance.income.name">
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-6 input-group">
-			<label for="finances-amount" class="input-label required">amount</label>
-			<input id="finances-amount" class="input" type="text" ng-model="newFinance.income.amount">
-		</div>
-		<div class="col-6 input-group">
-			<label for="finances-date" class="input-label required">due date</label>
-			<quick-datepicker id="finances-date" ng-model='newFinance.income.date'></quick-datepicker>
-		</div>
-	</div>
-	<div class="row">
-		<div class="input-group">
-			<label for="finances-interval" class="input-label required">interval</label>
-			<select class="input" name="interval" id="finances-interval" ng-model="newFinance.income.interval">
-				<option value="0">one time</option>
-				<option value="24">daily</option>
-				<option value="168">weekly</option>
-				<option value="336">every other week</option>
-				<option value="744">each month</option>
-				<option value="4464">every 6 months</option>
-				<option value="8628">yearly</option>
-			</select>
-		</div>
-	</div>
-	<div class="row">
-		<div class="input-group">
-			<label for="finances-description" class="input-label">description</label>
-			<textarea id="finances-description" class="input" name="description" cols="10" rows="10" ng-model="newFinance.income.description"></textarea>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-6">
-			<button class="button">cancel</button>
-		</div>
-		<div class="col-6">
-			<button class="button" type="submit" ng-click="$event.stopPropagation()" ng-disabled="!!creatingNewFinance">
-				create<span ng-if="!!creatingNewFinance">ing...</span></button>
-		</div>
-	</div>
-</form>
