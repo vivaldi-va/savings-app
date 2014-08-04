@@ -13,7 +13,7 @@
 		<div class="finance-item-amount-wrapper">
 			<div class="finance-item-amount">{{ finance.amount | currency }}</div>
 			<div class="finance-item-time-meta">
-				<span ng-if="finance.interval !== 'once'">every {{ finance.interval }}</span>
+				<span ng-if="finance.interval !== 'once'">{{ finance.interval | interval }}</span>
 				<span ng-if="finance.interval === 'once'">{{ finance.duedate | date:'shortDate' }}</span>
 			</div>
 		</div>
