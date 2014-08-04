@@ -3,7 +3,7 @@
  */
 
 angular.module('Savings.Services')
-	.factory('$financeService', function($http, $q, $log) {
+	.factory('$financeService', function($http, $q, $log, ErrorService) {
 
 		function _createFinance(data) {
 			var dfd = $q.defer();
@@ -17,8 +17,13 @@ angular.module('Savings.Services')
 					$log.info("DEBUG: create finance ", status);
 					dfd.resolve(status);
 				})
-				.error(function(reason) {
-					dfd.reject(reason);
+				.error(function(reason, status) {
+
+					if(status===400) {
+						dfd.reject(ErrorService.messages(reason));
+					} else {
+						dfd.reject(reason);
+					}
 				});
 			return dfd.promise;
 		}

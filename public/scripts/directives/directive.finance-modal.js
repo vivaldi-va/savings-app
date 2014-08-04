@@ -17,6 +17,7 @@ angular.module('Savings.Directives')
 			templateUrl: 'views/template.finance-modal.html',
 			link: function(scope, element, attrs, ngModelCtrl) {
 
+				scope.errors = false;
 
 				element.on('click', function(e) {
 					$log.info('dont close when you click the modal');
@@ -59,6 +60,7 @@ angular.module('Savings.Directives')
 				};
 
 				function _createNewFinance() {
+					scope.errors = false; // reset errors on each try
 					$financeService.createFinance(scope.finance)
 						.then(
 						function(success) {
@@ -67,7 +69,7 @@ angular.module('Savings.Directives')
 							scope.creatingNewFinance	= false;
 							scope.showNewIncomeForm		= false;
 							scope.showNewExpenseForm	= false;
-							scope.finance._id			= success._id;
+							scope.finance['_id']		= success._id;
 
 							if(type===0) {
 								$rootScope.finances.income.push(scope.finance);
@@ -83,7 +85,7 @@ angular.module('Savings.Directives')
 						},
 						function(reason) {
 							scope.creatingNewFinance = false;
-							scope.errors.push(reason);
+							scope.errors = reason;
 						}
 					);
 				}
