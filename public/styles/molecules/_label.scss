@@ -1,0 +1,21 @@
+.label {
+
+	display: inline-block;
+	padding: 0.15em 0.25em;
+
+	background: $muted;
+
+	color: $white;
+	font-style: normal;
+	line-height: 1;
+
+	border-radius: 2px;
+
+	&-red {
+		background: $red;
+	}
+
+	&-blue {
+		background: $blue;
+	}
+}

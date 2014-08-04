@@ -25,12 +25,14 @@
 @import "molecules/finance-form";
 @import "molecules/user-dropdown";
 @import "molecules/pill";
+@import "molecules/label";
 
 // organs
 @import "organs/timeline-balance";
 @import "organs/datepicker-dropdown";
 @import "organs/timelineItem--dropdown";
 @import "organs/modal";
+@import "organs/modal-finance";
 
 // organisms
 @import "organisms/header";

@@ -1,10 +1,17 @@
 
     <div id="finance-modal" class="modal modal_finance" ng-show="finance.active">
         <div class="row modal_finance-header">
-            <span class="modal_finance-title">
-				<span ng-if="!!finance">Edit finance {{ finance.name }}</span>
-				<span ng-if="!finance">Create new finance</span>
-			</span>
+            <div class="modal_finance-title">
+				<span ng-if="!!finance._id">Edit finance
+                    <em class="label" ng-class="{'label-red': finance.type===1, 'label-blue': finance.type===0}">{{ finance.name }}</em>
+                </span>
+				<div ng-if="!finance._id">
+
+                    <span ng-if="finance.type === 0">Track a new <em class="label label-blue">income</em></span>
+                    <span ng-if="finance.type === 1">Track a new <em class="label label-red">expense</em></span>
+
+				</div>
+			</div>
         </div>
         <form ng-submit="submit()">
             <div class="row">
@@ -43,6 +50,7 @@
             <div class="row modal_finance-footer">
                 <button class="button" type="button" ng-click="hideModal()">Cancel</button>
                 <button class="button" type="submit">Save</button>
+                <button class="button red modal_finance-deleteButton" ng-if="!!finance._id">delete</button>
             </div>
         </form>
 
