@@ -4,6 +4,24 @@
 
 angular.module('Savings.Controllers')
 	.controller('LoginCtrl', function($scope, $log, $location, $userService) {
+
+
+		/**
+		 * if the browser auto-inserts form values, add them to relevant scope
+		 */
+		(function() {
+			var emailVal	= angular.element(document.getElementById('email')).val();
+			var passVal		= angular.element(document.getElementById('password')).val();
+			if(emailVal) {
+				$scope.email = emailVal;
+			}
+
+			if(passVal) {
+				$scope.password = passVal;
+			}
+		})();
+
+
 		$scope.submit = function() {
 			$userService.login($scope.email, $scope.password)
 				.then(
