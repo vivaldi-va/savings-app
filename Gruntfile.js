@@ -425,12 +425,15 @@ module.exports = function (grunt) {
 				singleRun: true
 			}
 		},
-
 		mochaTest: {
-			options: {
-				reporter: 'spec'
-			},
-			src: ['test/server/**/*.js']
+			specs: {
+				options: {
+					ui: 'bdd',
+					reporter: 'spec',
+					require: './test/helpers/chai'
+				},
+				src: ['./test/spec/**/*.js']
+			}
 		},
 
 		env: {
@@ -494,7 +497,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('test', function (target) {
 		if (target === 'server') {
 			return grunt.task.run([
-				'env:test',
+				//'env:test',
 				'mochaTest'
 			]);
 		}
