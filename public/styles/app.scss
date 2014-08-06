@@ -16,11 +16,13 @@
 @import "atoms/input-label";
 @import "atoms/new-finance-button";
 @import "atoms/form-error";
+@import "atoms/input-char-count";
 
 // molecules
 
 @import "molecules/button";
 @import "molecules/input-group";
+@import "molecules/input-with-label";
 @import "molecules/column-heading";
 @import "molecules/finance-item";
 @import "molecules/finance-form";

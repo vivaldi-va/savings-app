@@ -21,7 +21,10 @@
                             <label for="finances-name" class="input-label required">name</label>
                             <span class="form-error" ng-if="!!errors && !!errors.name">{{ errors.name }}</span>
                         </div>
-                        <input id="finances-name" class="input" type="text" ng-model="activeFinance.name" tabindex="1">
+                        <div class="input-with-label">
+                            <input id="finances-name" class="input" type="text" ng-model="activeFinance.name" tabindex="1">
+                            <span class="input-char-count">{{ 50 | charsLeft:activeFinance.name }}</span>
+                        </div>
                     </div>
 
 
