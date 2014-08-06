@@ -7,7 +7,6 @@ var request			= require('supertest');
 var assert			= require('assert');
 var port			= process.env.PORT || 3000;
 var serverUrl		= 'http://localhost:' + port;
-console.log('Requesting ' + serverUrl);
 var app				= request(serverUrl);
 
 var testUserDetails = {
