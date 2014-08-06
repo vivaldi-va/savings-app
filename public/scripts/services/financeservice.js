@@ -57,6 +57,7 @@ angular.module('Savings.Services')
 			})
 				.success(function(status) {
 					$log.info('DEBUG: finance item modified');
+					dfd.resolve();
 				})
 				.error(
 					function(reason) {

@@ -8,69 +8,43 @@ angular.module('Savings.Directives')
 	.directive('financeModal', function($timeout, $log, $financeService, $document, $rootScope, $timelineService) {
 		return {
 			restrict: "EA",
-			require: "?ngModel",
-			scope: {
-				"finance": "=finance",
-				"active": "=active"
-			},
+			/*scope: {
+				"finance": "="
+			},*/
 			replace: true,
-			templateUrl: 'views/template.finance-modal.html',
+			templateUrl: 'views/finance-modal.template.html',
 			link: function(scope, element, attrs, ngModelCtrl) {
 
-				scope.errors = false;
-
-				element.on('click', function(e) {
-					$log.info('dont close when you click the modal');
-					e.stopPropagation();
-				});
-
-				// Bind to the document click event.
-
-				/*$document.on("click", function (event) {
-					$log.info('Is the finance modal active?', scope.finance.active);
-					if(scope.finance.active) {
-						$log.info("Finance is open, so close it");
-						scope.$apply(function() {
-							_hideModal();
-						});
-					}
-				});*/
+				var originalFinanceState = {};
 
 
 
+				function _saveState() {
+					angular.forEach(scope.activeFinance, function(val, param) {
+						originalFinanceState[param] = scope.activeFinance[param];
+					});
+				}
 
-				scope.hideModal = function() {
-					_hideModal();
+				function _resetToOriginalState() {
+					$log.debug('modified', scope.activeFinance);
+					$log.debug('original state', originalFinanceState);
 
-					$log.debug('Finances', $rootScope.finances);
-				};
+
+					angular.forEach(scope.activeFinance, function (val, property) {
+						scope.activeFinance[property] = originalFinanceState[property];
+
+					});
+
+				}
+
 
 				function _hideModal() {
 
-					scope.finance['active'] = false;
-					$log.info("hide modal", scope.finance);
-					/*scope.$apply(function() {
-					});*/
+					scope.activeFinance['active'] = false;
 				}
 
-				scope.submit = function() {
-					scope.errors = false; // reset errors on each try
-
-					if(!scope.finance._id) {
-						_createNewFinance();
-					} else {
-						_modifyFinance();
-					}
-
-						/*.then(function(success) {
-							$rootScope.timeline = success;
-						});*/
-
-				};
-
-
 				function _createNewFinance() {
-					$financeService.createFinance(scope.finance)
+					$financeService.createFinance(scope.activeFinance)
 						.then(
 						function(success) {
 							// create a new finance item based on the info supplied to the function
@@ -78,20 +52,20 @@ angular.module('Savings.Directives')
 							scope.creatingNewFinance	= false;
 							scope.showNewIncomeForm		= false;
 							scope.showNewExpenseForm	= false;
-							scope.finance['_id']		= success._id;
+							scope.activeFinance['_id']		= success._id;
 
 							if(success.type===0) {
-								$rootScope.finances.income.push(scope.finance);
+								$rootScope.finances.income.push(scope.activeFinance);
 							}
 
 							if(success.type===1) {
-								$rootScope.finances.expenses.push(scope.finance);
+								$rootScope.finances.expenses.push(scope.activeFinance);
 							}
 
 							_hideModal();
 
 							$timelineService.getTimeline();
-							$log.info("DEBUG: inserting finance item", scope.finance);
+							$log.info("DEBUG: inserting finance item", scope.activeFinance);
 
 						},
 						function(reason) {
@@ -104,10 +78,11 @@ angular.module('Savings.Directives')
 				function _modifyFinance() {
 					scope.updating = true;
 					$financeService
-						.modifyFinance(scope.finance)
+						.modifyFinance(scope.activeFinance)
 						.then(
 							function (success) {
 								scope.updating = false;
+								_saveState();
 								_hideModal();
 
 								$timelineService.getTimeline();
@@ -119,6 +94,59 @@ angular.module('Savings.Directives')
 							}
 						);
 				}
+
+
+				scope.$watch('activeFinance', function(newVal, oldVal) {
+
+					// save finance state when opening fresh modal
+					if(newVal && newVal.active && newVal!==oldVal) {
+
+						_saveState();
+					}
+				});
+
+				scope.errors = false;
+
+				element.on('click', function(e) {
+					$log.info('dont close when you click the modal');
+					e.stopPropagation();
+				});
+
+				$document.on('click', function(e) {
+					$log.info('Clicked outside the modal');
+
+				});
+
+				// TODO: close modal on clicking outside of it.
+
+
+
+
+				scope.hideModal = function(cancel) {
+					cancel = cancel || false;
+
+					if(cancel) {
+						_resetToOriginalState();
+					}
+
+					_hideModal();
+
+				};
+
+				scope.submit = function() {
+					scope.errors = false; // reset errors on each try
+
+					if(!scope.activeFinance._id) {
+						_createNewFinance();
+					} else {
+						_modifyFinance();
+					}
+
+						/*.then(function(success) {
+							$rootScope.timeline = success;
+						});*/
+
+				};
 
 
 				scope.doDisableFinance = function(finance) {

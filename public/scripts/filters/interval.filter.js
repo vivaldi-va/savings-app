@@ -6,6 +6,9 @@
 angular.module('Savings.Filters')
 	.filter('interval', function() {
 		return function(hours) {
+
+			hours = parseInt(hours);
+
 			switch(hours) {
 				case 0:
 					return "just the once";
