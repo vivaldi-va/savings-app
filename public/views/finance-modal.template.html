@@ -41,12 +41,12 @@
                             <label for="finances-date" class="input-label required">first due date</label>
                             <span class="form-error" ng-if="!!errors && !!errors.duedate">{{ errors.duedate }}</span>
                         </div>
-                        <quick-datepicker id="finances-date" ng-model='activeFinance.duedate'></quick-datepicker>
+                        <quick-datepicker id="finances-date" ng-model='activeFinance.duedate' tabindex="3"></quick-datepicker>
                     </div>
 
                     <div class="input-group">
                         <label for="finances-interval" class="input-label required">interval</label>
-                        <select class="input" name="interval" id="finances-interval" ng-model="activeFinance.interval" tabindex="3">
+                        <select class="input" name="interval" id="finances-interval" ng-model="activeFinance.interval" tabindex="4">
                             <option value="0">one time</option>
                             <option value="24">daily</option>
                             <option value="168">weekly</option>
@@ -59,13 +59,13 @@
 
                     <div class="input-group">
                         <label for="finances-description" class="input-label">description</label>
-                        <textarea id="finances-description" class="input" name="description" cols="10" rows="10" ng-model="activeFinance.description" tabindex="4"></textarea>
+                        <textarea id="finances-description" class="input" name="description" cols="10" rows="10" ng-model="activeFinance.description" tabindex="5"></textarea>
                     </div>
                 </div>
             </div>
             <div class="row modal_finance-footer">
                 <button class="button" type="button" ng-click="hideModal(true)">Cancel</button>
-                <button class="button" type="submit" tabindex="5">Save</button>
+                <button class="button" type="submit" tabindex="6">Save</button>
                 <button class="button red modal_finance-deleteButton" type="button" ng-if="!!activeFinance._id" ng-click="doDisableFinance(finance)">delete</button>
             </div>
         </form>
