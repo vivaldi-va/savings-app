@@ -12,7 +12,7 @@
     </span>
 </div>
 <div class="finance-item-wrapper" ng-repeat="finance in finances.income | hideDeleted" ng-click="doOpenEditFinanceModal(finance)">
-	<div class="finance-item blue" ng-class="{active: openFinance===finance}">
+	<div class="finance-item blue" ng-class="{active: activeFinance===finance && !!activeFinance.active}">
 		<div class="finance-item-amount-wrapper">
 			<div class="finance-item-amount">{{ finance.amount | currency }}</div>
 			<div class="finance-item-time-meta">

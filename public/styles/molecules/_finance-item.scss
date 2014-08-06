@@ -1,3 +1,10 @@
+.finance-item-amount-wrapper {
+	float: left;
+	margin: 0 0.5em 0 0;
+	padding: 0 0 0 0.5em;
+	text-align: left;
+}
+
 .finance-item {
 
 	display: flex;
@@ -7,7 +14,7 @@
 	height: 54px;
 
 	padding: 10px 1em 0 3px;
-	margin: 0 0 2px;
+	margin: 0 0 4px;
 
 	background: $muted;
 	color: $white;
@@ -15,30 +22,30 @@
 	border-radius: 6px;
 	cursor: pointer;
 
+	text-shadow: 0 1px $black28;
+
 
 
 	&.blue {
 		background: $blueLight;
+		box-shadow: 0 2px $blue;
 
 		&.active {
 			background: $blue;
+			box-shadow: 0 2px darken($blue, 10%);
 		}
 	}
 
 	&.red {
 		background: $redLight;
+
+		box-shadow: 0 2px $red;
+
 		&.active {
 			background: $red;
+			box-shadow: 0 2px darken($red, 10%);
 		}
 	}
-}
-
-
-.finance-item-amount-wrapper {
-	float: left;
-	margin: 0 0.5em 0 0;
-	padding: 0 0 0 0.5em;
-	text-align: left;
 }
 
 .finance-item-amount {
@@ -49,15 +56,21 @@
 .finance-item-time-meta {
 	font-size: 0.75em;
 	font-weight: 600;
-	text-transform: uppercase;
-	opacity: 0.85;
 	letter-spacing: 0.04em;
+
+	text-transform: uppercase;
+	text-shadow: none;
+
+	opacity: 0.85;
 }
 
 .finance-item-name {
 	float: left;
 	flex-grow: 1;
+
+	font-size: 1.125em;
 	font-weight: 600;
+	letter-spacing: 0.035em;
 	text-align: right;
 	text-transform: capitalize;
 }

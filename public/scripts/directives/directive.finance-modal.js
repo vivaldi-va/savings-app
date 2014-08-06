@@ -54,13 +54,14 @@ angular.module('Savings.Directives')
 				}
 
 				scope.submit = function() {
+					scope.errors = false; // reset errors on each try
+
 					if(!scope.finance._id) {
 						_createNewFinance();
 					} else {
 						_modifyFinance();
 					}
 
-					$timelineService.getTimeline();
 						/*.then(function(success) {
 							$rootScope.timeline = success;
 						});*/
@@ -69,7 +70,6 @@ angular.module('Savings.Directives')
 
 
 				function _createNewFinance() {
-					scope.errors = false; // reset errors on each try
 					$financeService.createFinance(scope.finance)
 						.then(
 						function(success) {
@@ -89,6 +89,8 @@ angular.module('Savings.Directives')
 							}
 
 							_hideModal();
+
+							$timelineService.getTimeline();
 							$log.info("DEBUG: inserting finance item", scope.finance);
 
 						},
@@ -107,6 +109,8 @@ angular.module('Savings.Directives')
 							function (success) {
 								scope.updating = false;
 								_hideModal();
+
+								$timelineService.getTimeline();
 								$log.info("DEBUG: modifying finance item successful");
 							},
 							function (reason) {
