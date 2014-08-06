@@ -10,7 +10,9 @@ angular.module('Savings.Services')
 			messages: function(array) {
 				var formattedErrors = {};
 				angular.forEach(array, function(error) {
-					formattedErrors[error.param] = error.msg;
+					if(!formattedErrors[error.param]) {
+						formattedErrors[error.param] = error.msg;
+					}
 				});
 				return formattedErrors;
 			}

@@ -6,6 +6,8 @@ angular.module('Savings.Controllers')
 	.controller('LoginCtrl', function($scope, $log, $location, $userService) {
 
 
+		$scope.errors = false;
+
 		/**
 		 * if the browser auto-inserts form values, add them to relevant scope
 		 */
@@ -23,6 +25,7 @@ angular.module('Savings.Controllers')
 
 
 		$scope.submit = function() {
+			$scope.errors = false;
 			$userService.login($scope.email, $scope.password)
 				.then(
 					function(success) {
@@ -31,6 +34,7 @@ angular.module('Savings.Controllers')
 					},
 					function(reason) {
 						$log.warn('ERR', "Login:", reason);
+						$scope.errors = reason;
 					});
 		};
 	});

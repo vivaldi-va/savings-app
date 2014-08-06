@@ -4,11 +4,17 @@
 	<form name="loginForm" ng-submit="submit()" class="offset-3 col-6">
 		<h2>Log In:</h2>
 		<div class="input-group">
-			<label for="email" class="input-label">Email:</label>
+            <div class="input-group-label">
+			    <label for="email" class="input-label">Email:</label>
+                <span class="form-error" ng-if="!!errors && !!errors.email">{{ errors.email}}</span>
+            </div>
 			<input id="email" type="email" class="input" ng-model="email">
 		</div>
 		<div class="input-group">
-			<label for="password" class="input-label">Password:</label>
+            <div class="input-group-label">
+			    <label for="password" class="input-label">Password:</label>
+                <span class="form-error" ng-if="!!errors && !!errors.password">{{ errors.password}}</span>
+            </div>
 			<input id="password" type="password" class="input" ng-model="password">
 		</div>
 

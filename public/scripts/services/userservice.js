@@ -4,7 +4,7 @@
 
 
 angular.module('Savings.Services')
-	.factory('$userService', function($http, $q, $log, $rootScope) {
+	.factory('$userService', function($http, $q, $log, $rootScope, ErrorService) {
 
 		function _session() {
 			var dfd = $q.defer();
@@ -44,7 +44,20 @@ angular.module('Savings.Services')
 				})
 				.error(function(reason) {
 					$log.warn('ERR', "user login failed", reason);
-					dfd.reject(reason);
+
+					var errors = reason;
+					if(typeof reason === 'object') {
+						errors = ErrorService.messages(reason)
+					} else if(reason === 'ERR_BAD_PASS') {
+						errors = {
+							'password': "Incorrect password"
+						}
+					} else if(reason === 'ERR_NO_USER') {
+						errors = {
+							'email': "Email not found"
+						}
+					}
+					dfd.reject(errors);
 				});
 			return dfd.promise;
 		}
