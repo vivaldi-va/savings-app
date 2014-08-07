@@ -104,19 +104,63 @@ angular.module('Savings.Services')
 				});
 		}
 
-		function _changeCurrencyFormat(currency) {
+
+
+
+		function _requestRecover(email) {
+			$log.debug('UserService', 'Recovery request');
+			var dfd = $q.defer();
+			$http({
+				url: '/api/user/passreset',
+				method: 'post',
+				data: {email: email}
+			})
+				.success(function(data, status) {
+					dfd.resolve();
+				})
+				.error(function(err, status) {
+					dfd.reject(err);
+				});
+
+			return dfd.promise;
+		}
+
+
+		function _validatePassResetToken(token) {
+			var dfd = $q.defer();
+			$http({
+				url: '/api/user/passreset/' + token,
+				method: 'get'
+			})
+				.success(function(data, status) {
+					dfd.resolve();
+				})
+				.error(function(err, status) {
+					dfd.reject(err);
+				});
+
+			return dfd.promise;
+		}
+
+		function _resetPass(token, password) {
+
 			var dfd = $q.defer();
 
 			$http({
-				"url": '/api/user/currency/' + currency,
-				"method": 'put'
+				url: '/api/user/passreset/' + token,
+				method: 'put',
+				data: {password: password}
 			})
-				.success(function(status) {
-					if(!status.success) dfd.reject(status.error);
+				.success(function(data, status) {
 					dfd.resolve();
 				})
-				.error(function(reason) {
-					dfd.reject(reason);
+				.error(function(err, status) {
+
+					if(typeof err === 'object') {
+						dfd.reject(ErrorService.messages(err));
+					} else {
+						dfd.reject(err);
+					}
 				});
 
 			return dfd.promise;
@@ -127,6 +171,9 @@ angular.module('Savings.Services')
 			session: _session,
 			login: _login,
 			register: _register,
-			logout: _logout
+			logout: _logout,
+			validateRecoverRequest: _validatePassResetToken,
+			requestRecovery: _requestRecover,
+			recover: _resetPass
 		}
 	});
