@@ -12,11 +12,11 @@ $black28: rgba($black, 0.28);
 
 $muted: #999999;
 
-$blue: #38AEDD;
-$blueLight: lighten(#38AEDD, 15%);
+$blue: #279ddd;
+$blueLight: lighten($blue, 15%);
 
 $red: #E22E07;
-$redLight: lighten(#E22E07, 15%);
+$redLight: lighten($red, 15%);
 
 $color-warning: #fcb514;
 $color-danger: #e87511;
