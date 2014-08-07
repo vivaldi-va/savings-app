@@ -1,0 +1,11 @@
+.text {
+	&-warn {
+		color: $color-warning;
+	}
+	&-danger {
+		color: $color-danger;
+	}
+	&-error {
+		color: $color-error;
+	}
+}

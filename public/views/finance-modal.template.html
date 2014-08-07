@@ -19,12 +19,11 @@
                     <div class="input-group">
                         <div class="input-group-label">
                             <label for="finances-name" class="input-label required">name</label>
+
                             <span class="form-error" ng-if="!!errors && !!errors.name">{{ errors.name }}</span>
+                            <span class="input-char-count" ng-class="{'text-warn': activeFinance.name.length>25, 'text-danger': activeFinance.name.length>40, 'text-error': activeFinance.name.length>50}">{{ 50 | charsLeft:activeFinance.name }}</span>
                         </div>
-                        <div class="input-with-label">
-                            <input id="finances-name" class="input" type="text" ng-model="activeFinance.name" tabindex="1">
-                            <span class="input-char-count">{{ 50 | charsLeft:activeFinance.name }}</span>
-                        </div>
+                        <input id="finances-name" class="input" type="text" ng-model="activeFinance.name" tabindex="1">
                     </div>
 
 
@@ -58,7 +57,11 @@
                     </div>
 
                     <div class="input-group">
-                        <label for="finances-description" class="input-label">description</label>
+                        <div class="input-group-label">
+                            <label for="finances-description" class="input-label">description</label>
+                            <span class="input-char-count" ng-class="{'text-warn': activeFinance.description.length>100, 'text-danger': activeFinance.description.length>120, 'text-error': activeFinance.description.length>150}">{{ 150 | charsLeft:activeFinance.description }}</span>
+                        </div>
+
                         <textarea id="finances-description" class="input" name="description" cols="10" rows="10" ng-model="activeFinance.description" tabindex="5"></textarea>
                     </div>
                 </div>
