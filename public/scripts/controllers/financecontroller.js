@@ -67,16 +67,21 @@ angular.module('Savings.Controllers')
 
 		};
 
-		$scope.doOpenNewFinanceModal = function(type) {
-			$scope.activeFinance = {
-				"active": true,
-				"type": type,
-				"name": null,
-				"amount": null,
-				"date": null,
-				"interval": 0,
-				"description": ''
-			};
+		$scope.doToggleNewFinanceModal = function(type) {
+
+			if($scope.activeFinance.active) {
+				$scope.activeFinance.active = false;
+			} else {
+				$scope.activeFinance = {
+					"active": true,
+					"type": type,
+					"name": null,
+					"amount": null,
+					"date": null,
+					"interval": 0,
+					"description": ''
+				};
+			}
 		};
 
 
