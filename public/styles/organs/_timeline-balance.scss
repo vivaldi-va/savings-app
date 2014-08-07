@@ -1,10 +1,13 @@
 .timeline-balance {
+	display: inline-flex;
+	justify-content: space-between;
+	
 	position: absolute;
 	top: 0;
 	left: 0;
 	z-index: 1001;
 	width: 100%;
-	padding: 1em 0 0;
+	padding: 1em 1em 0;
 	background: #dfdfdf;
 
 	&:after {
@@ -38,8 +41,7 @@
 }
 
 .timeline-balance-item {
-	float: left;
-	width: 25%;
+	flex-shrink: 0;
 	text-align: center;
 
 	line-height: 35px;
@@ -47,7 +49,7 @@
 	font-weight: 600;
 
 	&.middle {
-		width: 50%;
+		flex-grow: 1;
 	}
 }
 
