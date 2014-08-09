@@ -14,6 +14,14 @@ angular.module('Savings.Config')
 				"controller": "LoginCtrl",
 				"templateUrl": "views/login.html"
 			})
+			.when('/passreset/:token', {
+				"controller": "RecoverCtrl",
+				"templateUrl": "views/passreset.partial.html"
+			})
+			.when('/passreset', {
+				"controller": "RecoverCtrl",
+				"templateUrl": "views/passreset.partial.html"
+			})
 			.when('/timeline', {
 				"controller": "FinanceCtrl",
 				"templateUrl": "views/timeline.html"

@@ -1,0 +1,43 @@
+<div class="row">
+
+
+
+    <form ng-submit="submitRequest(email)" class="offset-3 col-6" ng-if="!token">
+        <h2>Recover account:</h2>
+
+        {{ email }}
+        <div class="input-group">
+            <div class="input-group-label">
+                <label for="email" class="input-label">Email:</label>
+                <span class="form-error" ng-if="!!errors && !!errors.email">{{ errors.email}}</span>
+            </div>
+
+            <input id="email" type="email" class="input" ng-model="email">
+        </div>
+        <button class="button" type="submit">Request recovery</button>
+        <span class="text-success" ng-show="formSuccess">recovery request received, check your email for reset link</span>
+    </form>
+
+    <form ng-submit="submitReset(password1, password2)" class="offset-3 col-6" ng-if="token">
+        <h2>Recover account:</h2>
+
+        <div class="input-group">
+            <div class="input-group-label">
+                <label for="password1" class="input-label">new password:</label>
+                <span class="form-error" ng-if="!!errors && !!errors.password">{{ errors.password}}</span>
+            </div>
+
+            <input id="password1" type="password" class="input" ng-model="password1">
+        </div>
+        <div class="input-group">
+            <label for="password2" class="input-label">repeat password:</label>
+
+            <input id="password2" type="password" class="input" ng-model="password2">
+        </div>
+
+        <button class="button" type="submit">Change password</button>
+
+        <span class="text-success" ng-show="formSuccess">Password changed successfully</span>
+        <a href="#/login" ng-show="formSuccess">try logging in</a>
+    </form>
+</div>

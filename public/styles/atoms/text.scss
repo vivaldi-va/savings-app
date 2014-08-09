@@ -1,4 +1,8 @@
 .text {
+	&-success {
+		color: $color-success;
+	}
+
 	&-warn {
 		color: $color-warning;
 	}
