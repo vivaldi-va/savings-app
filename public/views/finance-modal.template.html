@@ -69,7 +69,7 @@
             <div class="row modal_finance-footer">
                 <button class="button" type="button" ng-click="hideModal(true)">Cancel</button>
                 <button class="button" type="submit" tabindex="6">Save</button>
-                <button class="button red modal_finance-deleteButton" type="button" ng-if="!!activeFinance._id" ng-click="doDisableFinance(finance)">delete</button>
+                <button class="button red modal_finance-deleteButton" type="button" ng-if="!!activeFinance._id" ng-click="doDisableFinance(activeFinance)">delete</button>
             </div>
         </form>
 

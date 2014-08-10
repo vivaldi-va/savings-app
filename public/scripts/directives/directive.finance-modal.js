@@ -54,6 +54,13 @@ angular.module('Savings.Directives')
 							scope.showNewExpenseForm	= false;
 							scope.activeFinance['_id']		= success._id;
 
+							if(!$rootScope.finances) {
+								$rootScope.finances	= {
+									"income": [],
+									"expenses": []
+								};
+							}
+
 							if(success.type===0) {
 								$rootScope.finances.income.push(scope.activeFinance);
 							}
@@ -152,7 +159,8 @@ angular.module('Savings.Directives')
 				scope.doDisableFinance = function(finance) {
 
 
-					//$log.info()
+
+					$log.info(finance);
 					$financeService.disableFinance(finance._id)
 						.then(
 						function(success) {
