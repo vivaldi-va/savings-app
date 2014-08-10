@@ -166,6 +166,28 @@ angular.module('Savings.Services')
 			return dfd.promise;
 		}
 
+		function _verifyRequest(token) {
+			var dfd = $q.defer();
+
+			$http({
+				url: '/api/user/verify/' + token,
+				method: 'put'
+			})
+				.success(function(data, status) {
+					dfd.resolve();
+				})
+				.error(function(err, status) {
+
+					if(typeof err === 'object') {
+						dfd.reject(ErrorService.messages(err));
+					} else {
+						dfd.reject(err);
+					}
+				});
+
+			return dfd.promise;
+		}
+
 
 		return {
 			session: _session,
@@ -174,6 +196,7 @@ angular.module('Savings.Services')
 			logout: _logout,
 			validateRecoverRequest: _validatePassResetToken,
 			requestRecovery: _requestRecover,
-			recover: _resetPass
-		}
+			recover: _resetPass,
+			verify: _verifyRequest
+		};
 	});

@@ -22,6 +22,16 @@ angular.module('Savings.Config')
 				"controller": "RecoverCtrl",
 				"templateUrl": "views/passreset.partial.html"
 			})
+			.when('/verify/:token', {
+				"controller": "VerifyCtrl",
+				"templateUrl": "views/verify.partial.html"
+			})
+
+			.when('/verify', {
+				"controller": "VerifyCtrl",
+				"templateUrl": "views/verify.partial.html"
+			})
+
 			.when('/timeline', {
 				"controller": "FinanceCtrl",
 				"templateUrl": "views/timeline.html"

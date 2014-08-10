@@ -17,7 +17,7 @@ angular.module('Savings', [
 		$log.info('Locale:', $locale.id);
 
 
-		$rootScope.logged_in 	= false;
+		$rootScope.logged_in	= false;
 		$rootScope.errors		= [];
 		$rootScope.timeline		= null;
 		$rootScope.finances		= {
@@ -56,8 +56,6 @@ angular.module('Savings', [
 						_trueLogin();
 					});
 				}
-
-
 			},
 			function(reason) {
 				$log.debug('DEBUG:', "No session :c");
@@ -70,10 +68,13 @@ angular.module('Savings', [
 	.run(function($rootScope, $location, $log) {
 		$rootScope.$on('$routeChangeStart', function(e, next, current) {
 			$log.info('ROUTE:', "Changing route to", next.$$route.originalPath);
-			if(!$rootScope.logged_in
-				&& next.$$route.originalPath != '/login'
-				&& next.$$route.originalPath != '/register'
-				&& !next.$$route.originalPath.match(/\/passreset(\/[a-zA-Z0-9]+)?/)) {
+			if(!$rootScope.logged_in &&
+				next.$$route.originalPath !== '/login' &&
+				next.$$route.originalPath !== '/register'&&
+				!next.$$route.originalPath.match(/\/passreset(\/[a-zA-Z0-9]+)?/) &&
+				!next.$$route.originalPath.match(/\/verify(\/[a-zA-Z0-9]+)?/))
+			{
+
 				$location.path('/login');
 			}
 		});
