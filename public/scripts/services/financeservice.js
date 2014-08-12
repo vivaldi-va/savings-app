@@ -3,7 +3,7 @@
  */
 
 angular.module('Savings.Services')
-	.factory('$financeService', function($http, $q, $log, ErrorService) {
+	.factory('$financeService', function($http, $q, $log, $cookies, ErrorService) {
 
 		function _createFinance(data) {
 			var dfd = $q.defer();
@@ -11,7 +11,8 @@ angular.module('Savings.Services')
 			$http({
 				url: '/api/finances',
 				method: 'post',
-				data: data
+				data: data,
+				headers: {'Authorization': $cookies.saToken}
 			})
 				.success(function(status) {
 					$log.info("DEBUG: create finance ", status);
@@ -33,7 +34,8 @@ angular.module('Savings.Services')
 
 			$http({
 				url: '/api/finances',
-				method: 'get'
+				method: 'get',
+				headers: {'Authorization': $cookies.saToken}
 			})
 				.success(function(data) {
 					$log.warn('DEBUG: finances data ', data);
@@ -53,7 +55,8 @@ angular.module('Savings.Services')
 			$http({
 				url: '/api/finances/' + item._id,
 				method: 'put',
-				data: item
+				data: item,
+				headers: {'Authorization': $cookies.saToken}
 			})
 				.success(function(status) {
 					$log.info('DEBUG: finance item modified');
@@ -73,7 +76,8 @@ angular.module('Savings.Services')
 
 			$http({
 				url: '/api/finances/' + id,
-				method: 'delete'
+				method: 'delete',
+				headers: {'Authorization': $cookies.saToken}
 			})
 				.success(function(status) {
 					$log.info('DEBUG: finance item disabled');

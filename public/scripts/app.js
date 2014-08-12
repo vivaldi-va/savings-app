@@ -1,6 +1,6 @@
 'use strict';
 angular.module('Savings.Config', []);
-angular.module('Savings.Services', []);
+angular.module('Savings.Services', ['ngCookies']);
 angular.module('Savings.Directives', ['ngQuickDate']);
 angular.module('Savings.Controllers', []);
 angular.module('Savings.Filters', []);
@@ -13,7 +13,7 @@ angular.module('Savings', [
 		'Savings.Controllers',
 		'Savings.Filters'
 	])
-	.run(function($rootScope, $location, $log, $userService, $locale, $timeout, $http) {
+	.run(function($rootScope, $location, $log, $userService, $locale, $timeout, $http, $cookies) {
 		$log.info('Locale:', $locale.id);
 
 
@@ -37,32 +37,38 @@ angular.module('Savings', [
 				$location.path('/timeline');
 			});
 		}
-		$userService.session().then(
-			function(success) {
 
-				if(!window.localStorage.locale) {
-					$http.get('http://ipinfo.io/json')
-						.success(function(data) {
-							var countryCode = data.country.toLowerCase();
-							window.localStorage.setItem('locale', countryCode);
+		if($cookies.saIdent) {
+			_trueLogin();
+		} else {
 
-							$log.info('DEBUG:', "country code", countryCode);
-							$log.info('DEBUG:', "country script", '/bower_components/angular-i18n/angular-locale_' + countryCode + '.js');
-							$log.debug('DEBUG:', "Loaded locale script");
+			$userService.session().then(
+				function(success) {
+
+					if(!window.localStorage.locale) {
+						$http.get('http://ipinfo.io/json')
+							.success(function(data) {
+								var countryCode = data.country.toLowerCase();
+								window.localStorage.setItem('locale', countryCode);
+
+								$log.debug('DEBUG:', "country code", countryCode);
+								$log.debug('DEBUG:', "country script", '/bower_components/angular-i18n/angular-locale_' + countryCode + '.js');
+								$log.debug('DEBUG:', "Loaded locale script");
+								_trueLogin();
+							});
+					} else {
+						$timeout(function() {
 							_trueLogin();
 						});
-				} else {
-					$timeout(function() {
-						_trueLogin();
-					});
-				}
-			},
-			function(reason) {
-				$log.debug('DEBUG:', "No session :c");
-				$rootScope.errors.push(reason);
-				$location.path('/login');
-				$rootScope.logged_in = false;
-			});
+					}
+				},
+				function(reason) {
+					$log.debug('DEBUG:', "No session :c");
+					$rootScope.errors.push(reason);
+					$location.path('/login');
+					$rootScope.logged_in = false;
+				});
+		}
 
 	})
 	.run(function($rootScope, $location, $log) {
