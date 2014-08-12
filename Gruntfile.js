@@ -310,7 +310,20 @@ module.exports = function (grunt) {
 						cwd: '.tmp/images',
 						dest: '<%= yeoman.dist %>/public/images',
 						src: ['generated/*']
+					},
+					{
+						expand: true,
+						cwd: '<%= yeoman.app %>/bower_components/font-awesome/',
+						dest: '<%= yeoman.dist %>/public',
+						src: ['fonts/*']
+					},
+					{
+						expand: true,
+						cwd: '<%= yeoman.app %>/bower_components/',
+						dest: '<%= yeoman.dist %>/public/bower_components',
+						src: ['angular-i18n/*']
 					}
+
 				]
 			},
 			styles: {
@@ -342,8 +355,7 @@ module.exports = function (grunt) {
 				//'copy:styles',
 				'imagemin',
 				'svgmin',
-				'htmlmin',
-				'sass'
+				'htmlmin'
 			]
 		},
 
@@ -368,7 +380,7 @@ module.exports = function (grunt) {
 					style: 'expanded'
 				},
 				files: {
-					'<%= yeoman.app %>/styles/app.css': '<%= yeoman.app %>/styles/app.scss'
+					'.tmp/styles/app.css': '<%= yeoman.app %>/styles/app.scss'
 				}
 			},
 			test: {
@@ -523,6 +535,8 @@ module.exports = function (grunt) {
 		'concat',
 		'ngmin',
 		'copy:dist',
+		'sass:dist',
+		'autoprefixer:dist',
 		'cssmin',
 		'uglify',
 		'rev',
