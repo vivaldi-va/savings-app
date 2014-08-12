@@ -26,19 +26,13 @@ angular.module('Savings.Config')
 				"controller": "VerifyCtrl",
 				"templateUrl": "views/verify.partial.html"
 			})
-
 			.when('/verify', {
 				"controller": "VerifyCtrl",
 				"templateUrl": "views/verify.partial.html"
 			})
-
 			.when('/timeline', {
 				"controller": "FinanceCtrl",
 				"templateUrl": "views/timeline.html"
-			})
-			.when('/jwt', {
-				"controller": "JWTCtrl",
-				"templateUrl": "views/login.html"
 			})
 			.otherwise({
 				"redirectTo": '/timeline'
