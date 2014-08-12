@@ -36,6 +36,10 @@ angular.module('Savings.Config')
 				"controller": "FinanceCtrl",
 				"templateUrl": "views/timeline.html"
 			})
+			.when('/jwt', {
+				"controller": "JWTCtrl",
+				"templateUrl": "views/login.html"
+			})
 			.otherwise({
 				"redirectTo": '/timeline'
 			});

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('Savings.Config', []);
-angular.module('Savings.Services', []);
+angular.module('Savings.Services', ['ngCookies']);
 angular.module('Savings.Directives', ['ngQuickDate']);
 angular.module('Savings.Controllers', []);
 angular.module('Savings.Filters', []);

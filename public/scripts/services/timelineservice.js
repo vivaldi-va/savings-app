@@ -3,7 +3,7 @@
  */
 
 angular.module('Savings.Services')
-	.factory('$timelineService', function($http, $q, $log, $rootScope) {
+	.factory('$timelineService', function($http, $q, $log, $rootScope, $cookies) {
 		function _getTimelineData(past) {
 			$log.info('DEBUG: getTimeline');
 			var dfd = $q.defer();
@@ -11,7 +11,8 @@ angular.module('Savings.Services')
 
 			$http({
 				url: '/api/timeline',
-				method: 'get'
+				method: 'get',
+				headers: {'Authorization': $cookies.saToken}
 			})
 				.success(function(data, status) {
 					$log.info('DEBUG: getTimeline HTTP request received');
@@ -42,7 +43,8 @@ angular.module('Savings.Services')
 			return $http({
 				url: '/api/timeline/modify',
 				method: 'PUT',
-				data: data
+				data: data,
+				headers: {'Authorization': $cookies.saToken}
 			});
 		}
 
