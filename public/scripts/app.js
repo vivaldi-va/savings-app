@@ -19,12 +19,13 @@ angular.module('Savings', [
 		$rootScope.logged_in	= false;
 		$rootScope.errors		= [];
 		$rootScope.timeline	= null;
+		$rootScope.assistance	= true;
 		$rootScope.finances	= {
 			"income": [],
 			"expenses": []
 		};
 
-		$log.debug('DEBUG:', "check route",$location.path() !== '/login' && $location.path() !== '/register');
+		$log.debug('DEBUG:', "check route", $location.path() !== '/login' && $location.path() !== '/register');
 
 		$log.debug('DEBUG:', "check for session");
 
@@ -37,37 +38,38 @@ angular.module('Savings', [
 			});
 		}
 
-		if($cookies.saIdent) {
-			_trueLogin();
-		} else {
 
-			$userService.session().then(
-				function(success) {
+		$userService.session().then(
+			function(success) {
 
-					if(!window.localStorage.locale) {
-						$http.get('http://ipinfo.io/json')
-							.success(function(data) {
-								var countryCode = data.country.toLowerCase();
-								window.localStorage.setItem('locale', countryCode);
+				if(!success.attrs.assistance) {
+					$rootScope.assistance = false;
+				}
 
-								$log.debug('DEBUG:', "country code", countryCode);
-								$log.debug('DEBUG:', "country script", '/bower_components/angular-i18n/angular-locale_' + countryCode + '.js');
-								$log.debug('DEBUG:', "Loaded locale script");
-								_trueLogin();
-							});
-					} else {
-						$timeout(function() {
+				if(!window.localStorage.locale || success.attrs.i18n_code) {
+					$http.get('http://ipinfo.io/json')
+						.success(function(data) {
+							var countryCode = data.country.toLowerCase();
+							window.localStorage.setItem('locale', countryCode);
+
+							$log.debug('DEBUG:', "country code", countryCode);
+							$log.debug('DEBUG:', "country script", '/bower_components/angular-i18n/angular-locale_' + countryCode + '.js');
+							$log.debug('DEBUG:', "Loaded locale script");
 							_trueLogin();
 						});
-					}
-				},
-				function(reason) {
-					$log.debug('DEBUG:', "No session :c");
-					$rootScope.errors.push(reason);
-					$location.path('/login');
-					$rootScope.logged_in = false;
-				});
-		}
+				} else {
+					$timeout(function() {
+						_trueLogin();
+					});
+				}
+			},
+			function(reason) {
+				$log.debug('DEBUG:', "No session :c");
+				$rootScope.errors.push(reason);
+				$location.path('/login');
+				$rootScope.logged_in = false;
+			});
+
 
 	})
 	.run(function($rootScope, $location, $log) {

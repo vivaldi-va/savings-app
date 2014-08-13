@@ -3,7 +3,7 @@
  */
 
 angular.module('Savings.Controllers')
-	.controller('FinanceCtrl', ['$scope', '$rootScope', '$financeService', '$log', '$timeout', '$locale', function($scope, $rootScope, $financeService, $log, $timeout, $locale) {
+	.controller('FinanceCtrl', ['$scope', '$rootScope', '$financeService', '$log', '$timeout', '$locale', 'AssistanceService', function($scope, $rootScope, $financeService, $log, $timeout, $locale, AssistanceService) {
 
 
 		$scope.errors = [];
@@ -46,6 +46,7 @@ angular.module('Savings.Controllers')
 		$log.info('Currency Symbol', $locale.NUMBER_FORMATS.CURRENCY_SYM);
 
 
+
 		$financeService.getFinances
 			.then(
 				function(success) {
@@ -84,8 +85,17 @@ angular.module('Savings.Controllers')
 			}
 		};
 
+		$scope.$on('$viewContentLoaded', function() {
+		});
+
+		$scope.$on('$includeContentLoaded', function(event) {
+			console.log(event);
+			AssistanceService.start();
+		});
+
 
 		$scope.$watch('activeFinance', function(oldVal, newVal) {
 			$log.info('FinanceCtrl', "is modal active?", oldVal, newVal);
 		});
+
 	}]);

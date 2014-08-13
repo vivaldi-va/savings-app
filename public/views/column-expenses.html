@@ -1,7 +1,7 @@
 <div class="column-heading">
     <div class="column-title-wrapper">
         <span class="column-title">expenses</span>
-        <button class="button column-title-button" type="button" ng-click="doToggleNewFinanceModal(1)">track new expense</button>
+        <button id="newExpenseButton" class="button column-title-button" type="button" ng-click="doToggleNewFinanceModal(1)">track new expense</button>
 </div>
     <span class="column-totals expenses" ng-if="finances.expenses.length">
         <em>{{ finances.attrs.expenses.count }}</em>

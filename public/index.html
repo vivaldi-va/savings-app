@@ -24,6 +24,7 @@
 	<link rel="stylesheet" href="styles/app.css">
 	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
 	<link rel="stylesheet" href="bower_components/drop/css/drop-theme-arrows-bounce.css" />
+	<link rel="stylesheet" href="bower_components/anno/anno.css" />
 	<!-- endbuild -->
 
 </head>
@@ -86,12 +87,15 @@ mixpanel.init("a938dc133bc4ccee5242d1edc1229faa");</script><!-- end Mixpanel -->
 
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.js"></script>
 <script src="bower_components/ftscroller/lib/ftscroller.js"></script>
 <script src="bower_components/scriptjs/dist/script.js"></script>
 <script src="bower_components/drop/drop.js"></script>
+<script src="bower_components/anno/bower_components/scrollintoview/jquery.scrollintoview.js"></script>
+<script src="bower_components/anno/anno.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -112,6 +116,7 @@ mixpanel.init("a938dc133bc4ccee5242d1edc1229faa");</script><!-- end Mixpanel -->
 <script src="scripts/services/timelineservice.js"></script>
 <script src="scripts/services/userservice.js"></script>
 <script src="scripts/services/errormessage.service.js"></script>
+<script src="scripts/services/assistance.service.js"></script>
 
 <script src="scripts/directives/timelineitemdirective.js"></script>
 <script src="scripts/directives/ngquickdatedirective.js"></script>

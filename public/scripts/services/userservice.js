@@ -13,9 +13,9 @@ angular.module('Savings.Services')
 				method: 'get'
 			})
 				.success(function(data) {
-					$rootScope.user = data.data;
+					$rootScope.user = data;
 
-					dfd.resolve();
+					dfd.resolve(data);
 				})
 				.error(function(reason) {
 					$log.warn('ERR:', "Getting user session failed", reason);
@@ -187,6 +187,7 @@ angular.module('Savings.Services')
 
 			return dfd.promise;
 		}
+
 
 
 		return {
