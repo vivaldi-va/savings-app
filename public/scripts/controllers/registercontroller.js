@@ -45,6 +45,17 @@ angular.module('Savings.Controllers')
 						function(success) {
 							$scope.registerSuccess = true;
 
+							mixpanel.identify(success._id);
+							mixpanel.track("New account created", {
+								"id": success._id
+							});
+							mixpanel.people.set({
+								"$created": new Date(),
+								"$last_login": new Date(),
+								"$email": $scope.email,
+								"$name": $scope.username
+							});
+
 							$userService.login($scope.email, $scope.password)
 								.then(
 									function(loginSuccess) {

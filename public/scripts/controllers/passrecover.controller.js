@@ -31,6 +31,10 @@ angular.module('Savings.Controllers')
 
 		$scope.submitRequest = function(email) {
 
+			mixpanel.track("Password recovery request", {
+				"$email": email
+			});
+
 			$scope.errors = null;
 			$log.debug('Submit recovery request', $scope.email, email);
 			if(email.length) {
@@ -50,6 +54,7 @@ angular.module('Savings.Controllers')
 			if(password1 !== password2) {
 				$scope.errors = {"password": "passwords don't match"};
 			} else {
+				mixpanel.track("Reset password");
 				$userService.recover($scope.token, password1)
 					.then(function() {
 						$scope.formSuccess = true;

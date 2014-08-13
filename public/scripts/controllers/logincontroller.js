@@ -29,7 +29,11 @@ angular.module('Savings.Controllers')
 			$userService.login($scope.email, $scope.password)
 				.then(
 					function(success) {
-						$log.info('Login:', "login success");
+						$log.info('Login:', "login success", success);
+						mixpanel.track("Logged in", {
+							"id": success._id
+						});
+						mixpanel.identify(success._id);
 						$location.path('/timeline')
 					},
 					function(reason) {

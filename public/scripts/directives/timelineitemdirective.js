@@ -23,6 +23,9 @@ angular.module('Savings.Directives')
 				$timeout(function(){
 					scope.item = ngModelCtrl.$modelValue;
 					scope.updateItem = function() {
+
+						mixpanel.track("Updated a timeline item");
+
 						$timelineService.updateItem(scope.item, attrs.date)
 							.then(
 							function(response) {

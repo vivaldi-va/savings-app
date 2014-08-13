@@ -11,20 +11,22 @@ angular.module('Savings.Controllers')
 
 		if(!$routeParams.token) {
 			$scope.message = "Invalid token";
+		} else {
+			mixpanel.track("User validated their email");
+			$userService.verify($routeParams.token)
+				.then(function() {
+					$scope.success = true;
+					$scope.message = "Email address verified successfully";
+				},
+				function(err) {
+					switch(err) {
+						case 'ERR_BAD_TOKEN':
+							$scope.message = "Error: token is invalid.";
+							break;
+					}
+				});
 		}
 
-		$userService.verify($routeParams.token)
-			.then(function() {
-				$scope.success = true;
-				$scope.message = "Email address verified successfully";
-			},
-			function(err) {
-				switch(err) {
-					case 'ERR_BAD_TOKEN':
-						$scope.message = "Error: token is invalid.";
-						break;
-				}
-			});
 
 
 	});

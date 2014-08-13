@@ -71,6 +71,9 @@ angular.module('Savings.Directives')
 
 							_hideModal();
 
+
+
+
 							$timelineService.getTimeline();
 							$log.info("DEBUG: inserting finance item", scope.activeFinance);
 
@@ -144,8 +147,20 @@ angular.module('Savings.Directives')
 					scope.errors = false; // reset errors on each try
 
 					if(!scope.activeFinance._id) {
+						mixpanel.track("Created a new finance", {
+							"interval": scope.activeFinance.interval,
+							"created": new Date(),
+							"type": scope.activeFinance.type === 0 ? "income" : "expense",
+							"has_description": !!scope.activeFinance.description
+
+						});
 						_createNewFinance();
 					} else {
+						mixpanel.track("Modified a finance",
+							{
+								"id": scope.activeFinance._id,
+								"timestamp": new Date()
+							});
 						_modifyFinance();
 					}
 
@@ -158,9 +173,13 @@ angular.module('Savings.Directives')
 
 				scope.doDisableFinance = function(finance) {
 
+					mixpanel.track("Disabled a finance",
+						{
+							"id": scope.activeFinance._id,
+							"timestamp": new Date()
+						});
 
 
-					$log.info(finance);
 					$financeService.disableFinance(finance._id)
 						.then(
 						function(success) {

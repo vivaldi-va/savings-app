@@ -18,8 +18,8 @@ angular.module('Savings', [
 
 		$rootScope.logged_in	= false;
 		$rootScope.errors		= [];
-		$rootScope.timeline		= null;
-		$rootScope.finances		= {
+		$rootScope.timeline	= null;
+		$rootScope.finances	= {
 			"income": [],
 			"expenses": []
 		};

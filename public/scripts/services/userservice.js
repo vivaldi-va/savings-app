@@ -39,8 +39,8 @@ angular.module('Savings.Services')
 			})
 				.success(function(data) {
 					$rootScope.logged_in = true;
-					$rootScope.user = data.data;
-					dfd.resolve(data.data);
+					$rootScope.user = data;
+					dfd.resolve(data);
 				})
 				.error(function(reason) {
 					$log.warn('ERR', "user login failed", reason);

@@ -12,6 +12,7 @@ angular.module('Savings.Controllers')
 		};
 
 		$scope.logout = function() {
+			mixpanel.track("User logged out");
 			$userService.logout();
 			$rootScope.logged_in = false;
 			$location.path('/login');
