@@ -88,9 +88,16 @@ angular.module('Savings.Controllers')
 		$scope.$on('$viewContentLoaded', function() {
 		});
 
+
+		var columnsLoaded = 0;
 		$scope.$on('$includeContentLoaded', function(event) {
 			console.log(event);
-			AssistanceService.start();
+			columnsLoaded++;
+			if(columnsLoaded === 2) {
+				$timeout(function() {
+					AssistanceService.start();
+				});
+			}
 		});
 
 
