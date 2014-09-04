@@ -4,7 +4,7 @@
 
 
 angular.module('Savings.Filters')
-	.filter('interval', function() {
+	.filter('interval', function($locale) {
 		return function(hours) {
 
 			hours = parseInt(hours);
@@ -20,7 +20,15 @@ angular.module('Savings.Filters')
 					return "each week";
 					break;
 				case 336:
-					return "every other week";
+					var string = "biweekly";
+					if($locale.id === 'en-gb' ||
+						$locale.id === 'en-au' ||
+						$locale.id === 'en-nz') {
+
+						string = "fortnightly";
+					}
+
+					return string;
 					break;
 				case 744:
 					return "every month";

@@ -3,6 +3,7 @@
 	margin: 0 0.5em 0 0;
 	padding: 0 0 0 0.5em;
 	text-align: left;
+	flex-shrink: 0;
 }
 
 .finance-item {
@@ -68,7 +69,7 @@
 	float: left;
 	flex-grow: 1;
 
-	font-size: 1.125em;
+	font-size: 1.075em;
 	font-weight: 600;
 	letter-spacing: 0.035em;
 	text-align: right;
