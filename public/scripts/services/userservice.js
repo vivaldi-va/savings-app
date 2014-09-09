@@ -2,7 +2,7 @@
  * Created by vivaldi on 23/02/14.
  */
 
-
+'use strict';
 angular.module('Savings.Services')
 	.factory('$userService', function($http, $q, $log, $rootScope, ErrorService) {
 

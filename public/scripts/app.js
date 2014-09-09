@@ -16,6 +16,26 @@ angular.module('Savings', [
 		$log.info('Locale:', $locale.id);
 
 
+		$log.debug('sending socket.io handshake with token: %s', $cookies.saToken);
+
+		var socket = io('http://localhost', { query: "token=" + $cookies.saToken });
+
+		socket.on('ready', function() {
+			$log.info('SOCKET', "connected to websocket and joined room probably");
+
+			socket.emit('finances', {});
+
+		});
+
+		socket.on('finance', function(finance) {
+			$log.info("got a finance via sockets", finance);
+
+			$rootScope.finances[finance.type === 0 ? 'income' : 'expenses'].push(finance);
+
+			$rootScope.$apply();
+			$log.debug($rootScope.finances);
+		});
+
 		$rootScope.logged_in	= false;
 		$rootScope.errors		= [];
 		$rootScope.timeline	= null;
