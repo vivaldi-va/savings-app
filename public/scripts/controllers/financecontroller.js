@@ -2,6 +2,8 @@
  * Created by vivaldi on 27/12/13.
  */
 
+'use strict';
+
 angular.module('Savings.Controllers')
 	.controller('FinanceCtrl', ['$scope', '$rootScope', '$financeService', '$log', '$timeout', '$locale', function($scope, $rootScope, $financeService, $log, $timeout, $locale) {
 
@@ -46,15 +48,7 @@ angular.module('Savings.Controllers')
 		$log.info('Currency Symbol', $locale.NUMBER_FORMATS.CURRENCY_SYM);
 
 
-		$financeService.getFinances
-			.then(
-				function(success) {
-					$rootScope.finances = success;
-				},
-				function(reason) {
-					$scope.errors.push(reason);
-				}
-			);
+		$financeService.getFinances();
 
 
 

@@ -2,8 +2,10 @@
  * Created by vivaldi on 27/12/13.
  */
 
+'use strict';
+
 angular.module('Savings.Services')
-	.factory('$financeService', function($http, $q, $log, $cookies, ErrorService) {
+	.factory('$financeService', function($rootScope, $http, $q, $log, $cookies, ErrorService) {
 
 		function _createFinance(data) {
 			var dfd = $q.defer();
@@ -30,23 +32,30 @@ angular.module('Savings.Services')
 		}
 
 		function _getFinances() {
-			var dfd = $q.defer();
+			$log.debug('get finances');
 
-			$http({
-				url: '/api/finances',
-				method: 'get',
-				headers: {'Authorization': $cookies.saToken}
-			})
-				.success(function(data) {
-					$log.warn('DEBUG: finances data ', data);
-					dfd.resolve(data);
-				})
-				.error(function(reason) {
-					$log.warn('ERROR: ' + reason);
-					dfd.reject(reason);
-				});
 
-			return dfd.promise;
+			var socket = io('/finances');
+
+			// reset finances object, to avoid having the same finances
+			// repeated over and over
+			$rootScope.finances = {
+				"income": [],
+				"expenses": []
+			};
+
+
+
+			socket.emit('finances');
+
+			socket.on('finance', function(finance) {
+				$log.info("got a finance via sockets", finance);
+
+				$rootScope.finances[finance.type === 0 ? 'income' : 'expenses'].push(finance);
+				$rootScope.$apply();
+				$log.debug($rootScope.finances);
+			});
+
 		}
 
 		function _modifyFinance(item) {
@@ -94,8 +103,8 @@ angular.module('Savings.Services')
 
 		return {
 			createFinance: _createFinance,
-			getFinances: _getFinances(),
+			getFinances: _getFinances,
 			modifyFinance: _modifyFinance,
 			disableFinance: _disableFinance
-		}
+		};
 	});

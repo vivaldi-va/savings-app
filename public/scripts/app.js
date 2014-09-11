@@ -12,48 +12,42 @@ angular.module('Savings', [
 		'Savings.Controllers',
 		'Savings.Filters'
 	])
-	.run(function($rootScope, $location, $log, $userService, $locale, $timeout, $http, $cookies) {
+	.run(function($rootScope, $location, $log, $userService, $locale, $timeout, $http, $cookies, SocketService) {
 		$log.info('Locale:', $locale.id);
-
-
-		$log.debug('sending socket.io handshake with token: %s', $cookies.saToken);
-
-		var socket = io('http://localhost', { query: "token=" + $cookies.saToken });
-
-		socket.on('ready', function() {
-			$log.info('SOCKET', "connected to websocket and joined room probably");
-
-			socket.emit('finances', {});
-
-		});
-
-		socket.on('finance', function(finance) {
-			$log.info("got a finance via sockets", finance);
-
-			$rootScope.finances[finance.type === 0 ? 'income' : 'expenses'].push(finance);
-
-			$rootScope.$apply();
-			$log.debug($rootScope.finances);
-		});
-
 		$rootScope.logged_in	= false;
 		$rootScope.errors		= [];
 		$rootScope.timeline	= null;
-		$rootScope.finances	= {
+		/*$rootScope.finances	= {
 			"income": [],
 			"expenses": []
-		};
+		};*/
 
 		$log.debug('DEBUG:', "check route",$location.path() !== '/login' && $location.path() !== '/register');
 
 		$log.debug('DEBUG:', "check for session");
 
 		function _trueLogin() {
-			$log.debug('DEBUG:', "Yey there's a session");
-			$rootScope.logged_in = true;
-			$timeout(function() {
-				$log.info('Locale:', $locale.id);
-				$location.path('/timeline');
+
+			/*SocketService.connect()
+				.then(function() {
+					$log.info('SOCKET', "Socket handshake successful");
+				});*/
+
+
+			SocketService.connect(function(err, connected) {
+				if(err) {
+					$log.error('SOCKET', "Socket handshake failed");
+				}
+
+				if(connected) {
+					$log.info('SOCKET', "Socket handshake successful");
+					$log.debug('DEBUG:', "Yey there's a session");
+					$rootScope.logged_in = true;
+					$timeout(function() {
+						$log.info('Locale:', $locale.id);
+						$location.path('/timeline');
+					});
+				}
 			});
 		}
 
@@ -63,7 +57,6 @@ angular.module('Savings', [
 
 			$userService.session().then(
 				function(success) {
-
 					if(!window.localStorage.locale) {
 						$http.get('http://ipinfo.io/json')
 							.success(function(data) {
