@@ -90,21 +90,22 @@ angular.module('Savings.Directives')
 				function _modifyFinance() {
 					scope.updating = true;
 					$financeService
-						.modifyFinance(scope.activeFinance)
-						.then(
-							function (success) {
+						.modifyFinance(scope.activeFinance, function(err, finance) {
+							if(err) {
+								scope.updating = false;
+								scope.errors.push(err);
+							}
+
+							if(finance) {
 								scope.updating = false;
 								_saveState();
 								_hideModal();
 
 								$timelineService.getTimeline();
 								$log.info("DEBUG: modifying finance item successful");
-							},
-							function (reason) {
-								scope.updating = false;
-								scope.errors.push(reason);
 							}
-						);
+						});
+
 				}
 
 

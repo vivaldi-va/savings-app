@@ -40,7 +40,8 @@ angular.module('Savings.Services')
 				"expenses": []
 			};
 
-			socket.emit('finances');
+			//socket.emit('finances');
+			SocketService.send('finances');
 
 			socket.on('finance', function(finance) {
 				$log.info("got a finance via sockets", finance);
@@ -52,28 +53,21 @@ angular.module('Savings.Services')
 
 		}
 
-		function _modifyFinance(item) {
-			var dfd = $q.defer();
+		function _modifyFinance(item, cb) {
+			SocketService.send('finance-modify', {data: item});
 
-			$http({
-				url: '/api/finances/' + item._id,
-				method: 'put',
-				data: item,
-				headers: {'Authorization': $cookies.saToken}
-			})
-				.success(function(status) {
-					$log.info('DEBUG: finance item modified');
-					dfd.resolve();
-				})
-				.error(
-					function(reason) {
-						$log.warn('ERROR: finance item modification failed ', reason);
-						dfd.reject(reason);
-					}
-				);
+			$rootScope.transport.emit('finance-modified', function(msg) {
+				if(msg.error) {
+					$log.error('SOCKET', "Finance failed to be modified", msg.error);
+					cb(msg.error);
+				}
 
-			return dfd.promise;
+				if(msg.success) {
+					cb(null, msg);
+				}
+			});
 		}
+
 		function _disableFinance(id) {
 			var dfd = $q.defer();
 
