@@ -48,7 +48,11 @@ angular.module('Savings.Controllers')
 		$log.info('Currency Symbol', $locale.NUMBER_FORMATS.CURRENCY_SYM);
 
 
-		$financeService.getFinances();
+		$rootScope.$watch('transport', function(newVal) {
+			if(newVal.connected) {
+				$financeService.getFinances();
+			}
+		});
 
 
 

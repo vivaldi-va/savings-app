@@ -13,6 +13,8 @@ angular.module('Savings', [
 		'Savings.Filters'
 	])
 	.run(function($rootScope, $location, $log, $userService, $locale, $timeout, $http, $cookies, SocketService) {
+		$log.debug('Savings.run()');
+
 		$log.info('Locale:', $locale.id);
 		$rootScope.logged_in	= false;
 		$rootScope.errors		= [];
@@ -33,22 +35,19 @@ angular.module('Savings', [
 					$log.info('SOCKET', "Socket handshake successful");
 				});*/
 
-
-			SocketService.connect(function(err, connected) {
-				if(err) {
-					$log.error('SOCKET', "Socket handshake failed");
-				}
-
-				if(connected) {
-					$log.info('SOCKET', "Socket handshake successful");
-					$log.debug('DEBUG:', "Yey there's a session");
-					$rootScope.logged_in = true;
-					$timeout(function() {
-						$log.info('Locale:', $locale.id);
-						$location.path('/timeline');
-					});
-				}
+			$log.info('SOCKET', "Socket handshake successful");
+			$log.debug('DEBUG:', "Yey there's a session");
+			$rootScope.logged_in = true;
+			$timeout(function() {
+				$log.info('Locale:', $locale.id);
+				$location.path('/timeline');
+				SocketService.connect(function(err, connected) {
+					if(err) {
+						$log.error('SOCKET', "Socket handshake failed");
+					}
+				});
 			});
+
 		}
 
 		if($cookies.saIdent) {

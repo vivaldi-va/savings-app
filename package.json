@@ -58,6 +58,7 @@
     "grunt-rev": "~0.1.0",
     "grunt-svgmin": "~0.2.0",
     "grunt-usemin": "~2.0.0",
+    "joi": "^4.6.2",
     "jshint-stylish": "~0.1.3",
     "jsonwebtoken": "~0.4.1",
     "load-grunt-tasks": "~0.2.0",

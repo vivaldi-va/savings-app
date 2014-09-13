@@ -5,37 +5,25 @@
 'use strict';
 
 angular.module('Savings.Services')
-	.factory('$financeService', function($rootScope, $http, $q, $log, $cookies, ErrorService) {
+	.factory('$financeService', function($rootScope, $http, $q, $log, $cookies, ErrorService, SocketService) {
 
-		function _createFinance(data) {
-			var dfd = $q.defer();
+		function _createFinance(data, cb) {
 
-			$http({
-				url: '/api/finances',
-				method: 'post',
-				data: data,
-				headers: {'Authorization': $cookies.saToken}
-			})
-				.success(function(status) {
-					$log.info("DEBUG: create finance ", status);
-					dfd.resolve(status);
-				})
-				.error(function(reason, status) {
+			$log.debug('Savings.Services.FinanceService.createFinance()');
 
-					if(status===400) {
-						dfd.reject(ErrorService.messages(reason));
-					} else {
-						dfd.reject(reason);
-					}
-				});
-			return dfd.promise;
+			$rootScope.transport.emit('add-finance', data);
+
+			$rootScope.transport.on('add-finance--success', function(result) {
+				$log.info("Adding finance successful");
+				$log.info(result);
+				cb(null, result);
+			});
 		}
 
 		function _getFinances() {
-			$log.debug('get finances');
 
-
-			var socket = io('/finances');
+			$log.debug('Savings.Services.FinanceService.getFinances()');
+			var socket = SocketService.getSocket();
 
 			// reset finances object, to avoid having the same finances
 			// repeated over and over
@@ -43,8 +31,6 @@ angular.module('Savings.Services')
 				"income": [],
 				"expenses": []
 			};
-
-
 
 			socket.emit('finances');
 
