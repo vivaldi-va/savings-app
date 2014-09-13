@@ -45,6 +45,8 @@ angular.module('Savings.Directives')
 
 				function _createNewFinance() {
 					$log.debug('Savings.Directives.FinanceModal.createNewFinance()');
+
+					$log.debug(scope.activeFinance);
 					$financeService.createFinance(scope.activeFinance, function(err, result) {
 
 

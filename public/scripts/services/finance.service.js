@@ -14,16 +14,24 @@ angular.module('Savings.Services')
 			$rootScope.transport.emit('add-finance', data);
 
 			$rootScope.transport.on('add-finance--success', function(result) {
-				$log.info("Adding finance successful");
-				$log.info(result);
-				cb(null, result);
+
+				if(!!result._id) {
+					$log.info("Adding finance successful");
+					$log.info(result);
+					cb(null, result);
+				}
+			});
+
+			$rootScope.transport.on('add-finance--error', function(err) {
+				$log.warn("adding finance failed with error", err);
+				cb(err);
 			});
 		}
 
 		function _getFinances() {
 
 			$log.debug('Savings.Services.FinanceService.getFinances()');
-			var socket = SocketService.getSocket();
+			var socket = $rootScope.transport;
 
 			// reset finances object, to avoid having the same finances
 			// repeated over and over

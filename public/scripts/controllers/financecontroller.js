@@ -19,14 +19,14 @@ angular.module('Savings.Controllers')
 			"income": {
 				"name": null,
 				"amount": null,
-				"date": null,
+				"duedate": null,
 				"interval": 0,
 				"description": ''
 			},
 			"expense": {
 				"name": null,
 				"amount": null,
-				"date": null,
+				"duedate": null,
 				"interval": 0,
 				"description": ''
 			}
@@ -37,7 +37,7 @@ angular.module('Savings.Controllers')
 			"type": 0,
 			"name": null,
 			"amount": null,
-			"date": null,
+			"duedate": null,
 			"interval": 0,
 			"description": ''
 		};
@@ -75,7 +75,7 @@ angular.module('Savings.Controllers')
 					"type": type,
 					"name": null,
 					"amount": null,
-					"date": null,
+					"duedate": null,
 					"interval": 0,
 					"description": ''
 				};

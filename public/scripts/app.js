@@ -29,13 +29,6 @@ angular.module('Savings', [
 		$log.debug('DEBUG:', "check for session");
 
 		function _trueLogin() {
-
-			/*SocketService.connect()
-				.then(function() {
-					$log.info('SOCKET', "Socket handshake successful");
-				});*/
-
-			$log.info('SOCKET', "Socket handshake successful");
 			$log.debug('DEBUG:', "Yey there's a session");
 			$rootScope.logged_in = true;
 			$timeout(function() {
