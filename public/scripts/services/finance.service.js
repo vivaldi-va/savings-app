@@ -13,7 +13,7 @@ angular.module('Savings.Services')
 
 			SocketService.send('finance-add', {data: data});
 
-			$rootScope.transport.on('finance-add--result', function(result) {
+			$rootScope.transport.on('finance-added', function(result) {
 
 				if(result.error) {
 					$log.warn("adding finance failed with error", result.error);
@@ -57,7 +57,7 @@ angular.module('Savings.Services')
 		function _modifyFinance(item, cb) {
 			SocketService.send('finance-modify', {data: item});
 
-			$rootScope.transport.on('finance-modified', function(msg) {
+			/*$rootScope.transport.on('finance-modified', function(msg) {
 				if(msg.error) {
 					$log.error('SOCKET', "Finance failed to be modified", msg.error);
 					cb(msg.error);
@@ -66,29 +66,78 @@ angular.module('Savings.Services')
 				if(msg.data) {
 					cb(null, msg.data);
 				}
-			});
+			});*/
 		}
 
-		function _disableFinance(id) {
-			var dfd = $q.defer();
+		function _removeFromFinancesArray(id) {
+			var i = 0;
+			var hasRemoved = false;
 
-			$http({
-				url: '/api/finances/' + id,
-				method: 'delete',
-				headers: {'Authorization': $cookies.saToken}
-			})
-				.success(function(status) {
-					$log.info('DEBUG: finance item disabled');
-				})
-				.error(
-					function(reason) {
-						$log.warn('ERROR: finance item failed to be disabled ', reason);
-						dfd.reject(reason);
+			for(i = 0; i <= $rootScope.finances.income.length; i++) {
+				if($rootScope.finances.income[i]._id === id) {
+					$rootScope.finances.income.splice(i, 1);
+					hasRemoved = true;
+				}
+			}
+
+			if(!hasRemoved) {
+				for(i = 0; i <= $rootScope.finances.income.expenses; i++) {
+					if($rootScope.finances.expenses[i]._id === id) {
+						$rootScope.finances.expenses.splice(i, 1);
 					}
-				);
-
-			return dfd.promise;
+				}
+			}
 		}
+
+
+		function _disableFinance(id, cb) {
+
+
+			SocketService.send('finance-disable', {data: {_id: id}});
+
+			/*$rootScope.transport.on('finance-disabled', function(msg) {
+				if(msg.error) {
+					cb(msg.error);
+				} else {
+					_removeFromFinancesArray(id);
+					cb(null, msg.data);
+				}
+			});*/
+
+		}
+
+		$rootScope.$watch('transport', function(newTransport) {
+			if(newTransport && newTransport.connected) {
+
+				var _transport = $rootScope.transport;
+
+				_transport.on('finance-modified', function(msg) {
+					if(msg.error) {
+						$log.error('SOCKET', "Finance failed to be modified", msg.error);
+					}
+
+					if(msg.data) {
+						$log.debug('SOCKET', msg.data);
+						var typeString = msg.data.type === 0 ? 'income' : 'expenses';
+						for(var i=0; i<$rootScope.finances[typeString].length; i++) {
+							if(msg.data._id === $rootScope.finances[typeString][i]._id) {
+
+								$rootScope.finances[typeString][i] = msg.data;
+							}
+						}
+					}
+				});
+
+				_transport.on('finance-disabled', function(msg) {
+					if(msg.error) {
+						$log.error(msg.error);
+					} else {
+						_removeFromFinancesArray(msg.data._id);
+					}
+				});
+			}
+		});
+
 
 		return {
 			createFinance: _createFinance,

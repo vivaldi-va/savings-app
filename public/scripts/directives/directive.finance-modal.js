@@ -65,7 +65,7 @@ angular.module('Savings.Directives')
 							scope.activeFinance['_id']	= result._id;
 
 							// create the finances object in rootscope if it
-							// doesnt exist alreadt
+							// doesnt exist already
 							if(!$rootScope.finances) {
 								$rootScope.finances	= {
 									"income": [],
@@ -167,10 +167,6 @@ angular.module('Savings.Directives')
 						_modifyFinance();
 					}
 
-						/*.then(function(success) {
-							$rootScope.timeline = success;
-						});*/
-
 				};
 
 
@@ -183,17 +179,16 @@ angular.module('Savings.Directives')
 						});
 
 
-					$financeService.disableFinance(finance._id)
-						.then(
-						function(success) {
+					$financeService.disableFinance(finance._id, function(err) {
+						if(err) {
+							scope.errors.push(err);
+						} else {
 							$log.info("DEBUG: disabling finance item successful");
 							finance.disabled = true;
 							_hideModal();
-						},
-						function(reason) {
-							scope.errors.push(reason);
 						}
-					);
+					});
+
 					$log.debug("DEBUG: disable finance item", finance);
 
 				};
