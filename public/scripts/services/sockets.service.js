@@ -8,8 +8,9 @@ angular.module('Savings.Services')
 	.factory('SocketService', function($log, $cookies, $rootScope, $interval, $timeout) {
 
 		var socket;
-		var _emitterQueue 	= [];
-		var _pingNum		= 0;
+		var _emitterQueue 		= [];
+		var _emitterQueueCache	= [];
+		var _pingNum			= 0;
 		$rootScope.transport = false;
 
 		$rootScope.$watch('transport', function(newTransport, oldTransport) {
@@ -27,10 +28,12 @@ angular.module('Savings.Services')
 						var d = new Date();
 						time = new Date(time);
 						$log.debug('PING', Math.abs(time.getTime() - d.getTime()) + 'ms');
+						//_eventCacheController();
 					}
 
 					_pingNum++;
 				});
+
 			}
 
 			if(newTransport.connecting) {
@@ -84,8 +87,35 @@ angular.module('Savings.Services')
 				$log.debug('SOCKET', "Savings.Services.SocketService.sendQueuedEvent()");
 				var event = _emitterQueue.shift();
 
-				socket.emit(event.event, event.msg);
+				socket.emit(event.name, event.data);
+				//_emitterQueueCache.push(event);
 				_sendQueuedEvent();
+			}
+		}
+
+
+		function _clearEventFromCache(id) {
+			$log.debug('SOCKET', "Savings.Services.SocketService.clearEventFromCache()");
+
+			for(var i = 0; i <= _emitterQueueCache.length; i++) {
+				if(id === _emitterQueueCache[i]._id) {
+					_emitterQueueCache.splice(i, 1);
+				}
+			}
+
+		}
+
+		function _eventCacheController() {
+			if(_emitterQueueCache.length) {
+				$log.debug('SOCKET', "Savings.Services.SocketService.eventCacheController()");
+
+				for(var i = 0; i <= _emitterQueueCache.length; i++) {
+					// take the last element from the emitter queue cache (the oldest event)
+					var event = _emitterQueueCache.pop();
+
+					// stick it at the beginning of the emitter queue
+					_emitterQueue.unshift(event);
+				}
 			}
 		}
 
@@ -99,11 +129,16 @@ angular.module('Savings.Services')
 			socket = io('http://localhost', { query: "token=" + $cookies.saToken });
 
 			socket.on('connect', function() {
-
-				$log.debug(socket);
 				$log.info('SOCKET', "connected to websocket and joined room probably");
+
 				$rootScope.transport = socket;
 				$rootScope.$apply();
+/*
+				// add listner to listen for successful events
+				// so as to manage caching events in an array that have not yet been completed
+				socket.on('event-success', function(event) {
+					_clearEventFromCache(event._id);
+				});*/
 				cb(null, true);
 			});
 		}
@@ -118,19 +153,22 @@ angular.module('Savings.Services')
 		 * Once connection is reestablished, all queued events will be send sequentially
 		 * on the next tick.
 		 *
-		 * @param event
-		 * @param msg
+		 * @param name
+		 * @param data
 		 * @private
 		 */
-		function _send(event, msg) {
+		function _send(name, data) {
 			$log.debug('Savings.Services.SocketService.send()');
+
+			data = data || {};
+
+			data._id = Math.floor(Math.random() * new Date().getTime());
 			var obj = {
-				"event": event,
-				"msg": msg
+				"name": name,
+				"data": data
 			};
 
 			$log.debug(obj);
-			msg = msg || null;
 			_emitterQueue.push(obj);
 		}
 

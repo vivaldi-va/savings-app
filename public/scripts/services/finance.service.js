@@ -11,20 +11,21 @@ angular.module('Savings.Services')
 
 			$log.debug('Savings.Services.FinanceService.createFinance()');
 
-			$rootScope.transport.emit('add-finance', data);
+			SocketService.send('finance-add', {data: data});
 
-			$rootScope.transport.on('add-finance--success', function(result) {
+			$rootScope.transport.on('finance-add--result', function(result) {
 
-				if(!!result._id) {
-					$log.info("Adding finance successful");
-					$log.info(result);
-					cb(null, result);
+				if(result.error) {
+					$log.warn("adding finance failed with error", result.error);
+
+					cb(result.err);
 				}
-			});
 
-			$rootScope.transport.on('add-finance--error', function(err) {
-				$log.warn("adding finance failed with error", err);
-				cb(err);
+				if(result.data) {
+					$log.info("Adding finance successful");
+					$log.info(result.data);
+					cb(null, result.data);
+				}
 			});
 		}
 
@@ -56,14 +57,14 @@ angular.module('Savings.Services')
 		function _modifyFinance(item, cb) {
 			SocketService.send('finance-modify', {data: item});
 
-			$rootScope.transport.emit('finance-modified', function(msg) {
+			$rootScope.transport.on('finance-modified', function(msg) {
 				if(msg.error) {
 					$log.error('SOCKET', "Finance failed to be modified", msg.error);
 					cb(msg.error);
 				}
 
-				if(msg.success) {
-					cb(null, msg);
+				if(msg.data) {
+					cb(null, msg.data);
 				}
 			});
 		}
