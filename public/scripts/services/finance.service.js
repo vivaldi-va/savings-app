@@ -7,6 +7,35 @@
 angular.module('Savings.Services')
 	.factory('$financeService', function($rootScope, $http, $q, $log, $cookies, ErrorService, SocketService) {
 
+
+		/**
+		 * Splice an item from the relevant array in the finances object
+		 * which is in the rootScope
+		 *
+		 * @param id - ID of the finance
+		 * @private
+		 */
+		function _removeFromFinancesArray(id) {
+			var i = 0;
+			var hasRemoved = false;
+
+			for(i = 0; i <= $rootScope.finances.income.length; i++) {
+				if($rootScope.finances.income[i]._id === id) {
+					$rootScope.finances.income.splice(i, 1);
+					hasRemoved = true;
+				}
+			}
+
+			if(!hasRemoved) {
+				for(i = 0; i <= $rootScope.finances.income.expenses; i++) {
+					if($rootScope.finances.expenses[i]._id === id) {
+						$rootScope.finances.expenses.splice(i, 1);
+					}
+				}
+			}
+		}
+
+
 		function _createFinance(data, cb) {
 
 			$log.debug('Savings.Services.FinanceService.createFinance()');
@@ -44,72 +73,30 @@ angular.module('Savings.Services')
 			//socket.emit('finances');
 			SocketService.send('finances');
 
-			socket.on('finance', function(finance) {
-				$log.info("got a finance via sockets", finance);
-
-				$rootScope.finances[finance.type === 0 ? 'income' : 'expenses'].push(finance);
-				$rootScope.$apply();
-				$log.debug($rootScope.finances);
-			});
-
 		}
 
 		function _modifyFinance(item, cb) {
 			SocketService.send('finance-modify', {data: item});
-
-			/*$rootScope.transport.on('finance-modified', function(msg) {
-				if(msg.error) {
-					$log.error('SOCKET', "Finance failed to be modified", msg.error);
-					cb(msg.error);
-				}
-
-				if(msg.data) {
-					cb(null, msg.data);
-				}
-			});*/
-		}
-
-		function _removeFromFinancesArray(id) {
-			var i = 0;
-			var hasRemoved = false;
-
-			for(i = 0; i <= $rootScope.finances.income.length; i++) {
-				if($rootScope.finances.income[i]._id === id) {
-					$rootScope.finances.income.splice(i, 1);
-					hasRemoved = true;
-				}
-			}
-
-			if(!hasRemoved) {
-				for(i = 0; i <= $rootScope.finances.income.expenses; i++) {
-					if($rootScope.finances.expenses[i]._id === id) {
-						$rootScope.finances.expenses.splice(i, 1);
-					}
-				}
-			}
 		}
 
 
-		function _disableFinance(id, cb) {
-
-
+		function _disableFinance(id) {
 			SocketService.send('finance-disable', {data: {_id: id}});
-
-			/*$rootScope.transport.on('finance-disabled', function(msg) {
-				if(msg.error) {
-					cb(msg.error);
-				} else {
-					_removeFromFinancesArray(id);
-					cb(null, msg.data);
-				}
-			});*/
-
 		}
 
+		// watchers for all finance events
 		$rootScope.$watch('transport', function(newTransport) {
 			if(newTransport && newTransport.connected) {
 
 				var _transport = $rootScope.transport;
+
+				_transport.on('finance', function(finance) {
+					$log.info("got a finance via sockets", finance);
+
+					$rootScope.finances[finance.type === 0 ? 'income' : 'expenses'].push(finance);
+					$rootScope.$apply();
+					$log.debug($rootScope.finances);
+				});
 
 				_transport.on('finance-modified', function(msg) {
 					if(msg.error) {
