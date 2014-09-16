@@ -13,6 +13,13 @@ angular.module('Savings.Services')
 		var _pingNum			= 0;
 		$rootScope.transport = false;
 
+		/*
+		 * Watch the transport object in rootScope for changes, namely
+		 * whether it has become disconnected or has disappeared for some reason.
+		 *
+		 * In here, relevant functions to maintain or resurrect the socket
+		 * are called.
+		 */
 		$rootScope.$watch('transport', function(newTransport, oldTransport) {
 
 			$log.debug("SOCKET", "Old transport:", oldTransport, "New transport", newTransport);
@@ -37,7 +44,7 @@ angular.module('Savings.Services')
 			}
 
 			if(newTransport.connecting) {
-				$log.debug('SOCKET', "Transport is trying to reconnect");
+				$log.warn('SOCKET', "Transport is trying to reconnect");
 			}
 
 			if(newTransport.disconnected) {
@@ -84,8 +91,8 @@ angular.module('Savings.Services')
 		function _sendQueuedEvent() {
 
 			if(_emitterQueue.length > 0) {
-				$log.debug('SOCKET', "Savings.Services.SocketService.sendQueuedEvent()");
 				var event = _emitterQueue.shift();
+				$log.debug('SOCKET', "Savings.Services.SocketService.sendQueuedEvent(" + event.name + ")");
 
 				socket.emit(event.name, event.data);
 				//_emitterQueueCache.push(event);
