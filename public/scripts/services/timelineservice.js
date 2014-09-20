@@ -2,9 +2,11 @@
  * Created by vivaldi on 06/01/14.
  */
 
+'use strict';
+
 angular.module('Savings.Services')
-	.factory('$timelineService', function($http, $q, $log, $rootScope, $cookies) {
-		function _getTimelineData(past) {
+	.factory('$timelineService', function($http, $q, $log, $rootScope, $cookies, SocketService) {
+		function _getEmptyTimeline(past) {
 			$log.info('DEBUG: getTimeline');
 			var dfd = $q.defer();
 			past = past || null;
@@ -23,6 +25,9 @@ angular.module('Savings.Services')
 					}
 
 					$rootScope.timeline = data;
+
+
+					SocketService.send('timeline');
 				})
 				.error(function(reason) {
 					$log.info('DEBUG: getTimeline HTTP request failed', reason);
@@ -31,6 +36,30 @@ angular.module('Savings.Services')
 
 			return dfd.promise;
 		}
+
+
+		function _addItemToTimeline(item) {
+
+			var typeString = item.type === 0 ? 'income' : 'expenses';
+
+			angular.forEach($rootScope.timeline.items, function(timelineSegment, key) {
+				var segmentDate = new Date(timelineSegment.attrs.date);
+				var itemDate = new Date(item.timeline_date);
+
+				//$log.debug('segment date', segmentDate, 'item date', item.timeline_date);
+
+
+				var dayMatches =	segmentDate.getDate() === itemDate.getDate() &&
+									segmentDate.getMonth() === itemDate.getMonth() &&
+									segmentDate.getYear() === itemDate.getYear();
+
+				if(dayMatches) {
+					$rootScope.timeline.items[key].finances[typeString].push(item);
+				}
+			});
+
+		}
+
 
 		function _updateTimelineItem(finance, date) {
 
@@ -48,8 +77,21 @@ angular.module('Savings.Services')
 			});
 		}
 
+		// watchers for all finance events
+		$rootScope.$watch('transport', function(newTransport) {
+			if(newTransport && newTransport.connected) {
+
+				var _transport = $rootScope.transport;
+
+				_transport.on('timeline-item', function(msg) {
+					$log.debug('SOCKET', "Got timeline item", msg.data);
+					_addItemToTimeline(msg.data);
+				});
+			}
+		});
+
 		return {
-			getTimeline: _getTimelineData,
+			getTimeline: _getEmptyTimeline,
 			updateItem: _updateTimelineItem
-		}
+		};
 	});
