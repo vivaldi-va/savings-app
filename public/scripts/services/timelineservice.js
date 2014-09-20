@@ -43,17 +43,24 @@ angular.module('Savings.Services')
 			var typeString = item.type === 0 ? 'income' : 'expenses';
 
 			angular.forEach($rootScope.timeline.items, function(timelineSegment, key) {
-				var segmentDate = new Date(timelineSegment.attrs.date);
-				var itemDate = new Date(item.timeline_date);
-
-				//$log.debug('segment date', segmentDate, 'item date', item.timeline_date);
+				var segmentDate	= new Date(timelineSegment.attrs.date);
+				var itemDate	= new Date(item.timeline_date);
 
 
-				var dayMatches =	segmentDate.getDate() === itemDate.getDate() &&
+				var dayMatches	=	segmentDate.getDate() === itemDate.getDate() &&
 									segmentDate.getMonth() === itemDate.getMonth() &&
 									segmentDate.getYear() === itemDate.getYear();
 
+
 				if(dayMatches) {
+					// remove the timeline item from this segment if it exists
+					// to account for the possibility it has been removed
+					for(var i = 0; i < timelineSegment.finances[typeString]; i++) {
+						if(timelineSegment.finances[typeString][i]._id === item._id) {
+							$rootScope.timeline.items[key].finances[typeString].splice(i, 1);
+						}
+					}
+
 					$rootScope.timeline.items[key].finances[typeString].push(item);
 				}
 			});
