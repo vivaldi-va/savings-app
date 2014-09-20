@@ -54,7 +54,7 @@ angular.module('Savings.Directives')
 						if(err) {
 							scope.creatingNewFinance = false;
 							scope.errors = err;
-						} else {
+						} /*else {
 
 
 							// create a new finance item based on the info supplied to the function
@@ -82,9 +82,11 @@ angular.module('Savings.Directives')
 							}
 							//$timelineService.getTimeline();
 							$log.info("DEBUG: inserting finance item", scope.activeFinance);
-							_hideModal();
-						}
+						}*/
 					});
+					_hideModal();
+					//var typeString = msg.data.type === 0 ? 'income' : 'expenses';
+					//$rootScope.finances[typeString].push(scope.)
 				}
 
 				function _modifyFinance() {
@@ -95,16 +97,16 @@ angular.module('Savings.Directives')
 								scope.updating = false;
 								scope.errors.push(err);
 							}
-
+							/*
 							if(finance) {
 								scope.updating = false;
-								_saveState();
-								_hideModal();
 
 								$timelineService.getTimeline();
 								$log.info("DEBUG: modifying finance item successful");
-							}
+							}*/
 						});
+						_saveState();
+						_hideModal();
 
 				}
 

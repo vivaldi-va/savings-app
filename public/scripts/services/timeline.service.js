@@ -55,7 +55,8 @@ angular.module('Savings.Services')
 				if(dayMatches) {
 					// remove the timeline item from this segment if it exists
 					// to account for the possibility it has been removed
-					for(var i = 0; i < timelineSegment.finances[typeString]; i++) {
+
+					for(var i = 0; i < timelineSegment.finances[typeString].length; i++) {
 						if(timelineSegment.finances[typeString][i]._id === item._id) {
 							$rootScope.timeline.items[key].finances[typeString].splice(i, 1);
 						}

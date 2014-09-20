@@ -77,6 +77,7 @@ angular.module('Savings.Services')
 
 		function _modifyFinance(item, cb) {
 			SocketService.send('finance-modify', {data: item});
+
 		}
 
 
@@ -94,13 +95,14 @@ angular.module('Savings.Services')
 					$log.info("got a finance via sockets", finance);
 
 					$rootScope.finances[finance.type === 0 ? 'income' : 'expenses'].push(finance);
-					$rootScope.$apply();
+					//$rootScope.$apply();
 					$log.debug($rootScope.finances);
 				});
 
 				_transport.on('finance-modified', function(msg) {
 					if(msg.error) {
 						$log.error('SOCKET', "Finance failed to be modified", msg.error);
+						// TODO: global error
 					}
 
 					if(msg.data) {
