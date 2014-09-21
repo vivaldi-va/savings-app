@@ -8,7 +8,7 @@
 		</div>
 		<div class="timeline-balance-item middle">
 			<div class="sum" ng-class="{'red': timeline.attrs.finance_sums.income<timeline.attrs.finance_sums.expense, 'blue': timeline.attrs.finance_sums.income>timeline.attrs.finance_sums.expense}">
-				<strong>{{ timelineBalance | currency }}</strong>
+				<strong>{{ timeline.attrs.timeline_balance.month | currency }}</strong>
 				<span ng-if="timeline.attrs.finance_sums.income<timeline.attrs.finance_sums.expense">loss</span>
 				<span ng-if="timeline.attrs.finance_sums.income>timeline.attrs.finance_sums.expense">surplus</span>
 				this month

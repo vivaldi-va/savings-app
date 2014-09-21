@@ -60,11 +60,12 @@ angular.module('Savings.Services')
 				}
 			});
 
-			//calculatedTotal = Math.abs(incomeTotal - expenseTotal);
+			calculatedTotal = Math.abs(incomeTotal - expenseTotal);
 
 			$rootScope.timeline.attrs.finance_sums.income = incomeTotal;
 			$rootScope.timeline.attrs.finance_sums.expense = expenseTotal;
 			$rootScope.timeline.attrs.finances_count = itemCount;
+			$rootScope.timeline.attrs.timeline_balance.month = calculatedTotal;
 
 		}
 
