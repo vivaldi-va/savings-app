@@ -622,11 +622,11 @@ th {
 }
 
 .container {
-  background: #dfdfdf;
+  background: #DFDFDF;
 }
 
 .column {
-  background: #f7f7f7;
+  background: #F7F7F7;
 }
 
 html {
@@ -682,7 +682,7 @@ textarea {
 .form-error {
   font-size: 0.85em;
   font-weight: 600;
-  color: #e22e07;
+  color: #E22E07;
 }
 
 .input-char-count {
@@ -726,7 +726,7 @@ textarea {
   line-height: 1.5em;
   border: none;
   background: rgba(0, 0, 0, 0.28);
-  color: white;
+  color: #FFFFFF;
   font-size: 1.3rem;
   font-weight: 400;
   letter-spacing: 0.1em;
@@ -745,7 +745,7 @@ textarea {
 }
 
 .button.red {
-  background: #e22e07;
+  background: #E22E07;
 }
 
 .button.no-style {
@@ -834,7 +834,7 @@ textarea {
 }
 
 .expenses .column-totals em {
-  color: #e22e07;
+  color: #E22E07;
 }
 
 .finance-item-amount-wrapper {
@@ -842,6 +842,8 @@ textarea {
   margin: 0 0.5em 0 0;
   padding: 0 0 0 0.5em;
   text-align: left;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .finance-item {
@@ -854,7 +856,7 @@ textarea {
   padding: 10px 1em 0 3px;
   margin: 0 0 4px;
   background: #999999;
-  color: white;
+  color: #FFFFFF;
   border-radius: 6px;
   cursor: pointer;
   text-shadow: 0 1px rgba(0, 0, 0, 0.28);
@@ -872,11 +874,11 @@ textarea {
 
 .finance-item.red {
   background: #f95e3d;
-  box-shadow: 0 2px #e22e07;
+  box-shadow: 0 2px #E22E07;
 }
 
 .finance-item.red.active {
-  background: #e22e07;
+  background: #E22E07;
   box-shadow: 0 2px #b12405;
 }
 
@@ -898,7 +900,7 @@ textarea {
   float: left;
   -webkit-flex-grow: 1;
   flex-grow: 1;
-  font-size: 1.125em;
+  font-size: 1.075em;
   font-weight: 600;
   letter-spacing: 0.035em;
   text-align: right;
@@ -957,8 +959,8 @@ textarea {
 }
 
 .pill.red {
-  color: #e22e07;
-  border-color: #e22e07;
+  color: #E22E07;
+  border-color: #E22E07;
 }
 
 .pill.blue {
@@ -970,7 +972,7 @@ textarea {
   display: inline-block;
   padding: 0.15em 0.25em;
   background: #999999;
-  color: white;
+  color: #FFFFFF;
   font-style: normal;
   line-height: 1;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
@@ -978,7 +980,7 @@ textarea {
 }
 
 .label-red {
-  background: #e22e07;
+  background: #E22E07;
 }
 
 .label-blue {
@@ -1016,12 +1018,12 @@ textarea {
   /* IE10+ */
   background: linear-gradient(to bottom, #dfdfdf 0%, rgba(223, 223, 223, 0) 100%);
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#00dfdfdf',GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dfdfdf', endColorstr='#00dfdfdf',GradientType=0 );
   /* IE6-8 */
 }
 
 .timeline-balance .sum.red {
-  color: #e22e07;
+  color: #E22E07;
 }
 
 .timeline-balance .sum.blue {
@@ -1095,7 +1097,7 @@ textarea {
   width: 100%;
   height: 35px;
   background: rgba(0, 0, 0, 0.85);
-  color: white;
+  color: #FFFFFF;
 }
 
 .timeline {
@@ -1159,7 +1161,7 @@ textarea {
   margin: 15px 0 0 -41px;
   background: #999999;
   font-size: 1.2em;
-  color: white;
+  color: #FFFFFF;
   text-align: center;
   line-height: 30px;
   border-radius: 15px;
@@ -1188,7 +1190,7 @@ textarea {
 }
 
 .timeline-segment.future .expenses .timeline-segment-meta {
-  color: #e22e07;
+  color: #E22E07;
 }
 
 .timeline-segment.future:before {
@@ -1294,24 +1296,25 @@ textarea {
 }
 
 .future .item-wrapper.red .item {
-  background: #e22e07;
+  background: #E22E07;
 }
 
 .future .item-wrapper.red .item:before {
-  background: #e22e07;
+  background: #E22E07;
 }
 
 .item {
   display: -webkit-flex;
   display: flex;
-  -webkit-align-items: baseline;
-  align-items: baseline;
+  -webkit-align-items: center;
+  align-items: center;
   position: relative;
   width: 100%;
   height: 30px;
   padding: 0 0.25em;
   background: #999;
   color: #fff;
+  line-height: 1.2;
   border-radius: 6px;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -1320,6 +1323,8 @@ textarea {
 
 .item-amount-wrapper {
   float: left;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .item-amount-wrapper .item-amount {
@@ -1333,7 +1338,7 @@ textarea {
   -webkit-flex-grow: 1;
   flex-grow: 1;
   margin: 0 1em 0 0;
-  padding: 0.25em 0 0 0.5em;
+  padding: 0 0 0 0.5em;
   text-align: right;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -1341,8 +1346,13 @@ textarea {
 
 .item-name-wrapper .item-name {
   font-size: 0.85em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .item-name-wrapper .item-name:first-letter {
   text-transform: uppercase;
 }
+
+/*# sourceMappingURL=app.css.map */

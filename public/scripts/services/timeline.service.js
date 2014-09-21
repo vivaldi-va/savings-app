@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('Savings.Services')
-	.factory('$timelineService', function($http, $q, $log, $rootScope, $cookies, SocketService) {
+	.factory('$timelineService', function($http, $q, $log, $rootScope, $cookies, $timeout, SocketService) {
 
 		function _addItemToTimeline(item) {
 
@@ -121,6 +121,9 @@ angular.module('Savings.Services')
 			SocketService.send('timeline-modify-item', {data: data});
 		}
 
+
+
+
 		// watchers for all finance events
 		$rootScope.$watch('transport', function(newTransport) {
 			if(newTransport && newTransport.connected) {
@@ -131,6 +134,13 @@ angular.module('Savings.Services')
 					$log.debug('SOCKET', "Got timeline item", msg.data);
 					_addItemToTimeline(msg.data);
 					_calcTimelineTotals();
+				});
+
+				_transport.on('timeline-complete', function() {
+					$timeout(function(){
+						$log.debug("Got timeline data");
+						document.getElementById('timeline-scroll').scrollTop = document.getElementById('today').offsetTop-(window.innerHeight/2);
+					});
 				});
 			}
 		});

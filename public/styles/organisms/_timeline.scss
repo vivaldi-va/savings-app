@@ -255,6 +255,7 @@
 	padding: 0 0.25em;
 	background: #999;
 	color: #fff;
+	line-height: 1.2;
 
 	border-radius: 6px;
 
@@ -288,6 +289,9 @@
 
 	.item-name {
 		font-size: 0.85em;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 
 		&:first-letter {text-transform: uppercase;}
 	}
