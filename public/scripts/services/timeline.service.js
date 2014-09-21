@@ -77,12 +77,14 @@ angular.module('Savings.Services')
 				date: date
 			};
 
-			return $http({
+			/*return $http({
 				url: '/api/timeline/modify',
 				method: 'PUT',
 				data: data,
 				headers: {'Authorization': $cookies.saToken}
-			});
+			});*/
+
+			SocketService.send('timeline-modify-item', {data: data});
 		}
 
 		// watchers for all finance events

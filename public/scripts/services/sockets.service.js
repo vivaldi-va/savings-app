@@ -41,6 +41,10 @@ angular.module('Savings.Services')
 					_pingNum++;
 				});
 
+				socket.on('error', function(msg) {
+					$log.error('SOCKET', msg.error);
+				});
+
 			}
 
 			if(newTransport.connecting) {
