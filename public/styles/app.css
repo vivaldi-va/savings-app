@@ -1217,6 +1217,7 @@ textarea {
 
 .item-container.income .timeline-segment-meta {
   float: right;
+  padding: 0 0 0 0.5em;
 }
 
 .item-container.expenses {
@@ -1225,6 +1226,7 @@ textarea {
 
 .item-container.expenses .timeline-segment-meta {
   float: left;
+  padding: 0 0.5em 0 0;
   text-align: right;
 }
 

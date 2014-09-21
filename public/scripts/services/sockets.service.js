@@ -11,6 +11,7 @@ angular.module('Savings.Services')
 		var _emitterQueue 		= [];
 		var _emitterQueueCache	= [];
 		var _pingNum			= 0;
+		var _handshakeAttempts	= 0;
 		$rootScope.transport = false;
 
 		/*
@@ -25,6 +26,7 @@ angular.module('Savings.Services')
 			$log.debug("SOCKET", "Old transport:", oldTransport, "New transport", newTransport);
 
 			if(newTransport.connected) {
+				_handshakeAttempts = 0;
 				//_connect(function(){});
 				$log.debug('SOCKET', "Transport is connected");
 
@@ -53,6 +55,12 @@ angular.module('Savings.Services')
 
 			if(newTransport.disconnected) {
 				$log.warn('SOCKET', "Transport disconnected");
+			}
+
+			if(!newTransport) {
+				if(_handshakeAttempts < 5) {
+					_connect();
+				}
 			}
 		});
 
@@ -131,13 +139,15 @@ angular.module('Savings.Services')
 		}
 
 		function _connect(cb) {
-
-			cb = cb || null;
 			$log.debug('Savings.Services.SocketService.connect()');
 
+			cb = cb || null;
+			var token = $rootScope.token || $cookies.saToken || null;
 
-			$log.debug('sending socket.io handshake with token: %s', $cookies.saToken);
-			socket = io('http://localhost', { query: "token=" + $cookies.saToken });
+
+
+			$log.debug('sending socket.io handshake with token: %s', token);
+			socket = io('http://localhost', { query: "token=" + token });
 
 			socket.on('connect', function() {
 				$log.info('SOCKET', "connected to websocket and joined room probably");
@@ -150,8 +160,11 @@ angular.module('Savings.Services')
 				socket.on('event-success', function(event) {
 					_clearEventFromCache(event._id);
 				});*/
-				cb(null, true);
+				if(cb) {
+					cb(null, true);
+				}
 			});
+
 		}
 
 		function _getSocket() {
@@ -170,7 +183,14 @@ angular.module('Savings.Services')
 		 */
 		function _send(name, data) {
 			$log.debug('Savings.Services.SocketService.send()');
+			/*if(!$rootScope.transport) {
+				_connect(function() {
+					_send(name, data);
+				});
 
+			} else {
+
+			}*/
 			data = data || {};
 
 			data._id = Math.floor(Math.random() * new Date().getTime());
@@ -179,8 +199,8 @@ angular.module('Savings.Services')
 				"data": data
 			};
 
-			$log.debug(obj);
 			_emitterQueue.push(obj);
+			$log.debug(_emitterQueue, $rootScope.transport);
 		}
 
 		return {

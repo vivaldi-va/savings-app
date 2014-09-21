@@ -129,6 +129,15 @@ angular.module('Savings.Services')
 
 		function modifyFinance(item, cb) {
 			SocketService.send('finance-modify', {data: item});
+			var typeString = item.type === 0 ? 'income' : 'expenses';
+
+			angular.forEach($rootScope.timeline.items, function(segment, segmentKey) {
+				angular.forEach(segment.finances[typeString], function(timelineItem, itemKey) {
+					if(timelineItem.id === item.id) {
+						$rootScope.timeline.items[segmentKey].finances[typeString].splice([itemKey], 1);
+					}
+				});
+			});
 			_calculateFinanceTotals();
 		}
 

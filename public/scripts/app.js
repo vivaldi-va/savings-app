@@ -43,7 +43,9 @@ angular.module('Savings', [
 
 		}
 
+
 		if($cookies.saIdent) {
+			$log.debug('INIT', "loaded cookie using angular cookies", $cookies.saIdent, $cookies.saIdent.length);
 			_trueLogin();
 		} else {
 

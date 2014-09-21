@@ -7,6 +7,9 @@
 angular.module('Savings.Services')
 	.factory('$timelineService', function($http, $q, $log, $rootScope, $cookies, $timeout, SocketService) {
 
+
+		var _itemCache = [];
+
 		function _addItemToTimeline(item) {
 
 			var typeString = item.type === 0 ? 'income' : 'expenses';
@@ -16,21 +19,22 @@ angular.module('Savings.Services')
 				var itemDate	= new Date(item.timeline_date);
 
 
-				var dayMatches	=	segmentDate.getDate() === itemDate.getDate() &&
+				var dayMatches	=
+					segmentDate.getDate() === itemDate.getDate() &&
 					segmentDate.getMonth() === itemDate.getMonth() &&
 					segmentDate.getYear() === itemDate.getYear();
 
 
 				if(dayMatches) {
-					// remove the timeline item from this segment if it exists
-					// to account for the possibility it has been removed
-
 					for(var i = 0; i < timelineSegment.finances[typeString].length; i++) {
 						if(timelineSegment.finances[typeString][i]._id === item._id) {
+							$log.debug('cleaning item from timeline segment', timelineSegment.finances[typeString][i]._id, item._id);
 							$rootScope.timeline.items[key].finances[typeString].splice(i, 1);
 						}
 					}
-
+					// remove the timeline item from this segment if it exists
+					// to account for the possibility it has been removed
+					$log.debug('adding timeline item to segment');
 					$rootScope.timeline.items[key].finances[typeString].push(item);
 				}
 			});
@@ -72,30 +76,35 @@ angular.module('Savings.Services')
 		function getEmptyTimeline(past) {
 			$log.info('DEBUG: getTimeline');
 			var dfd = $q.defer();
+			var token = $rootScope.token || $cookies.saToken || null;
 			past = past || null;
 
-			$http({
-				url: '/api/timeline',
-				method: 'get',
-				headers: {'Authorization': $cookies.saToken}
-			})
-				.success(function(data, status) {
-					$log.info('DEBUG: getTimeline HTTP request received');
-					if(status === 204) {
-						dfd.resolve(null);
-					} else {
-						dfd.resolve(data);
-					}
+			if(!token) {
+				dfd.reject('ERR_NOAUTH');
+			} else {
 
-					$rootScope.timeline = data;
-
-
-					SocketService.send('timeline');
+				$http({
+					url: '/api/timeline',
+					method: 'get',
+					headers: {'Authorization': token}
 				})
-				.error(function(reason) {
-					$log.info('DEBUG: getTimeline HTTP request failed', reason);
-					dfd.reject(reason);
-				});
+					.success(function(data, status) {
+						$log.info('DEBUG: getTimeline HTTP request received');
+						if(status === 204) {
+							dfd.resolve(null);
+						} else {
+							dfd.resolve(data);
+						}
+
+						$rootScope.timeline = data;
+
+						SocketService.send('timeline');
+					})
+					.error(function(reason) {
+						$log.info('DEBUG: getTimeline HTTP request failed', reason);
+						dfd.reject(reason);
+					});
+			}
 
 			return dfd.promise;
 		}
