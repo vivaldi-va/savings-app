@@ -35,8 +35,54 @@ angular.module('Savings.Services')
 			}
 		}
 
+		function _calculateFinanceTotals() {
 
-		function _createFinance(data, cb) {
+			$log.debug("Savings.Services.FinanceSevice.calculateFinanceTotals()");
+			var finances = $rootScope.finances;
+
+			var incomeTotal		= 0;
+			var incomeCount		= 0;
+			var expensesTotal	= 0;
+			var expensesCount	= 0;
+
+			angular.forEach(finances.income, function(finance) {
+				if(finance.interval <= 744) {
+					var mult = 1;
+
+					if(finance.interval === 24*7) {
+						mult = 4;
+					} else if(finance.interval === 24*14) {
+						mult = 2;
+					}
+
+					incomeTotal += finance.amount * mult;
+				}
+				incomeCount++;
+			});
+
+			angular.forEach(finances.expenses, function(finance) {
+				if(finance.interval <= 744) {
+					var mult = 1;
+
+					if(finance.interval === 24*7) {
+						mult = 4;
+					} else if(finance.interval === 24*14) {
+						mult = 2;
+					}
+
+					expensesTotal += finance.amount * mult;
+				}
+				expensesCount++;
+			});
+
+			$rootScope.finances.attrs.income_sum		= incomeTotal;
+			$rootScope.finances.attrs.income_count		= incomeCount;
+			$rootScope.finances.attrs.expenses_sum		= expensesTotal;
+			$rootScope.finances.attrs.expenses_count	= expensesCount;
+		}
+
+
+		function createFinance(data, cb) {
 
 			$log.debug('Savings.Services.FinanceService.createFinance()');
 
@@ -58,7 +104,7 @@ angular.module('Savings.Services')
 			});
 		}
 
-		function _getFinances() {
+		function getFinances() {
 
 			$log.debug('Savings.Services.FinanceService.getFinances()');
 			var socket = $rootScope.transport;
@@ -67,7 +113,13 @@ angular.module('Savings.Services')
 			// repeated over and over
 			$rootScope.finances = {
 				"income": [],
-				"expenses": []
+				"expenses": [],
+				"attrs": {
+					"income_sum": 0,
+					"income_count": 0,
+					"expenses_sum": 0,
+					"expenses_count": 0
+				}
 			};
 
 			//socket.emit('finances');
@@ -75,14 +127,15 @@ angular.module('Savings.Services')
 
 		}
 
-		function _modifyFinance(item, cb) {
+		function modifyFinance(item, cb) {
 			SocketService.send('finance-modify', {data: item});
-
+			_calculateFinanceTotals();
 		}
 
 
-		function _disableFinance(id) {
+		function disableFinance(id) {
 			SocketService.send('finance-disable', {data: {_id: id}});
+			_calculateFinanceTotals();
 		}
 
 		// watchers for all finance events
@@ -95,14 +148,13 @@ angular.module('Savings.Services')
 					$log.info("got a finance via sockets", finance);
 
 					$rootScope.finances[finance.type === 0 ? 'income' : 'expenses'].push(finance);
-					//$rootScope.$apply();
-					$log.debug($rootScope.finances);
+					_calculateFinanceTotals();
 				});
 
 				_transport.on('finance-modified', function(msg) {
 					if(msg.error) {
 						$log.error('SOCKET', "Finance failed to be modified", msg.error);
-						// TODO: global error
+
 					}
 
 					if(msg.data) {
@@ -110,8 +162,8 @@ angular.module('Savings.Services')
 						var typeString = msg.data.type === 0 ? 'income' : 'expenses';
 						for(var i=0; i<$rootScope.finances[typeString].length; i++) {
 							if(msg.data._id === $rootScope.finances[typeString][i]._id) {
-
 								$rootScope.finances[typeString][i] = msg.data;
+								_calculateFinanceTotals();
 							}
 						}
 					}
@@ -122,6 +174,7 @@ angular.module('Savings.Services')
 						$log.error(msg.error);
 					} else {
 						_removeFromFinancesArray(msg.data._id);
+						_calculateFinanceTotals();
 					}
 				});
 			}
@@ -129,9 +182,9 @@ angular.module('Savings.Services')
 
 
 		return {
-			createFinance: _createFinance,
-			getFinances: _getFinances,
-			modifyFinance: _modifyFinance,
-			disableFinance: _disableFinance
+			createFinance: createFinance,
+			getFinances: getFinances,
+			modifyFinance: modifyFinance,
+			disableFinance: disableFinance
 		};
 	});

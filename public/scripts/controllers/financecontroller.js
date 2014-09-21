@@ -55,8 +55,6 @@ angular.module('Savings.Controllers')
 		});
 
 
-
-
 		$scope.doOpenEditFinanceModal = function(finance) {
 			$log.info('Open edit finance modal', finance);
 			$scope.activeFinance = finance;
