@@ -8,7 +8,7 @@
 		</div>
 		<div class="timeline-balance-item middle">
 			<div class="sum" ng-class="{'red': timeline.attrs.finance_sums.income<timeline.attrs.finance_sums.expense, 'blue': timeline.attrs.finance_sums.income>timeline.attrs.finance_sums.expense}">
-				<strong>{{ timelineBalance | currency }}</strong>
+				<strong>{{ timeline.attrs.timeline_balance.month | currency }}</strong>
 				<span ng-if="timeline.attrs.finance_sums.income<timeline.attrs.finance_sums.expense">loss</span>
 				<span ng-if="timeline.attrs.finance_sums.income>timeline.attrs.finance_sums.expense">surplus</span>
 				this month
@@ -29,7 +29,7 @@
 
 					<span ng-switch-when="true">expected</span>
 					<span ng-switch-default>received</span>
-					{{ timelineSegment.attrs.date | date}}
+					{{ timelineSegment.attrs.date | date:'EEE'}}. {{ timelineSegment.attrs.date | date}}
 				</div>
 				<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.income">
 					<div timeline-item ng-model="finance" date="{{ timelineSegment.attrs.date }}"></div>
@@ -40,7 +40,7 @@
 				<div class="timeline-segment-meta" ng-switch="timelineSegment.attrs.future">
 					<span ng-switch-when="true">due</span>
 					<span ng-switch-default>paid</span>
-					{{ timelineSegment.attrs.date | date}}
+					{{ timelineSegment.attrs.date | date:'EEE'}}. {{ timelineSegment.attrs.date | date}}
 				</div>
 				<div class="item-row" ng-class="{first: $index==0}" ng-repeat="finance in timelineSegment.finances.expenses">
 					<div timeline-item ng-model="finance" date="{{ timelineSegment.attrs.date }}"></div>

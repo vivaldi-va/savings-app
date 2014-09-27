@@ -10,6 +10,7 @@ angular.module('Savings.Controllers')
 		$scope.timelineBalance	= false;
 
 
+
 		$timelineService.getTimeline()
 			.then(
 				function(success) {
@@ -19,9 +20,7 @@ angular.module('Savings.Controllers')
 					//$scope.timeline = success;
 					//$scope.timelineBalance = Math.abs(success.attrs.finance_sums.income - success.attrs.finance_sums.expense);
 					//$scope.timelineBalance = Math.abs($scope.timeline.attrs.finance_sums.income - $scope.timeline.attrs.finance_sums.expense);
-					$timeout(function(){
-						document.getElementById('timeline-scroll').scrollTop = document.getElementById('today').offsetTop-(window.innerHeight/2);
-					});
+
 
 				},
 				function(reason) {
@@ -32,6 +31,7 @@ angular.module('Savings.Controllers')
 
 
 		$rootScope.$watch('timeline', function() {
+			$log.debug("timeline changed");
 			if(!!$rootScope.timeline) {
 				$scope.timelineBalance = Math.abs($scope.timeline.attrs.finance_sums.income - $scope.timeline.attrs.finance_sums.expense);
 			}

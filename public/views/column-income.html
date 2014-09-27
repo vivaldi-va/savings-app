@@ -4,8 +4,8 @@
         <button class="button column-title-button" type="button" ng-click="doToggleNewFinanceModal(0)">track new income</button>
     </div>
     <span class="column-totals income" ng-if="finances.income.length">
-        <em>{{ finances.attrs.income.count }}</em> item<span ng-if="finances.attrs.income.count>1">s</span> totaling <em>
-        {{ finances.attrs.income.total_per_month | currency }}</em> per month
+        <em>{{ finances.attrs.income_count }}</em> item<span ng-if="finances.attrs.income_count>1">s</span> totaling <em>
+        {{ finances.attrs.income_sum | currency }}</em> per month
     </span>
     <span class="column-totals expenses" ng-if="!finances.income.length">
         You&rsquo;re tracking no income yet

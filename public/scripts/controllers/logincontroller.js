@@ -3,7 +3,7 @@
  */
 
 angular.module('Savings.Controllers')
-	.controller('LoginCtrl', function($scope, $log, $location, $userService) {
+	.controller('LoginCtrl', function($scope, $rootScope, $log, $location, $userService, $timeout, $cookies) {
 
 
 		$scope.errors = false;
@@ -34,7 +34,11 @@ angular.module('Savings.Controllers')
 							"id": success._id
 						});
 						mixpanel.identify(success._id);
-						$location.path('/timeline')
+
+						$timeout(function(){
+							$log.debug("Should have a token by now", $rootScope.token, $cookies.saToken);
+							location.reload();
+						});
 					},
 					function(reason) {
 						$log.warn('ERR', "Login:", reason);

@@ -12,17 +12,17 @@ angular.module('Savings', [
 		'Savings.Controllers',
 		'Savings.Filters'
 	])
-	.run(function($rootScope, $location, $log, $userService, $locale, $timeout, $http, $cookies) {
+	.run(function($rootScope, $location, $log, $userService, $locale, $timeout, $http, $cookies, SocketService) {
+		$log.debug('Savings.run()');
+
 		$log.info('Locale:', $locale.id);
-
-
 		$rootScope.logged_in	= false;
 		$rootScope.errors		= [];
 		$rootScope.timeline	= null;
-		$rootScope.finances	= {
+		/*$rootScope.finances	= {
 			"income": [],
 			"expenses": []
-		};
+		};*/
 
 		$log.debug('DEBUG:', "check route",$location.path() !== '/login' && $location.path() !== '/register');
 
@@ -34,16 +34,23 @@ angular.module('Savings', [
 			$timeout(function() {
 				$log.info('Locale:', $locale.id);
 				$location.path('/timeline');
+				SocketService.connect(function(err, connected) {
+					if(err) {
+						$log.error('SOCKET', "Socket handshake failed");
+					}
+				});
 			});
+
 		}
 
+
 		if($cookies.saIdent) {
+			$log.debug('INIT', "loaded cookie using angular cookies", $cookies.saIdent, $cookies.saIdent.length);
 			_trueLogin();
 		} else {
 
 			$userService.session().then(
 				function(success) {
-
 					if(!window.localStorage.locale) {
 						$http.get('http://ipinfo.io/json')
 							.success(function(data) {

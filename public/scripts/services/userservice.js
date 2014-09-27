@@ -2,9 +2,9 @@
  * Created by vivaldi on 23/02/14.
  */
 
-
+'use strict';
 angular.module('Savings.Services')
-	.factory('$userService', function($http, $q, $log, $rootScope, ErrorService) {
+	.factory('$userService', function($http, $q, $log, $rootScope, $timeout, SocketService, ErrorService) {
 
 		function _session() {
 			var dfd = $q.defer();
@@ -39,23 +39,28 @@ angular.module('Savings.Services')
 			})
 				.success(function(data) {
 					$rootScope.logged_in = true;
-					$rootScope.user = data;
-					dfd.resolve(data);
+					//$rootScope.user = data;
+					$rootScope.token = data.token;
+					$timeout(function() {
+
+						SocketService.connect();
+						dfd.resolve(data);
+					});
 				})
 				.error(function(reason) {
 					$log.warn('ERR', "user login failed", reason);
 
 					var errors = reason;
 					if(typeof reason === 'object') {
-						errors = ErrorService.messages(reason)
+						errors = ErrorService.messages(reason);
 					} else if(reason === 'ERR_BAD_PASS') {
 						errors = {
 							'password': "Incorrect password"
-						}
+						};
 					} else if(reason === 'ERR_NO_USER') {
 						errors = {
 							'email': "Email not found"
-						}
+						};
 					}
 					dfd.reject(errors);
 				});

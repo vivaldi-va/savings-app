@@ -26,14 +26,14 @@ angular.module('Savings.Directives')
 
 						mixpanel.track("Updated a timeline item");
 
-						$timelineService.updateItem(scope.item, attrs.date)
-							.then(
+						$timelineService.updateItem(scope.item, attrs.date);
+							/*.then(
 							function(response) {
 								$log.info('HTTP', "Update timeline item", response.data, response.status);
 							},
 							function(err) {
 								$log.warn('HTTP', "Update timeline item failed", err.data, err.status);
-							});
+							});*/
 					};
 				});
 

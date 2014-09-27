@@ -44,16 +44,28 @@ angular.module('Savings.Directives')
 				}
 
 				function _createNewFinance() {
-					$financeService.createFinance(scope.activeFinance)
-						.then(
-						function(success) {
+					$log.debug('Savings.Directives.FinanceModal.createNewFinance()');
+
+					$log.debug(scope.activeFinance);
+					$financeService.createFinance(scope.activeFinance, function(err, result) {
+
+
+
+						if(err) {
+							scope.creatingNewFinance = false;
+							scope.errors = err;
+						} /*else {
+
+
 							// create a new finance item based on the info supplied to the function
 							// so as to avoid getting new data to update it
 							scope.creatingNewFinance	= false;
 							scope.showNewIncomeForm		= false;
 							scope.showNewExpenseForm	= false;
-							scope.activeFinance['_id']		= success._id;
+							scope.activeFinance['_id']	= result._id;
 
+							// create the finances object in rootscope if it
+							// doesnt exist already
 							if(!$rootScope.finances) {
 								$rootScope.finances	= {
 									"income": [],
@@ -61,48 +73,41 @@ angular.module('Savings.Directives')
 								};
 							}
 
-							if(success.type===0) {
+							if(result.type===0) {
 								$rootScope.finances.income.push(scope.activeFinance);
 							}
 
-							if(success.type===1) {
+							if(result.type===1) {
 								$rootScope.finances.expenses.push(scope.activeFinance);
 							}
-
-							_hideModal();
-
-
-
-
-							$timelineService.getTimeline();
+							//$timelineService.getTimeline();
 							$log.info("DEBUG: inserting finance item", scope.activeFinance);
-
-						},
-						function(reason) {
-							scope.creatingNewFinance = false;
-							scope.errors = reason;
-						}
-					);
+						}*/
+					});
+					_hideModal();
+					//var typeString = msg.data.type === 0 ? 'income' : 'expenses';
+					//$rootScope.finances[typeString].push(scope.)
 				}
 
 				function _modifyFinance() {
 					scope.updating = true;
 					$financeService
-						.modifyFinance(scope.activeFinance)
-						.then(
-							function (success) {
+						.modifyFinance(scope.activeFinance, function(err, finance) {
+							if(err) {
 								scope.updating = false;
-								_saveState();
-								_hideModal();
+								scope.errors.push(err);
+							}
+							/*
+							if(finance) {
+								scope.updating = false;
 
 								$timelineService.getTimeline();
 								$log.info("DEBUG: modifying finance item successful");
-							},
-							function (reason) {
-								scope.updating = false;
-								scope.errors.push(reason);
-							}
-						);
+							}*/
+						});
+						_saveState();
+						_hideModal();
+
 				}
 
 
@@ -164,10 +169,6 @@ angular.module('Savings.Directives')
 						_modifyFinance();
 					}
 
-						/*.then(function(success) {
-							$rootScope.timeline = success;
-						});*/
-
 				};
 
 
@@ -180,17 +181,16 @@ angular.module('Savings.Directives')
 						});
 
 
-					$financeService.disableFinance(finance._id)
-						.then(
-						function(success) {
+					$financeService.disableFinance(finance._id, function(err) {
+						if(err) {
+							scope.errors.push(err);
+						} else {
 							$log.info("DEBUG: disabling finance item successful");
 							finance.disabled = true;
 							_hideModal();
-						},
-						function(reason) {
-							scope.errors.push(reason);
 						}
-					);
+					});
+
 					$log.debug("DEBUG: disable finance item", finance);
 
 				};
