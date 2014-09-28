@@ -9,8 +9,7 @@
     "npm": "1.2.x"
   },
   "scripts": {
-    "start": "node lib/server.js",
-    "postinstall": "bower install && grunt build"
+    "start": "node lib/server.js"
   },
   "repository": {
     "type": "git",
