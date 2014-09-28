@@ -20,16 +20,20 @@ angular.module('Savings.Services')
 			var hasRemoved = false;
 
 			for(i = 0; i <= $rootScope.finances.income.length; i++) {
-				if($rootScope.finances.income[i]._id === id) {
-					$rootScope.finances.income.splice(i, 1);
-					hasRemoved = true;
+				if(!!$rootScope.finances.income[i]) {
+					if($rootScope.finances.income[i]._id === id) {
+						$rootScope.finances.income.splice(i, 1);
+						hasRemoved = true;
+					}
 				}
 			}
 
 			if(!hasRemoved) {
-				for(i = 0; i <= $rootScope.finances.income.expenses; i++) {
-					if($rootScope.finances.expenses[i]._id === id) {
-						$rootScope.finances.expenses.splice(i, 1);
+				for(i = 0; i <= $rootScope.finances.expenses.length; i++) {
+					if(!!$rootScope.finances.expenses[i]) {
+						if($rootScope.finances.expenses[i]._id === id) {
+							$rootScope.finances.expenses.splice(i, 1);
+						}
 					}
 				}
 			}
