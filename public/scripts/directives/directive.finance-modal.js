@@ -181,15 +181,9 @@ angular.module('Savings.Directives')
 						});
 
 
-					$financeService.disableFinance(finance._id, function(err) {
-						if(err) {
-							scope.errors.push(err);
-						} else {
-							$log.info("DEBUG: disabling finance item successful");
-							finance.disabled = true;
-							_hideModal();
-						}
-					});
+					$financeService.disableFinance(finance._id);
+
+					_hideModal();
 
 					$log.debug("DEBUG: disable finance item", finance);
 

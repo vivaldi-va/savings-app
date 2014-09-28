@@ -41,6 +41,22 @@ angular.module('Savings.Services')
 
 		}
 
+		function _removeItemsFromTimeline(item) {
+			var typeString = item.type === 0 ? 'income' : 'expenses';
+
+			angular.forEach($rootScope.timeline.items, function(timelineSegment, key) {
+
+				for(var i = 0; i < timelineSegment.finances[typeString].length; i++) {
+					if(timelineSegment.finances[typeString][i]._id === item._id) {
+						$log.debug('cleaning item from timeline segment', timelineSegment.finances[typeString][i]._id, item._id);
+						$rootScope.timeline.items[key].finances[typeString].splice(i, 1);
+					}
+				}
+
+
+			});
+		}
+
 		function _calcTimelineTotals() {
 			var timeline		= $rootScope.timeline;
 			var incomeTotal		= 0;
@@ -150,6 +166,11 @@ angular.module('Savings.Services')
 						$log.debug("Got timeline data");
 						document.getElementById('timeline-scroll').scrollTop = document.getElementById('today').offsetTop-(window.innerHeight/2);
 					});
+				});
+
+				_transport.on('finance-disabled', function(msg) {
+					$log.debug('SOCKET', "Services.TimelineService:listeners", "finance-disabled")
+					_removeItemsFromTimeline(msg.data);
 				});
 			}
 		});
