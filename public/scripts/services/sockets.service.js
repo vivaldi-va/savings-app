@@ -147,7 +147,7 @@ angular.module('Savings.Services')
 
 
 			$log.debug('sending socket.io handshake with token: %s', token);
-			socket = io('http://localhost', { query: "token=" + token });
+			socket = io({ query: "token=" + token });
 
 			socket.on('connect', function() {
 				$log.info('SOCKET', "connected to websocket and joined room probably");
