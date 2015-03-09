@@ -13,3 +13,5 @@ public/styles/**/*.css
 public/fonts/*
 .idea
 **/*.log*
+react-client/js/bundle.js
+react-client/js/bundle.min.js
