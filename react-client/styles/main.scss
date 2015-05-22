@@ -1,6 +1,6 @@
 
 @import '../../bower_components/normalize-scss/normalize';
-
+@import '../../bower_components/font-awesome/scss/font-awesome';
 $headerHeight: 35px;
 
 $white: #FFFFFF;
@@ -55,4 +55,6 @@ $color-error: #7c211e;
 @import 'global/_structure.scss';
 @import 'global/_typography.scss';
 @import 'global/elements/_box.element.scss';
+@import 'global/elements/_button.element.scss';
+@import 'global/elements/_text.element.scss';
 // endinjector

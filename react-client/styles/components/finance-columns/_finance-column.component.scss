@@ -1,11 +1,11 @@
 .finances {
+
 	&__Column {
 		$colWidth: 300px;
 		width: $colWidth;
 		min-width: $colWidth;
 
 		margin: 0.5em;
-		padding: 0 5px 2em;
 		overflow-y: scroll;
 
 		&-income {
@@ -22,6 +22,37 @@
 
 		&::-moz-scrollbar {
 			display: none;
+		}
+	}
+
+	&__ColumnTop {
+		padding: 0.25em 0.25em 0.5em;
+		border-bottom: 1px solid $black-08;
+	}
+
+	&__ColumnHeader {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 0.5em;
+	}
+
+	&__ColumnType {
+		font: {
+			size: 1.25em;
+			weight: 600;
+		}
+
+		text-transform: capitalize;
+	}
+
+	&__ColumnCount {
+		font: {
+			weight: 600;
+			size: 1.15em;
+		}
+
+		span + span {
+			margin: 0 0 0 0.1em;
 		}
 	}
 }

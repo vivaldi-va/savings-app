@@ -11,7 +11,7 @@ var actionMap = {
 	FINANCE_REMOVE: 'finance-disable',
 	FINANCE_UPDATE: 'finance-modify',
 	TIMELINE_ITEM_UPDATE: null
-}
+};
 
 module.exports = {
 	initListener: function(eventName, cb) {
