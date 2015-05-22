@@ -3,11 +3,11 @@
  */
 
 var React = require('react');
-var SavingsFinanceActions = require('../../actions/SavingsFinanceActions');
-var SavingsFinanceItem = require('./FinanceItem.react.js');
+var FinanceActions = require('../../actions/FinanceActions');
+var FinanceItem = require('./FinanceItem.react.js');
 
 
-var SavingsFinanceColumn = React.createClass({
+var FinanceColumn = React.createClass({
 	openFinance: function(finance) {
 
 	},
@@ -46,10 +46,10 @@ var SavingsFinanceColumn = React.createClass({
 					</div>
 				</div>
 
-				<div className="financeColumn__ItemWrapper">
+				<div className="finances__ColumnItemWrapper">
 				{this.props.finances.map(function(finance) {
 					return (
-						<SavingsFinanceItem finance={finance} />
+						<FinanceItem finance={finance} />
 					)
 				})}
 				</div>
@@ -58,4 +58,4 @@ var SavingsFinanceColumn = React.createClass({
 	}
 });
 
-module.exports = SavingsFinanceColumn;
+module.exports = FinanceColumn;

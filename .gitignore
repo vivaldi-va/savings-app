@@ -7,7 +7,7 @@ conf.json
 dbconf.json
 .tmp
 .sass-cache
-public/bower_components
+bower_components
 public/styles/**/*.css
 !public/styles/app.css
 public/fonts/*

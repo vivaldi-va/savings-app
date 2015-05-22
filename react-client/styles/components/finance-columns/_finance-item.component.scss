@@ -1,0 +1,56 @@
+$itemHeight: 54px;
+
+.finances {
+
+	&__ItemWrapper {
+		& + & {
+			margin-top: 0.5em;
+		}
+	}
+
+	&__Item {
+		display: flex;
+		align-items: baseline;
+		height: $itemHeight;
+		padding: 0.25em;
+
+		color: $white;
+		border-radius: 3px;
+
+		&-income {
+			background: $green-02;
+			box-shadow: 0 2px $green-01;
+		}
+
+		&-expense {
+			background: $orange-02;
+			box-shadow: 0 2px $orange-01;
+		}
+	}
+
+	&__ItemAmountWrapper {
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+	}
+
+	&__ItemAmount {
+		font: {
+			size: 1.5em;
+			weight: 600
+		}
+	}
+
+	&__ItemInterval {
+		font: {
+			size: 0.85em;
+			weight: 600;
+		}
+		text-transform: uppercase;
+		color: rgba($white, 0.85);
+	}
+
+	&__ItemName {
+		flex-grow: 2;
+	}
+}
