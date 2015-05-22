@@ -1,0 +1,28 @@
+.navigation {
+
+	display: flex;
+	align-items: center;
+
+	width: 100%;
+	height: 40px;
+
+	padding: 0 0.5em;
+
+	border-bottom: 1px solid $black-08;
+
+	&__Item {
+		color: $black-05;
+		font: {
+			weight: 700;
+		}
+
+		text: {
+			decoration: none;
+		}
+
+		&:hover {
+			color: $black-02;
+		}
+	}
+
+}

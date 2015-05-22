@@ -1,0 +1,58 @@
+
+@import '../../bower_components/normalize-scss/normalize';
+
+$headerHeight: 35px;
+
+$white: #FFFFFF;
+$offWhite: #F7F7F7;
+
+$grey: #DFDFDF;
+
+$black-01: #3C434C;
+$black-02: #49535F;
+$black-03: #5A6370;
+$black-04: #7C8794;
+$black-05: #939AA3;
+$black-06: #ACB5BF;
+$black-07: #C7CFD9;
+$black-08: #DADFE5;
+$black-09: #E7ECF2;
+$black-10: #FAFAFA;
+
+$green-01: #7DA73A;
+$green-02: #AACC6B;
+$green-03: #D3F29F;
+$green-04: #FAFFF0;
+
+$orange-01: #BF520E;
+$orange-02: #E68127;
+$orange-03: #F1985B;
+$orange-04: #FFF5EC;
+
+$red-01: #B65053;
+$red-02: #CD6166;
+$red-03: #E59699;
+$red-04: #FEF3F5;
+
+$muted: #999999;
+
+$blue: #279ddd;
+$blueLight: lighten($blue, 15%);
+
+$red: #E22E07;
+$redLight: lighten($red, 15%);
+
+$color-success: #00b760;
+$color-warning: #fcb514;
+$color-danger: #e87511;
+$color-error: #7c211e;
+
+// injector
+@import 'components/_header.component.scss';
+@import 'components/_navigation.component.scss';
+@import 'components/finance-columns/_finance-column.component.scss';
+@import 'components/timeline/_timeline.component.scss';
+@import 'global/_structure.scss';
+@import 'global/_typography.scss';
+@import 'global/elements/_box.element.scss';
+// endinjector

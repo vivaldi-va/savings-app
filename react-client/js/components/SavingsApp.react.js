@@ -6,54 +6,48 @@
 var React = require('react');
 var FinancesStore = require('../stores/FinancesStore');
 var TimelineStore = require('../stores/TimelineStore');
-var FinancesColumn = require('../components/SavingsFinancesColumn.react');
-//var Timeline = require('../components/Timeline.react');
+
+var Header = require('./Header.react');
+var Navigation = require('./Navigation.react');
+var FinancesColumn = require('./columns/FinancesColumn.react.js');
+var Timeline = require('./timeline/Timeline.react');
 
 // Method to retrieve state from Stores
 function getFinancesState() {
 	return {
 		finances: FinancesStore.getFinances(),
-		timelineitems: {}
+		timelineItems: {}
 	};
 }
 
-// Define main Controller View
 var SavingsApp = React.createClass({
-
-	// Get initial state from stores
-	getInitialState: function () {
+	getInitialState: function() {
 		return getFinancesState();
 	},
-
-	// Add change listeners to stores
 	componentDidMount: function () {
 		FinancesStore.addChangeListener(this._onChange);
 	},
-
-	// Remove change listers from stores
 	componentWillUnmount: function () {
 		FinancesStore.removeChangeListener(this._onChange);
 	},
-
-	// Render our child components, passing state via props
+	_onChange: function () {
+		this.setState(getFinancesState());
+	},
 	render: function () {
-
-
 		console.log(this.state.finances);
 
 		return (
-			<div className="savings-app">
-				<FinancesColumn className="finances__Income" finances={this.state.finances.income} type="income" />
-				<FinancesColumn className="finances__Expenses" finances={this.state.finances.expense} type="expense" />
+			<div className="window">
+				<Header />
+				<Navigation />
+				<div className="container savings-app">
+					<Timeline className="timeline" timelineItems={this.state.timelineItems} />
+					<FinancesColumn finances={this.state.finances.income} type="income" />
+					<FinancesColumn finances={this.state.finances.expense} type="expense" />
+				</div>
 			</div>
 		);
-	},
-
-	// Method to setState based upon Store changes
-	_onChange: function () {
-		this.setState(getFinancesState());
 	}
-
 });
 
 module.exports = SavingsApp;

@@ -53,12 +53,14 @@
     "npmlog": "0.0.6",
     "okay": "^0.3.0",
     "q": "~0.9.7",
-    "react": "^0.12.2",
+    "react": "^0.13.3",
+    "react-router": "^0.13.3",
     "redis": "^0.12.1",
     "requirejs": "~2.1.9",
     "socket.io": "^1.3.5",
     "socket.io-client": "^1.3.5",
     "socketio-jwt": "^2.3.5",
+    "superagent": "^1.2.0",
     "underscore": "^1.8.2"
   },
   "devDependencies": {

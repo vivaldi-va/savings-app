@@ -1,0 +1,27 @@
+.finances {
+	&__Column {
+		$colWidth: 300px;
+		width: $colWidth;
+		min-width: $colWidth;
+
+		margin: 0.5em;
+		padding: 0 5px 2em;
+		overflow-y: scroll;
+
+		&-income {
+			order: 1;
+		}
+
+		&-expense {
+			order: 3;
+		}
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+		&::-moz-scrollbar {
+			display: none;
+		}
+	}
+}

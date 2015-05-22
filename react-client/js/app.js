@@ -1,5 +1,5 @@
 var React = require('react');
-var SavingsApp = require('./components/SavingsApp.react');
+var SavingsApp = require('./components/SavingsApp.react.js');
 var SavingsFinanceActions = require('./actions/SavingsFinanceActions');
 var uuid = require('node-uuid');
 
@@ -27,7 +27,29 @@ for(var i = 0; i < 10; i++) {
 }
 
 
-// Render FluxCartApp Controller View
+/*var addEvent = function(elem, type, eventHandle) {
+	if(elem == null ||typeof(elem) == 'undefined') return;
+	if(elem.addEventListener) {
+		elem.addEventListener(type, eventHandle, false);
+	} else if(elem.attachEvent) {
+		elem.attachEvent("on" + type, eventHandle);
+	} else {
+		elem["on" + type] = eventHandle;
+	}
+};
+
+function setWindow() {
+	console.log('set window');
+	var container	= document.getElementById('window');
+	var header		= document.getElementById('header');
+	container.style.height = window.innerHeight - header.clientHeight + 'px';
+
+}
+(function() {
+	setWindow();
+	addEvent(window, "resize", setWindow);
+})();*/
+
 React.render(
 	<SavingsApp />,
 	document.getElementById('savings-app')

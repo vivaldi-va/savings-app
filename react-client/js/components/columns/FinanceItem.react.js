@@ -3,7 +3,7 @@
  */
 
 var React = require('react');
-var SavingsFinanceActions = require('../actions/SavingsFinanceActions');
+var SavingsFinanceActions = require('../../actions/SavingsFinanceActions');
 
 
 var SavingsFinanceColumn = React.createClass({

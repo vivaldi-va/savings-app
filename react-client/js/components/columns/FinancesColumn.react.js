@@ -3,8 +3,8 @@
  */
 
 var React = require('react');
-var SavingsFinanceActions = require('../actions/SavingsFinanceActions');
-var SavingsFinanceItem = require('./SavingsFinanceItem.react');
+var SavingsFinanceActions = require('../../actions/SavingsFinanceActions');
+var SavingsFinanceItem = require('./FinanceItem.react.js');
 
 
 var SavingsFinanceColumn = React.createClass({
@@ -21,7 +21,7 @@ var SavingsFinanceColumn = React.createClass({
 		console.log(this.props);
 
 		return (
-			<div className="financeColumn">
+			<div className={"box finances__Column finances__Column-" + this.props.type}>
 				<div className="financeColumn__Header">
 					<span>{this.props.type}</span>
 				</div>

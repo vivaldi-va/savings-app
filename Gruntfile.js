@@ -17,20 +17,20 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		paths: {
-			dev: require('./bower.json').appPath || 'react-client',
+			dev: 'react-client',
 			dist: 'dist'
 		},
 		watch: {
 			injectSass: {
 				files: [
-					'<%= paths.dev %>/styles/**/*.{scss,sass}',
-					'<%= paths.dev %>/bower_components/**/*.{scss,sass}'
+					'<%= paths.dev %>/styles/**/*.scss',
+					'<%= paths.dev %>/bower_components/**/*.scss'
 				],
 				tasks: ['injector:sass']
 			},
 			sass: {
 				files: [
-					'<%= paths.dev %>/styles/**/*.{scss,sass}',
+					'<%= paths.dev %>/styles/**/*.scss',
 					'<%= paths.dev %>/bower_components/**/*.{scss,sass}'
 				],
 				tasks: ['sass', 'autoprefixer']
@@ -161,7 +161,7 @@ module.exports = function(grunt) {
 			sass: {
 				options: {
 					transform: function(filePath) {
-						filePath = filePath.replace('/client/styles/', '');
+						filePath = filePath.replace('/react-client/styles/', '');
 						return '@import \'' + filePath + '\';';
 					},
 					starttag: '// injector',
