@@ -2,6 +2,10 @@
 
 	&__Column {
 		$colWidth: 300px;
+
+		display: flex;
+		flex-direction: column;
+
 		width: $colWidth;
 		min-width: $colWidth;
 
@@ -57,6 +61,9 @@
 	}
 
 	&__ColumnItemWrapper {
+		flex-grow: 1;
 		padding: 0.5em;
+		overflow-x: hidden;
+		overflow-y: auto;
 	}
 }

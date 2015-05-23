@@ -31,7 +31,7 @@ $itemHeight: 54px;
 	&__ItemAmountWrapper {
 		display: flex;
 		flex-direction: column;
-		flex-grow: 1;
+		width: 33%;
 	}
 
 	&__ItemAmount {
@@ -39,6 +39,8 @@ $itemHeight: 54px;
 			size: 1.5em;
 			weight: 600
 		}
+
+		text-shadow: 0 1px rgba(0, 0, 0, 0.5);
 	}
 
 	&__ItemInterval {
@@ -51,6 +53,11 @@ $itemHeight: 54px;
 	}
 
 	&__ItemName {
-		flex-grow: 2;
+		flex-grow: 1;
+		font: {
+			weight: 600;
+		}
+		text-align: right;
+		text-shadow: 0 1px rgba(0, 0, 0, 0.5);
 	}
 }
