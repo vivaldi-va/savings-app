@@ -1,4 +1,7 @@
 var React = require('react');
+require('./router');
+var AuthUtil = require('./utils/AuthUtil');
+
 var SavingsApp = require('./components/SavingsApp.react.js');
 var FinanceActions = require('./actions/FinanceActions');
 var uuid = require('node-uuid');
@@ -26,7 +29,23 @@ for(var i = 0; i < 10; i++) {
 	});
 }
 
-React.render(
-	<SavingsApp />,
-	document.getElementById('savings-app')
-);
+
+/*AuthUtil.checkSession(function(err, result) {
+	"use strict";
+	if(err) {
+		console.error(err);
+		return;
+	}
+
+	console.log('logged in');
+
+	console.log(document.getElementById('savings-app'));
+
+	React.render(
+		<SavingsApp />,
+		document.getElementById('savings-app')
+	);
+
+})*/
+
+

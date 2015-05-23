@@ -11,12 +11,12 @@ var RouteHandler = Router.RouteHandler;
 var DefaultRoute = Router.DefaultRoute;
 var Redirect = Router.Redirect;
 
+var AppWindow = require('./components/AppWindow.react');
 var SavingsApp = require('./components/SavingsApp.react');
 
 var routes = (
-	<Route name="app" path="/" handler={SavingsApp}>
-		<Route name="timeline" path="/timeline" />
-		<Redirect from="/timeline" to="app"/>
+	<Route name="app" handler={AppWindow}>
+		<Route path="/" handler={SavingsApp} />
 	</Route>
 );
 

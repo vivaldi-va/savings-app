@@ -5,7 +5,7 @@
 
 var AppDispatcher			= require('../dispatcher/AppDispatcher');
 var EventEmitter			= require('events').EventEmitter;
-var SavingsAppConstants	= require('../constants/SavingsAppConstants');
+var FinanceActionTypes	= require('../constants/FinanceActionTypes');
 var FinanceAPI				= require('../utils/FinanceAPI');
 var _						= require('underscore');
 
@@ -86,25 +86,25 @@ AppDispatcher.register(function (payload) {
 
 	switch (action.actionType) {
 
-		case SavingsAppConstants.FINANCE_ADD:
+		case FinanceActionTypes.FINANCE_ADD:
 			addFinance(action.data);
 			FinanceAPI.emit(action.actionType, action.data);
 			break;
 
 
-		case SavingsAppConstants.FINANCE_REMOVE:
+		case FinanceActionTypes.FINANCE_REMOVE:
 			removeFinance(action.id);
 			FinanceAPI.emit(action.actionType, {id: action.id});
 			break;
 
 
-		case SavingsAppConstants.FINANCE_UPDATE:
+		case FinanceActionTypes.FINANCE_UPDATE:
 			updateFinance(action.id, action.data);
 			FinanceAPI.emit(action.actionType, {id: action.id, data: action.data});
 			break;
 
 
-		case SavingsAppConstants.FINANCE_MODAL_OPEN:
+		case FinanceActionTypes.FINANCE_MODAL_OPEN:
 			setFinanceModalOpen(action.open);
 			break;
 

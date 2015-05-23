@@ -4,28 +4,28 @@
 
 'use strict';
 var AppDispatcher = require('../dispatcher/AppDispatcher');
-var SavingsAppConstants = require('../constants/SavingsAppConstants');
+var FinanceActionTypes = require('../constants/FinanceActionTypes');
 
 
 var SavingsFinanceActions = {
 
 	addFinance: function(data) {
 		AppDispatcher.handleAction({
-			actionType: SavingsAppConstants.FINANCE_ADD,
+			actionType: FinanceActionTypes.FINANCE_ADD,
 			data: data
 		});
 	},
 
 	removeFinance: function(id) {
 		AppDispatcher.handleAction({
-			actionType: SavingsAppConstants.FINANCE_REMOVE,
+			actionType: FinanceActionTypes.FINANCE_REMOVE,
 			id: id
 		});
 	},
 
 	updateFinance: function(id, data) {
 		AppDispatcher.handleAction({
-			actgionType: SavingsAppConstants.FINANCE_UPDATE,
+			actgionType: FinanceActionTypes.FINANCE_UPDATE,
 			id: id,
 			data: data
 		});
