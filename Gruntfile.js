@@ -305,6 +305,16 @@ module.exports = function(grunt) {
 					watch: true
 				}
 			}
+		},
+		mochaTest: {
+			specs: {
+				options: {
+					ui: 'bdd',
+					reporter: 'spec',
+					require: './test/helpers/chai'
+				},
+				src: ['./test/spec/**/*.js']
+			}
 		}
 	});
 
