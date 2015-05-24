@@ -52,9 +52,11 @@ var SavingsApp = React.createClass({
 		console.log(this.state.finances);
 
 		var modal;
+		var openFinance = null;
 
 		if(this.state.modal) {
-			modal = (<FinanceModal modal={this.state.modal} />)
+			modal = (<FinanceModal modal={this.state.modal} />);
+			openFinance = this.state.modal.finance;
 		}
 
 		return (
@@ -63,8 +65,8 @@ var SavingsApp = React.createClass({
 				<Navigation />
 				<div className="container savings-app">
 					<Timeline className="timeline" timelineItems={this.state.timelineItems} />
-					<FinancesColumn finances={this.state.finances.income} type={0} total={this.state.financeTotals.income} />
-					<FinancesColumn finances={this.state.finances.expense} type={1} total={this.state.financeTotals.expense} />
+					<FinancesColumn finances={this.state.finances.income} type={0} total={this.state.financeTotals.income} openFinance={openFinance} />
+					<FinancesColumn finances={this.state.finances.expense} type={1} total={this.state.financeTotals.expense} openFinance={openFinance} />
 				</div>
 				{modal}
 			</div>

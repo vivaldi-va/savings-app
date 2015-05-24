@@ -12,14 +12,19 @@ $itemHeight: 54px;
 		display: flex;
 		align-items: baseline;
 		height: $itemHeight;
-		padding: 0.25em;
+		padding: 0.25em 0.5em;
 
 		color: $white;
 		border-radius: 3px;
 
 		&-income {
-			background: $green-02;
-			box-shadow: 0 2px $green-01;
+			background: $green-03;
+			box-shadow: 0 2px $green-02;
+
+			&.active {
+				background: $green-02;
+				box-shadow: 0 2px $green-01;
+			}
 		}
 
 		&-expense {

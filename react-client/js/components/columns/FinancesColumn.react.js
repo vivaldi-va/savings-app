@@ -58,10 +58,17 @@ var FinanceColumn = React.createClass({
 
 				<div className="finances__ColumnItemWrapper">
 				{this.props.finances.map(function(finance) {
+					var financeIsActive;
+					if(!!this.props.openFinance) {
+						console.log("open finance", this.props.openFinance);
+						if(finance._id === this.props.openFinance._id) {
+							financeIsActive = true;
+						}
+					}
 					return (
-						<FinanceItem finance={finance} />
+						<FinanceItem finance={finance} open={financeIsActive} />
 					)
-				})}
+				}, this)}
 				</div>
 			</div>
 		);
