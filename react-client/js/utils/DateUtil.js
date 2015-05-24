@@ -8,7 +8,7 @@ module.exports = {
 	formatInterval: function formatInterval(interval) {
 		"use strict";
 		var formatted;
-		switch(interval) {
+		switch(Number(interval)) {
 			case 24:
 				formatted = IntervalConstants.INTERVAL_DAY;
 				break;
@@ -18,13 +18,13 @@ module.exports = {
 			case 24 * 7 * 2:
 				formatted = IntervalConstants.INTERVAL_OTHER_WEEK;
 				break;
-			case 24 * 7 * 4:
+			case 24 * 31:
 				formatted = IntervalConstants.INTERVAL_MONTH;
 				break;
-			case 24 * 7 * 4 * 6:
+			case 24 * 31 * 6:
 				formatted = IntervalConstants.INTERVAL_SIX_MONTH;
 				break;
-			case 24 * 7 * 4 * 12:
+			case 24 * 31 * 12:
 				formatted = IntervalConstants.INTERVAL_YEAR;
 				break;
 		}

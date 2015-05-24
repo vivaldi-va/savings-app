@@ -45,8 +45,31 @@ $barHeight: 38px;
 	}
 
 	&__Footer {
+		display: flex;
+		justify-content: space-between;
 		height: $barHeight;
 		background: $black-08;
 		border-top: 1px solid $black-07;
+	}
+
+	&__FooterButtonGroup {
+
+	}
+
+	&__FooterButton {
+		background: transparent;
+		border: none;
+		min-width: $barHeight;
+		height: $barHeight;
+
+		&-green {
+			background: $green-02;
+			color: $white;
+			font: {
+				weight: 600;
+			}
+
+			text-shadow: 0 1px rgba(0,0,0,0.25);
+		}
 	}
 }

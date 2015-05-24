@@ -14,7 +14,7 @@ var _finances = {
 	income: [],
 	expense: []
 };
-var _financeModalOpen = false;
+var _financeModalState = null;
 
 // Add a new finance
 function addFinance(finance) {
@@ -50,9 +50,9 @@ function updateFinance(id, data) {
 	}
 }
 
-function setFinanceModalOpen(open) {
-	console.log('setModalState', open);
-	_financeModalOpen = open;
+function setFinanceModalOpen(data) {
+	console.log('setModalState', data);
+	_financeModalState = data;
 }
 
 // Extend Cart Store with EventEmitter to add eventing capabilities
@@ -65,7 +65,7 @@ var FinancesStore = _.extend({}, EventEmitter.prototype, {
 
 	getModalState: function() {
 		"use strict";
-		return _financeModalOpen;
+		return _financeModalState;
 	},
 
 	// Emit Change event
@@ -111,7 +111,8 @@ AppDispatcher.register(function (payload) {
 
 
 		case FinanceActionTypes.FINANCE_MODAL_OPEN:
-			setFinanceModalOpen(action.open);
+			console.log('finance modal toggle', action.data);
+			setFinanceModalOpen(action.data);
 			break;
 
 		default:

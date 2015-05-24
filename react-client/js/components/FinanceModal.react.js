@@ -3,33 +3,65 @@
  */
 
 var React = require('react');
+var FinanceActions = require('../actions/FinanceActions');
 
 var FinanceModal = React.createClass({
 	propTypes: {
-		onSubmit: React.PropTypes.func,
-		type: React.PropTypes.number,
-		finance: React.PropTypes.object,
-		open: React.PropTypes.bool
+		onSubmit: React.PropTypes.func
 	},
 	getDefaultProps: function() {
 		"use strict";
 		return {
 			onSubmit: function() {},
-			finance: null,
-			type: 0,
-			open: false
 		};
+	},
+	getInitialState: function() {
+		"use strict";
+		return {
+			interval: 24
+		};
+	},
+	handleInterval: function(e) {
+		"use strict";
+		console.log('handleInterval', e.target.value);
+		this.setState({
+			interval: e.target.value
+		});
+	},
+	handleCloseModal: function(e) {
+		"use strict";
+		e.preventDefault();
+		FinanceActions.closeModal();
+	},
+	handleCreateFinance: function(e) {
+		"use strict";
+		e.preventDefault();
+		var name = this.refs.name.getDOMNode().value;
+		var amount = this.refs.amount.getDOMNode().value;
+		var interval = this.state.interval;
+		var date = new Date(this.refs.date.getDOMNode().value);
+
+		FinanceActions.addFinance({
+			name: name,
+			amount: amount,
+			interval: interval,
+			duedate: date,
+			type: this.props.modal.type
+		});
 	},
 	render: function() {
 		"use strict";
-		if(!this.props.open) {
+		if(!this.props.modal) {
 			return null;
 		}
 
-		var title;
-		var label = this.props.type === 0 ? (<span className="label label-green">income</span>) : (<span className="label label-orange">expense</span>);
+		console.log('modal type ', this.props.modal.type);
 
-		if(!this.props.finance) {
+		var title;
+		var label = this.props.modal.type === 0 ? (<span className="label label-green">income</span>) : (<span className="label label-orange">expense</span>);
+
+
+		if(!this.props.modal.finance) {
 			title = (<span>Add new {label}</span>);
 		}
 
@@ -40,7 +72,7 @@ var FinanceModal = React.createClass({
 						{title}
 					</div>
 					<div className="modal__Body">
-						<form action="" className="form">
+						<form className="form">
 							<div className="form__InputGroup">
 								<label htmlFor="finance-modal-name" className="form__InputLabel">name</label>
 								<input id="finance-modal-name" ref="name" type="text" className="input" />
@@ -51,13 +83,13 @@ var FinanceModal = React.createClass({
 							</div>
 							<div className="form__InputGroup">
 								<label htmlFor="finance-modal-interval" className="form__InputLabel">interval</label>
-								<select id="finance-modal-interval" ref="interval" type="text" className="input">
+								<select id="finance-modal-interval" ref="interval" onChange={this.handleInterval} type="text" className="input">
 									<option value={24}>daily</option>
 									<option value={24*7}>weekly</option>
 									<option value={24*7*2}>bi-weekly</option>
-									<option value={24*7*4}>monthly</option>
-									<option value={24*7*4*6}>every 6 months</option>
-									<option value={24*7*4*12}>yearly</option>
+									<option value={24*31*4}>monthly</option>
+									<option value={24*31*6}>every 6 months</option>
+									<option value={24*31*12}>yearly</option>
 								</select>
 							</div>
 							<div className="form__InputGroup">
@@ -70,7 +102,14 @@ var FinanceModal = React.createClass({
 							</div>
 						</form>
 					</div>
-					<div className="modal__Footer"></div>
+					<div className="modal__Footer">
+						<div className="modal__FooterButtonGroup">
+							<button type="button" className="modal__FooterButton modal__FooterButton-default" onClick={this.handleCloseModal}><i className="fa fa-remove"></i></button>
+						</div>
+						<div className="modal__FooterButtonGroup">
+							<button className="modal__FooterButton modal__FooterButton-green" onClick={this.handleCreateFinance}>Add finance</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		)

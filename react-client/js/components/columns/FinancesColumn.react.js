@@ -24,10 +24,10 @@ var FinanceColumn = React.createClass({
 		var type = this.props.type === 0 ? 'income' : 'expense';
 
 		return (
-			<div className={"box finances__Column finances__Column-" + this.props.type}>
+			<div className={"box finances__Column finances__Column-" + type}>
 				<div className="finances__ColumnTop">
 					<div className="finances__ColumnHeader">
-						<div className="finances__ColumnType">{this.props.type}</div>
+						<div className="finances__ColumnType">{type}</div>
 						<button className="button button-clear" onClick={this.newFinance}>
 							<i className="fa fa-plus"></i> add {type}
 						</button>

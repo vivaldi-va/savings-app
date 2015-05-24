@@ -19,6 +19,7 @@ module.exports = {
 	},
 	emit: function(event, data) {
 		"use strict";
+		console.log('emit %s', event);
 		this.socket.emit(event, data);
 	}
 };

@@ -18,12 +18,8 @@ module.exports = {
 		console.log('init listener', actionMap[eventName]);
 		SocketUtil.listen(actionMap[eventName], cb);
 	},
-	emit: function(eventName, data, cb) {
-
-		if(typeof data === 'function') {
-			cb = data;
-		}
-
-		SocketUtil.emit(actionMap[eventName], cb);
+	emit: function(eventName, data) {
+		data = data || null;
+		SocketUtil.emit(actionMap[eventName], data);
 	}
 };

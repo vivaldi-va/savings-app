@@ -34,17 +34,21 @@ var SavingsFinanceActions = {
 	openModal: function(type, finance) {
 		finance = finance || null;
 
+		console.log('open modal', type);
 		AppDispatcher.handleAction({
 			actionType: FinanceActionTypes.FINANCE_MODAL_OPEN,
-			open: true,
-			type: type,
-			finance: finance
+			data: {
+				open: true,
+				type: type,
+				finance: finance
+			}
 		});
 	},
 	closeModal: function() {
 		AppDispatcher.handleAction({
 			actionType: FinanceActionTypes.FINANCE_MODAL_OPEN,
-			open: false
+			data: null
+
 		});
 	}
 };
