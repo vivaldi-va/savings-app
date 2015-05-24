@@ -98,7 +98,6 @@
 			-webkit-border-radius: 15px;
 			-moz-border-radius: 15px;
 			border-radius: 15px;
-
 		}
 	}
 
@@ -107,13 +106,13 @@
 		// colour the future timeline item meta data
 		.income {
 			.timeline-segment-meta {
-				color: $blue;
+				color: $blue-01;
 			}
 		}
 
 		.expenses {
 			.timeline-segment-meta {
-				color: $red;
+				color: $red-01;
 			}
 		}
 
@@ -194,10 +193,10 @@
 		right: 110px;
 
 		.item {
-			background: $blueLight;
+			background: $blue-02;
 
 			&:before {
-				background: $blueLight;
+				background: $blue-02;
 			}
 		}
 	}
@@ -206,10 +205,10 @@
 		left: 110px;
 
 		.item {
-			background: $redLight;
+			background: $red-02;
 
 			&:before {
-				background: $redLight;
+				background: $red-02;
 			}
 		}
 	}
@@ -221,10 +220,10 @@
 			right: 110px;
 
 			.item {
-				background: $blue;
+				background: $blue-01;
 
 				&:before {
-					background: $blue;
+					background: $blue-01;
 				}
 			}
 		}
@@ -233,10 +232,10 @@
 			left: 110px;
 
 			.item {
-				background: $red;
+				background: $red-01;
 
 				&:before {
-					background: $red;
+					background: $red-01;
 				}
 			}
 		}

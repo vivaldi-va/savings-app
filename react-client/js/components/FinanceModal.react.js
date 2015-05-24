@@ -21,6 +21,17 @@ var FinanceModal = React.createClass({
 			interval: 24
 		};
 	},
+	componentDidMount: function() {
+		"use strict";
+		if(this.props.modal.finance) {
+			this.refs.name.getDOMNode().value = this.props.modal.finance.name;
+			this.refs.amount.getDOMNode().value = this.props.modal.finance.amount;
+			this.refs.interval.getDOMNode().value = this.props.modal.finance.interval;
+			this.refs.date.getDOMNode().value = this.props.modal.finance.duedate;
+			this.refs.description.getDOMNode().value = this.props.modal.finance.description;
+
+		}
+	},
 	handleInterval: function(e) {
 		"use strict";
 		console.log('handleInterval', e.target.value);
@@ -49,6 +60,10 @@ var FinanceModal = React.createClass({
 			type: this.props.modal.type
 		});
 	},
+	handleUpdateFinance: function(e) {
+		"use strict";
+		e.preventDefault();
+	},
 	render: function() {
 		"use strict";
 		if(!this.props.modal) {
@@ -58,12 +73,25 @@ var FinanceModal = React.createClass({
 		console.log('modal type ', this.props.modal.type);
 
 		var title;
-		var label = this.props.modal.type === 0 ? (<span className="label label-green">income</span>) : (<span className="label label-orange">expense</span>);
+		var submitButton;
+		var label;
+
+
 
 
 		if(!this.props.modal.finance) {
+			label = this.props.modal.type === 0 ? (<span className="label label-green">income</span>) : (<span className="label label-orange">expense</span>);
 			title = (<span>Add new {label}</span>);
+			submitButton = (<button className="modal__FooterButton modal__FooterButton-blue" onClick={this.handleCreateFinance}>Add finance</button>)
+		} else {
+			label = this.props.modal.type === 0
+				? (<span className="label label-green">{this.props.modal.finance.name}</span>)
+				: (<span className="label label-orange">{this.props.modal.finance.name}</span>);
+			title = (<span>Update {label}</span>);
+			submitButton = (<button className="modal__FooterButton modal__FooterButton-blue" onClick={this.handleUpdateFinance}>Save</button>)
 		}
+
+		//if(this.props.modal.finance)
 
 		return (
 			<div className="modal__Wrapper">
@@ -83,7 +111,7 @@ var FinanceModal = React.createClass({
 							</div>
 							<div className="form__InputGroup">
 								<label htmlFor="finance-modal-interval" className="form__InputLabel">interval</label>
-								<select id="finance-modal-interval" ref="interval" onChange={this.handleInterval} type="text" className="input">
+								<select id="finance-modal-interval" ref="interval" value={24} onChange={this.handleInterval} type="text" className="input">
 									<option value={24}>daily</option>
 									<option value={24*7}>weekly</option>
 									<option value={24*7*2}>bi-weekly</option>
@@ -98,7 +126,7 @@ var FinanceModal = React.createClass({
 							</div>
 							<div className="form__InputGroup">
 								<label htmlFor="finance-modal-description" className="form__InputLabel">description</label>
-								<textarea id="finance-modal-description" ref="description" type="text" className="input"></textarea>
+								<textarea id="finance-modal-description" ref="description" type="text" className="input" value=""></textarea>
 							</div>
 						</form>
 					</div>
@@ -107,7 +135,7 @@ var FinanceModal = React.createClass({
 							<button type="button" className="modal__FooterButton modal__FooterButton-default" onClick={this.handleCloseModal}><i className="fa fa-remove"></i></button>
 						</div>
 						<div className="modal__FooterButtonGroup">
-							<button className="modal__FooterButton modal__FooterButton-green" onClick={this.handleCreateFinance}>Add finance</button>
+							{submitButton}
 						</div>
 					</div>
 				</div>
