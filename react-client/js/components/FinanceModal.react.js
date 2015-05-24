@@ -85,13 +85,17 @@ var FinanceModal = React.createClass({
 		var label;
 
 		if(!this.props.modal.finance) {
-			label = this.props.modal.type === 0 ? (<span className="label label-green">income</span>) : (<span className="label label-orange">expense</span>);
+			label = this.props.modal.type === 0 ?
+				(<span className="label label-green">income</span>) :
+				(<span className="label label-orange">expense</span>);
+
 			title = (<span>Add new {label}</span>);
 			submitButton = (<button className="modal__FooterButton modal__FooterButton-blue" onClick={this.handleCreateFinance}>Add finance</button>)
 		} else {
-			label = this.props.modal.type === 0
-				? (<span className="label l6abel-green">{this.props.modal.finance.name}</span>)
-				: (<span className="label label-orange">{this.props.modal.finance.name}</span>);
+			label = this.props.modal.type === 0 ?
+				(<span className="label label-green">{this.props.modal.finance.name}</span>) :
+				(<span className="label label-orange">{this.props.modal.finance.name}</span>);
+
 			title = (<span>Update {label}</span>);
 			submitButton = (<button className="modal__FooterButton modal__FooterButton-blue" onClick={this.handleUpdateFinance}>Save</button>)
 		}
