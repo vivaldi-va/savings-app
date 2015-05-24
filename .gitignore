@@ -15,3 +15,4 @@ public/fonts/*
 **/*.log*
 react-client/js/bundle.js
 react-client/js/bundle.min.js
+fonts
