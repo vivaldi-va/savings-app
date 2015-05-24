@@ -227,7 +227,7 @@ module.exports = function(grunt) {
 				expand: true,
 				flatten: true,
 				filter: 'isFile',
-				cwd: '<%= paths.dev %>/bower_components',
+				cwd: 'bower_components',
 				dest: '<%= paths.dev %>/fonts',
 				src: ['**/*.{eot,svg,woff,woff2}']
 			},
@@ -380,7 +380,6 @@ module.exports = function(grunt) {
 		'clean:server',
 		'wiredep',
 		'copy:fonts',
-		'copy:zeroclipboard',
 		'injector:sass',
 		'concurrent:server',
 		'autoprefixer',
