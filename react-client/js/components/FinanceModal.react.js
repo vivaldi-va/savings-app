@@ -5,6 +5,8 @@
 var React = require('react');
 var FinanceActions = require('../actions/FinanceActions');
 
+var FinanceAPI = require('../utils/FinanceAPI');
+
 var FinanceModal = React.createClass({
 	propTypes: {
 		onSubmit: React.PropTypes.func
@@ -52,17 +54,25 @@ var FinanceModal = React.createClass({
 		var interval = this.state.interval;
 		var date = new Date(this.refs.date.getDOMNode().value);
 
-		FinanceActions.addFinance({
+
+		var newFinance = {
 			name: name,
 			amount: amount,
 			interval: interval,
 			duedate: date,
 			type: this.props.modal.type
-		});
+		};
+
+		//FinanceActions.addFinance(newFinance);
+
+		FinanceAPI.emit('FINANCE_ADD', newFinance);
+		FinanceActions.closeModal();
+
 	},
 	handleUpdateFinance: function(e) {
 		"use strict";
 		e.preventDefault();
+		FinanceActions.closeModal();
 	},
 	render: function() {
 		"use strict";
@@ -70,14 +80,9 @@ var FinanceModal = React.createClass({
 			return null;
 		}
 
-		console.log('modal type ', this.props.modal.type);
-
 		var title;
 		var submitButton;
 		var label;
-
-
-
 
 		if(!this.props.modal.finance) {
 			label = this.props.modal.type === 0 ? (<span className="label label-green">income</span>) : (<span className="label label-orange">expense</span>);
@@ -85,7 +90,7 @@ var FinanceModal = React.createClass({
 			submitButton = (<button className="modal__FooterButton modal__FooterButton-blue" onClick={this.handleCreateFinance}>Add finance</button>)
 		} else {
 			label = this.props.modal.type === 0
-				? (<span className="label label-green">{this.props.modal.finance.name}</span>)
+				? (<span className="label l6abel-green">{this.props.modal.finance.name}</span>)
 				: (<span className="label label-orange">{this.props.modal.finance.name}</span>);
 			title = (<span>Update {label}</span>);
 			submitButton = (<button className="modal__FooterButton modal__FooterButton-blue" onClick={this.handleUpdateFinance}>Save</button>)
@@ -111,11 +116,11 @@ var FinanceModal = React.createClass({
 							</div>
 							<div className="form__InputGroup">
 								<label htmlFor="finance-modal-interval" className="form__InputLabel">interval</label>
-								<select id="finance-modal-interval" ref="interval" value={24} onChange={this.handleInterval} type="text" className="input">
+								<select id="finance-modal-interval" ref="interval" defaultValue={24} onChange={this.handleInterval} type="text" className="input">
 									<option value={24}>daily</option>
 									<option value={24*7}>weekly</option>
 									<option value={24*7*2}>bi-weekly</option>
-									<option value={24*31*4}>monthly</option>
+									<option value={24*31}>monthly</option>
 									<option value={24*31*6}>every 6 months</option>
 									<option value={24*31*12}>yearly</option>
 								</select>

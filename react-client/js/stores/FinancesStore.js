@@ -139,7 +139,8 @@ AppDispatcher.register(function (payload) {
 
 		case FinanceActionTypes.FINANCE_ADD:
 			addFinance(action.data);
-			FinanceAPI.emit(action.actionType, action.data);
+			console.log('add finance to store');
+			//FinanceAPI.emit(action.actionType, action.data);
 			break;
 
 

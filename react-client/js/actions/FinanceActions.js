@@ -16,6 +16,7 @@ var SavingsFinanceActions = {
 		});
 	},
 
+
 	removeFinance: function(id) {
 		AppDispatcher.handleAction({
 			actionType: FinanceActionTypes.FINANCE_REMOVE,
