@@ -25,9 +25,26 @@ var SavingsFinanceActions = {
 
 	updateFinance: function(id, data) {
 		AppDispatcher.handleAction({
-			actgionType: FinanceActionTypes.FINANCE_UPDATE,
+			actionType: FinanceActionTypes.FINANCE_UPDATE,
 			id: id,
 			data: data
+		});
+	},
+
+	openModal: function(type, finance) {
+		finance = finance || null;
+
+		AppDispatcher.handleAction({
+			actionType: FinanceActionTypes.FINANCE_MODAL_OPEN,
+			open: true,
+			type: type,
+			finance: finance
+		});
+	},
+	closeModal: function() {
+		AppDispatcher.handleAction({
+			actionType: FinanceActionTypes.FINANCE_MODAL_OPEN,
+			open: false
 		});
 	}
 };

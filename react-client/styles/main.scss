@@ -49,6 +49,7 @@ $color-error: #7c211e;
 
 // injector
 @import 'components/_header.component.scss';
+@import 'components/_modal.component.scss';
 @import 'components/_navigation.component.scss';
 @import 'components/finance-columns/_finance-column.component.scss';
 @import 'components/finance-columns/_finance-item.component.scss';
@@ -57,5 +58,8 @@ $color-error: #7c211e;
 @import 'global/_typography.scss';
 @import 'global/elements/_box.element.scss';
 @import 'global/elements/_button.element.scss';
+@import 'global/elements/_form.element.scss';
+@import 'global/elements/_input.element.scss';
+@import 'global/elements/_label.element.scss';
 @import 'global/elements/_text.element.scss';
 // endinjector

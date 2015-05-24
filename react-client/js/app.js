@@ -8,7 +8,7 @@ var uuid = require('node-uuid');
 
 
 
-for(var i = 0; i < 10; i++) {
+/*for(var i = 0; i < 10; i++) {
 	FinanceActions.addFinance({
 		__v: 0,
 		_id: uuid.v4(),
@@ -27,7 +27,8 @@ for(var i = 0; i < 10; i++) {
 		type: i % 2,
 		user_id: "540f56f90c468e7e6ebeaafc"
 	});
-}
+}*/
+
 
 
 /*AuthUtil.checkSession(function(err, result) {

@@ -51,6 +51,7 @@ function updateFinance(id, data) {
 }
 
 function setFinanceModalOpen(open) {
+	console.log('setModalState', open);
 	_financeModalOpen = open;
 }
 
@@ -60,6 +61,11 @@ var FinancesStore = _.extend({}, EventEmitter.prototype, {
 
 	getFinances: function() {
 		return _finances;
+	},
+
+	getModalState: function() {
+		"use strict";
+		return _financeModalOpen;
 	},
 
 	// Emit Change event

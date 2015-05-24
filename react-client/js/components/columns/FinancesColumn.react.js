@@ -8,24 +8,29 @@ var FinanceItem = require('./FinanceItem.react.js');
 
 
 var FinanceColumn = React.createClass({
-	openFinance: function(finance) {
-
+	openModal: function(finance) {
+		"use strict";
+		finance = finance || null;
+		FinanceActions.openModal(this.props.type, finance);
 	},
 
-	newFinance: function(type) {
-
+	newFinance: function() {
+		"use strict";
+		FinanceActions.openModal(this.props.type);
 	},
 
 	render: function() {
 
-
+		var type = this.props.type === 0 ? 'income' : 'expense';
 
 		return (
 			<div className={"box finances__Column finances__Column-" + this.props.type}>
 				<div className="finances__ColumnTop">
 					<div className="finances__ColumnHeader">
 						<div className="finances__ColumnType">{this.props.type}</div>
-						<button className="button button-clear"><i className="fa fa-plus"></i> add income</button>
+						<button className="button button-clear" onClick={this.newFinance}>
+							<i className="fa fa-plus"></i> add {type}
+						</button>
 					</div>
 
 					<div className="finances__ColumnInfo">

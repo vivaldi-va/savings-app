@@ -3,22 +3,27 @@
  */
 
 'use strict';
-var sio = require('socket.io-client');
-
+var SocketUtil = require('./SocketUtil');
 var actionMap = {
-	FINANCE_GET: 'finance',
-	FINANCE_ADD: 'finance-add',
-	FINANCE_REMOVE: 'finance-disable',
-	FINANCE_UPDATE: 'finance-modify',
+	FINANCE_LOAD: 'finance::load',
+	FINANCE_GET: 'finance::get',
+	FINANCE_ADD: 'finance::add',
+	FINANCE_REMOVE: 'finance::disable',
+	FINANCE_UPDATE: 'finance::modify',
 	TIMELINE_ITEM_UPDATE: null
 };
 
 module.exports = {
 	initListener: function(eventName, cb) {
-		//sio.on(eventName, cb);
+		console.log('init listener', actionMap[eventName]);
+		SocketUtil.listen(actionMap[eventName], cb);
 	},
-	emit: function(actionType, data) {
+	emit: function(eventName, data, cb) {
 
-		//sio.emit(actionMap[actionType], !!data ? data : {});
+		if(typeof data === 'function') {
+			cb = data;
+		}
+
+		SocketUtil.emit(actionMap[eventName], cb);
 	}
-}
+};
