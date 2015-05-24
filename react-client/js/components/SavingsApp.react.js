@@ -21,6 +21,7 @@ var FinanceModal = require('./FinanceModal.react');
 function getFinancesState() {
 	return {
 		finances: FinancesStore.getFinances(),
+		financeTotals: FinancesStore.getFinanceTotals(),
 		timelineItems: {},
 		modal: FinancesStore.getModalState()
 	};
@@ -41,6 +42,7 @@ var SavingsApp = React.createClass({
 		FinancesStore.addChangeListener(this._onChange);
 	},
 	componentWillUnmount: function () {
+		"use strict";
 		FinancesStore.removeChangeListener(this._onChange);
 	},
 	_onChange: function () {
@@ -61,8 +63,8 @@ var SavingsApp = React.createClass({
 				<Navigation />
 				<div className="container savings-app">
 					<Timeline className="timeline" timelineItems={this.state.timelineItems} />
-					<FinancesColumn finances={this.state.finances.income} type={0} />
-					<FinancesColumn finances={this.state.finances.expense} type={1} />
+					<FinancesColumn finances={this.state.finances.income} type={0} total={this.state.financeTotals.income} />
+					<FinancesColumn finances={this.state.finances.expense} type={1} total={this.state.financeTotals.expense} />
 				</div>
 				{modal}
 			</div>

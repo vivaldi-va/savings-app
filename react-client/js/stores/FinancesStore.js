@@ -3,11 +3,13 @@
  * Created by vivaldi on 07/03/2015.
  */
 
+
+var _						= require('underscore');
+var moment				= require('moment');
 var AppDispatcher			= require('../dispatcher/AppDispatcher');
 var EventEmitter			= require('events').EventEmitter;
 var FinanceActionTypes	= require('../constants/FinanceActionTypes');
 var FinanceAPI				= require('../utils/FinanceAPI');
-var _						= require('underscore');
 
 // Define initial data points
 var _finances = {
@@ -15,6 +17,42 @@ var _finances = {
 	expense: []
 };
 var _financeModalState = null;
+var _financeTotals = {
+	income: 0,
+	expense: 0
+};
+
+
+
+var calcFinanceTotals = function() {
+	"use strict";
+
+	var calc = function(finance) {
+
+		var type = finance.type === 0 ? "income" : "expense";
+
+		switch(finance.interval) {
+			case 24:
+				_financeTotals[type] += finance.amount * moment().daysInMonth();
+				break;
+			case 24*7:
+				_financeTotals[type] += finance.amount * 4;
+				break;
+			case 24*31:
+				_financeTotals[type] += finance.amount;
+				break;
+		}
+	};
+
+	for(var i in _finances) {
+		if(_finances.hasOwnProperty(i)) {
+			var type = _finances[i];
+			type.forEach(calc);
+		}
+	}
+
+	console.log('finance totals', _financeTotals);
+};
 
 // Add a new finance
 function addFinance(finance) {
@@ -23,6 +61,8 @@ function addFinance(finance) {
 	} else {
 		_finances.expense.push(finance);
 	}
+
+	calcFinanceTotals();
 
 }
 
@@ -66,6 +106,11 @@ var FinancesStore = _.extend({}, EventEmitter.prototype, {
 	getModalState: function() {
 		"use strict";
 		return _financeModalState;
+	},
+
+	getFinanceTotals: function() {
+		"use strict";
+		return _financeTotals;
 	},
 
 	// Emit Change event

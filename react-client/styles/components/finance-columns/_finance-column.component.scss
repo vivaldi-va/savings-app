@@ -49,6 +49,11 @@
 		text-transform: capitalize;
 	}
 
+	&__ColumnInfo {
+		display: flex;
+		justify-content: space-between;
+	}
+
 	&__ColumnCount {
 		font: {
 			weight: 600;
@@ -57,6 +62,24 @@
 
 		span + span {
 			margin: 0 0 0 0.1em;
+		}
+	}
+
+	&__ColumnTotal {
+	}
+
+	&__ColumnTotalValue {
+		font: {
+			weight: 700;
+			size: 1.15em;
+		}
+
+		&-income {
+			color: $green-02;
+		}
+
+		&-expense {
+			color: $orange-02;
 		}
 	}
 

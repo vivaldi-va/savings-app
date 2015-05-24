@@ -3,6 +3,8 @@
  */
 
 var React = require('react');
+var Classnames = require('classnames');
+var Numeral = require('numeral');
 var FinanceActions = require('../../actions/FinanceActions');
 var FinanceItem = require('./FinanceItem.react.js');
 
@@ -22,7 +24,7 @@ var FinanceColumn = React.createClass({
 	render: function() {
 
 		var type = this.props.type === 0 ? 'income' : 'expense';
-
+		var totalClass = Classnames('finances__ColumnTotalValue', {'finances__ColumnTotalValue-income': this.props.type===0, 'finances__ColumnTotalValue-expense': this.props.type===1});
 		return (
 			<div className={"box finances__Column finances__Column-" + type}>
 				<div className="finances__ColumnTop">
@@ -47,7 +49,10 @@ var FinanceColumn = React.createClass({
 								}.call(this)}
 							</span>
 						</div>
-						<div className="finances__ColumnTotal"></div>
+						<div className="finances__ColumnTotal">
+							<span className={totalClass}>{Numeral(this.props.total).format('$0,0.00')}</span>
+							<span className="text-sub">/month</span>
+						</div>
 					</div>
 				</div>
 
