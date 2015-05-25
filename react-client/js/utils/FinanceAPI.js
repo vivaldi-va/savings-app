@@ -10,6 +10,7 @@ var actionMap = {
 	FINANCE_ADD: 'finance::add',
 	FINANCE_REMOVE: 'finance::disable',
 	FINANCE_UPDATE: 'finance::modify',
+	FINANCE_UPDATED: 'finance::modified',
 	TIMELINE_ITEM_UPDATE: null
 };
 

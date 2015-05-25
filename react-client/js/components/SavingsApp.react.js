@@ -34,11 +34,19 @@ var SavingsApp = React.createClass({
 	componentDidMount: function () {
 		"use strict";
 		FinanceAPI.emit('FINANCE_LOAD');
+
 		FinanceAPI.initListener('FINANCE_GET', function(financeData) {
 			console.log('got finance', financeData);
 			FinanceActions.addFinance(financeData);
-
 		});
+
+		FinanceAPI.initListener('FINANCE_UPDATED', function(financeData) {
+			console.log('got finance update', financeData);
+			FinanceActions.updateFinance(financeData);
+		});
+
+
+
 		FinancesStore.addChangeListener(this._onChange);
 	},
 	componentWillUnmount: function () {

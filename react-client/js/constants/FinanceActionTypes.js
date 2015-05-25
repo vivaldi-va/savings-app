@@ -8,7 +8,7 @@ var keyMirror = require('react/lib/keyMirror');
 module.exports = keyMirror({
 	FINANCE_ADD: null,
 	FINANCE_REMOVE: null,
-	FINANCE_UPDATE: null,
+	FINANCE_UPDATED: null,
 	FINANCE_MODAL_OPEN: null,
 	TIMELINE_ITEM_UPDATE: null,
 	SET_SELECTED: null,

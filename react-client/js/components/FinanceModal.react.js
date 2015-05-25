@@ -14,7 +14,7 @@ var FinanceModal = React.createClass({
 	getDefaultProps: function() {
 		"use strict";
 		return {
-			onSubmit: function() {},
+			onSubmit: function() {}
 		};
 	},
 	getInitialState: function() {
@@ -31,12 +31,14 @@ var FinanceModal = React.createClass({
 			this.refs.interval.getDOMNode().value = this.props.modal.finance.interval;
 			this.refs.date.getDOMNode().value = this.props.modal.finance.duedate;
 			this.refs.description.getDOMNode().value = this.props.modal.finance.description;
-
 		}
+
+		console.log('loading finance', this.refs.interval.getDOMNode().value);
 	},
 	handleInterval: function(e) {
 		"use strict";
 		console.log('handleInterval', e.target.value);
+		console.log(this.refs.interval.getDOMNode().value);
 		this.setState({
 			interval: e.target.value
 		});
@@ -51,7 +53,7 @@ var FinanceModal = React.createClass({
 		e.preventDefault();
 		var name = this.refs.name.getDOMNode().value;
 		var amount = this.refs.amount.getDOMNode().value;
-		var interval = this.state.interval;
+		var interval = this.refs.interval.getDOMNode().value;
 		var date = new Date(this.refs.date.getDOMNode().value);
 
 
@@ -72,6 +74,20 @@ var FinanceModal = React.createClass({
 	handleUpdateFinance: function(e) {
 		"use strict";
 		e.preventDefault();
+		var name = this.refs.name.getDOMNode().value;
+		var amount = this.refs.amount.getDOMNode().value;
+		var interval = this.refs.interval.getDOMNode().value;
+		var date = new Date(this.refs.date.getDOMNode().value);
+		var updatedFinance = {
+			_id: this.props.modal.finance._id,
+			name: name,
+			amount: amount,
+			interval: interval,
+			duedate: date
+		};
+
+
+		FinanceAPI.emit('FINANCE_UPDATE', updatedFinance);
 		FinanceActions.closeModal();
 	},
 	render: function() {
@@ -120,7 +136,7 @@ var FinanceModal = React.createClass({
 							</div>
 							<div className="form__InputGroup">
 								<label htmlFor="finance-modal-interval" className="form__InputLabel">interval</label>
-								<select id="finance-modal-interval" ref="interval" defaultValue={24} onChange={this.handleInterval} type="text" className="input">
+								<select id="finance-modal-interval" ref="interval" onChange={this.handleInterval} type="text" className="input">
 									<option value={24}>daily</option>
 									<option value={24*7}>weekly</option>
 									<option value={24*7*2}>bi-weekly</option>

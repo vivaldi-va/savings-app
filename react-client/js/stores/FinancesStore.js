@@ -79,15 +79,29 @@ function removeFinance(id) {
 }
 
 
-function updateFinance(id, data) {
+function updateFinance(updatedFinance) {
+	"use strict";
+
 	for(var i in _finances) {
-		for(var f in _finances[i]) {
-			if(_finances[i][f]._id === id) {
-				_finances[i][f] = data;
-				return;
-			}
+		if(_finances.hasOwnProperty(i)) {
+			_finances[i] = _finances[i].map(function(finance) {
+				console.log('check finance', finance, finance._id === updatedFinance._id);
+				if(finance._id === updatedFinance._id) {
+					finance.name = updatedFinance.name;
+					finance.amount = updatedFinance.amount;
+					finance.duedate = updatedFinance.duedate;
+					finance.interval = updatedFinance.interval;
+					finance.description = updatedFinance.description;
+
+					console.log('done updating finance ', finance);
+
+				}
+				return finance;
+			});
+			calcFinanceTotals.call(null);
 		}
 	}
+	console.log('done updating all finances', _finances);
 }
 
 function setFinanceModalOpen(data) {
@@ -150,9 +164,9 @@ AppDispatcher.register(function (payload) {
 			break;
 
 
-		case FinanceActionTypes.FINANCE_UPDATE:
-			updateFinance(action.id, action.data);
-			FinanceAPI.emit(action.actionType, {id: action.id, data: action.data});
+		case FinanceActionTypes.FINANCE_UPDATED:
+			updateFinance(action.data);
+			//FinanceAPI.emit(action.actionType, {id: action.id, data: action.data});
 			break;
 
 

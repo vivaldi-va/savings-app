@@ -7,7 +7,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var FinanceActionTypes = require('../constants/FinanceActionTypes');
 
 
-var SavingsFinanceActions = {
+var FinanceActions = {
 
 	addFinance: function(data) {
 		AppDispatcher.handleAction({
@@ -24,10 +24,10 @@ var SavingsFinanceActions = {
 		});
 	},
 
-	updateFinance: function(id, data) {
+	updateFinance: function(data) {
+		console.log('update finance', data);
 		AppDispatcher.handleAction({
-			actionType: FinanceActionTypes.FINANCE_UPDATE,
-			id: id,
+			actionType: FinanceActionTypes.FINANCE_UPDATED,
 			data: data
 		});
 	},
@@ -54,4 +54,4 @@ var SavingsFinanceActions = {
 	}
 };
 
-module.exports = SavingsFinanceActions;
+module.exports = FinanceActions;
