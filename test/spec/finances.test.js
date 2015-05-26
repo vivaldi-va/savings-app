@@ -176,7 +176,19 @@ describe('Finances tests', function() {
 				expect(msg.name).to.equal(addedFinance.name);
 				done();
 			});
-			done();
+		});
+
+		it('should send replacement timeline items', function(done) {
+			var callbackCount = 0;
+			addedFinance.name = 'new name again';
+			socketClient.emit('finance::modify', addedFinance);
+
+			socketClient.on('timeline::item', function(msg) {
+				callbackCount += 1;
+				if(callbackCount === 1) {
+					done();
+				}
+			});
 		});
 	});
 
