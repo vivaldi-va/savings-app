@@ -3,12 +3,15 @@
  */
 
 var request		= require('supertest');
-var expect			= require('chai').expect;
+var chai			= require('chai');
+var spies			= require('chai-spies');
 var io				= require('socket.io-client');
 var app			= require('../../lib/server');
 var config			= require('../helpers/config');
 var appConfig		= require('../../lib/config/env');
 var log			= require('log4js').getLogger('finances.test');
+var expect			= chai.expect;
+chai.use(spies);
 require('../helpers/cleardb');
 
 log.debug('finaces test', process.env.NODE_ENV);
@@ -120,8 +123,8 @@ describe('Finances tests', function() {
 		});
 
 		it('should add a finance', function(done) {
-			socketClient.emit('finance::add', testFinance);
-			socketClient.on('finance::get', function(msg) {
+
+			var financeGetCallback = function(msg) {
 				expect(msg).to.be.ok;
 				expect(msg).to.have.property('_id');
 				expect(msg).to.have.property('name');
@@ -134,7 +137,32 @@ describe('Finances tests', function() {
 				//expect(msg.amount).to.equal(testFinance.amount);
 				addedFinance = msg;
 				done();
-			});
+			};
+
+
+
+			var financeGetCallbackSpy = chai.spy(financeGetCallback);
+
+			socketClient.emit('finance::add', testFinance);
+			socketClient.on('finance::get', financeGetCallback);
+
+		});
+
+		it('should generate timeline items', function(done) {
+
+			var callbackCount = 0;
+			var timelineItemGetCallback = function(msg) {
+				log.debug('got timeline item');
+				expect(msg).to.be.ok;
+				callbackCount += 1;
+				if(callbackCount === 1) {
+					done();
+				}
+			};
+
+
+			socketClient.emit('finance::add', testFinance);
+			socketClient.on('timeline::item', timelineItemGetCallback);
 		});
 
 	});
