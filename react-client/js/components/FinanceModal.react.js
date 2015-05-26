@@ -90,6 +90,10 @@ var FinanceModal = React.createClass({
 		FinanceAPI.emit('FINANCE_UPDATE', updatedFinance);
 		FinanceActions.closeModal();
 	},
+	handleDisableFinance: function(e) {
+		"use strict";
+		e.preventDefault();
+	},
 	render: function() {
 		"use strict";
 		if(!this.props.modal) {
@@ -98,6 +102,7 @@ var FinanceModal = React.createClass({
 
 		var title;
 		var submitButton;
+		var leftButtons;
 		var label;
 
 		if(!this.props.modal.finance) {
@@ -107,13 +112,24 @@ var FinanceModal = React.createClass({
 
 			title = (<span>Add new {label}</span>);
 			submitButton = (<button className="modal__FooterButton modal__FooterButton-blue" onClick={this.handleCreateFinance}>Add finance</button>)
+			leftButtons = (
+				<div className="modal__FooterButtonGroup">
+					<button type="button" className="modal__FooterButton modal__FooterButton-default" onClick={this.handleCloseModal}><i className="fa fa-remove"></i></button>
+				</div>
+			);
 		} else {
 			label = this.props.modal.type === 0 ?
 				(<span className="label label-green">{this.props.modal.finance.name}</span>) :
 				(<span className="label label-orange">{this.props.modal.finance.name}</span>);
 
 			title = (<span>Update {label}</span>);
-			submitButton = (<button className="modal__FooterButton modal__FooterButton-blue" onClick={this.handleUpdateFinance}>Save</button>)
+			submitButton = (<button className="modal__FooterButton modal__FooterButton-blue" onClick={this.handleUpdateFinance}>Save</button>);
+			leftButtons = (
+			<div className="modal__FooterButtonGroup">
+				<button type="button" className="modal__FooterButton modal__FooterButton-default" onClick={this.handleCloseModal}><i className="fa fa-remove"></i></button>
+				<button type="button" className="modal__FooterButton modal__FooterButton-default" onClick={this.handleDisableFinance}><i className="fa fa-trash"></i></button>
+			</div>
+			);
 		}
 
 		//if(this.props.modal.finance)
@@ -156,9 +172,7 @@ var FinanceModal = React.createClass({
 						</form>
 					</div>
 					<div className="modal__Footer">
-						<div className="modal__FooterButtonGroup">
-							<button type="button" className="modal__FooterButton modal__FooterButton-default" onClick={this.handleCloseModal}><i className="fa fa-remove"></i></button>
-						</div>
+						{leftButtons}
 						<div className="modal__FooterButtonGroup">
 							{submitButton}
 						</div>

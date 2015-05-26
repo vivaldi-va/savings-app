@@ -67,7 +67,7 @@
   },
   "devDependencies": {
     "browserify": "^9.0.3",
-    "chai": "~1.9.1",
+    "chai": "^2.3.0",
     "envify": "^3.3.0",
     "grunt": "^0.4.5",
     "grunt-asset-injector": "^0.1.0",
@@ -94,7 +94,7 @@
     "mocha": "~1.21.3",
     "react": "^0.12.2",
     "reactify": "^1.0.0",
-    "supertest": "~0.13.0",
+    "supertest": "^1.0.1",
     "time-grunt": "~0.2.1",
     "watchify": "^2.4.0"
   }

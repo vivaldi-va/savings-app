@@ -311,9 +311,9 @@ module.exports = function(grunt) {
 				options: {
 					ui: 'bdd',
 					reporter: 'spec',
-					require: './test/helpers/chai'
+					require: ['./test/helpers/chai']
 				},
-				src: ['./test/spec/**/*.js']
+				src: ['./test/spec/**/*.test.js']
 			}
 		}
 	});

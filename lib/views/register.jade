@@ -1,0 +1,22 @@
+//
+	Created by Zaccary on 23/05/2015.
+
+doctype html
+html(lang='en')
+	head
+		title= 'register'
+
+	body
+		form(action="/api/auth/register", method="post")
+			div
+				label(for="name") username
+				input(type="text", name="username", id="name")
+			div
+				label(for="email") email
+				input(type="email", name="email", id="email")
+			div
+				label(for="password") password
+				input(type="password", name="password", id="password")
+			div
+				span #{error}
+				button(type="submit") register
