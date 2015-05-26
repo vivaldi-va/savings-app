@@ -15,9 +15,11 @@ log.debug('finaces test', process.env.NODE_ENV);
 
 var testUserDetails = config.user;
 
-var sessionToken;
 var socketClient;
 
+
+// before running any tests, create the test
+// user ONCE
 before(function(done) {
 	"use strict";
 	request(app)
@@ -43,7 +45,9 @@ before(function(done) {
 describe('Finances tests', function() {
 	"use strict";
 
-
+	// before each test, login with the
+	// test user and save it's token for use
+	// in connecting to sockets
 	beforeEach(function(done) {
 		request(app)
 			.post('/api/auth/login')
@@ -58,7 +62,7 @@ describe('Finances tests', function() {
 					throw err;
 				}
 
-				sessionToken = result.body.token;
+				var sessionToken = result.body.token;
 
 				var clientOpts = {
 					'reconnection delay': 0,
@@ -80,7 +84,7 @@ describe('Finances tests', function() {
 	afterEach(function(done) {
 
 		if(socketClient.connected) {
-			//socketClient.disconnect();
+			socketClient.disconnect();
 		}
 		done();
 	});
@@ -88,19 +92,56 @@ describe('Finances tests', function() {
 	console.log("socket client", socketClient);
 	var testFinance = {
 		name: 'finance',
-		amount: 10,
+		amount: '10',
 		interval: 24,
 		duedate: new Date('01/01/2015'),
+		description: "description",
 		type: 0
 	};
+	var addedFinance;
 
 	describe('adding finances', function() {
+
+		it('should not add a finance without a name', function(done) {
+
+			socketClient.emit('finance::add', {
+				name: '',
+				amount: testFinance.amount,
+				interval: testFinance.interval,
+				duedate: testFinance.duedate,
+				description: testFinance.description,
+				type: testFinance.type
+			});
+
+			socketClient.on('err', function(err) {
+				expect(err).to.be.ok;
+				done();
+			});
+		});
+
 		it('should add a finance', function(done) {
 			socketClient.emit('finance::add', testFinance);
 			socketClient.on('finance::get', function(msg) {
 				expect(msg).to.be.ok;
+				expect(msg).to.have.property('_id');
+				expect(msg).to.have.property('name');
+				expect(msg).to.have.property('amount');
+
+				expect(msg.name).to.equal(testFinance.name);
+				log.debug('added finance amount', msg.amount, testFinance.amount);
+				expect(msg.amount).to.equal(testFinance.amount);
+				//expect(msg.name).to.equal(testFinance.name);
+				//expect(msg.amount).to.equal(testFinance.amount);
+				addedFinance = msg;
 				done();
 			});
+		});
+
+	});
+
+	describe('modifying a finance', function() {
+		it('should modify a finance', function(done) {
+			done();
 		});
 	});
 
