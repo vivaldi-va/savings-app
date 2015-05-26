@@ -1,6 +1,7 @@
 .header {
 	position: relative;
 	width: 100%;
+	flex-shrink: 0;
 	height: $headerHeight;
 
 	background: $black-03;

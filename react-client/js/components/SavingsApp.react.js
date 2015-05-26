@@ -7,8 +7,10 @@ var React = require('react');
 var FinancesStore = require('../stores/FinancesStore');
 var TimelineStore = require('../stores/TimelineStore');
 var FinanceAPI = require('../utils/FinanceAPI');
+var TimelineAPI = require('../utils/TimelineAPI');
 
 var FinanceActions = require('../actions/FinanceActions');
+var TimelineActions = require('../actions/TimelineActions');
 
 var Header = require('./Header.react');
 var Navigation = require('./Navigation.react');
@@ -22,7 +24,7 @@ function getFinancesState() {
 	return {
 		finances: FinancesStore.getFinances(),
 		financeTotals: FinancesStore.getFinanceTotals(),
-		timelineItems: {},
+		timeline: TimelineStore.getTimeline(),
 		modal: FinancesStore.getModalState()
 	};
 }
@@ -36,28 +38,36 @@ var SavingsApp = React.createClass({
 		FinanceAPI.emit('FINANCE_LOAD');
 
 		FinanceAPI.initListener('FINANCE_GET', function(financeData) {
-			console.log('got finance', financeData);
 			FinanceActions.addFinance(financeData);
 		});
 
 		FinanceAPI.initListener('FINANCE_UPDATED', function(financeData) {
-			console.log('got finance update', financeData);
 			FinanceActions.updateFinance(financeData);
 		});
 
 
+		TimelineAPI.getEmptyTimeline(function(err, timeline) {
+			TimelineActions.initTimeline(timeline);
+			TimelineAPI.emit('TIMELINE_LOAD');
+			TimelineAPI.initListener('TIMELINE_ITEM', function(item) {
+
+				TimelineActions.addItem(item);
+			});
+		});
+
 
 		FinancesStore.addChangeListener(this._onChange);
+		TimelineStore.addChangeListener(this._onChange);
 	},
 	componentWillUnmount: function () {
 		"use strict";
 		FinancesStore.removeChangeListener(this._onChange);
+		TimelineStore.removeChangeListener(this._onChange);
 	},
 	_onChange: function () {
 		this.setState(getFinancesState());
 	},
 	render: function () {
-		console.log(this.state.finances);
 
 		var modal;
 		var openFinance = null;
@@ -72,7 +82,7 @@ var SavingsApp = React.createClass({
 				<Header />
 				<Navigation />
 				<div className="container savings-app">
-					<Timeline className="timeline" timelineItems={this.state.timelineItems} />
+					<Timeline className="timeline" timeline={this.state.timeline} />
 					<FinancesColumn finances={this.state.finances.income} type={0} total={this.state.financeTotals.income} openFinance={openFinance} />
 					<FinancesColumn finances={this.state.finances.expense} type={1} total={this.state.financeTotals.expense} openFinance={openFinance} />
 				</div>

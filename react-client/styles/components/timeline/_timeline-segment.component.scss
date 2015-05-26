@@ -1,0 +1,86 @@
+$lineWidth: 4px;
+
+.timeline__Segment {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 0 4em;
+
+	&:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 50%;
+
+		width: $lineWidth;
+		height: 100%;
+
+		margin: 0 0 0 -2px;
+		padding: 0 0 15px;
+
+		background: $black-08;
+	}
+
+	&-future {
+		&:before {
+			background: $black-06;
+		}
+	}
+
+	&-today {
+
+		// to hide the top of the timeline from appearing over the pill
+		&:before {
+			margin-top: 15px;
+		}
+
+		&:after {
+			content: "Today";
+			position: absolute;
+			top: 0;
+			left: 50%;
+
+			width: 82px;
+			height: 30px;
+
+			margin: 12px 0 0 -41px;
+
+			background: $black-06;
+
+			font-size: 1.2em;
+			color: $white;
+			text-align: center;
+			line-height: 30px;
+
+			-webkit-border-radius: 15px;
+			-moz-border-radius: 15px;
+			border-radius: 15px;
+		}
+	}
+
+	&-first {
+		&:after {
+			content: "\f0d8";
+			position: absolute;
+			left: 50%;
+			top: -28px;
+			width: 30px;
+			height: 30px;
+			margin: 0 0 0 -15px;
+			background: $muted;
+
+			font-family: FontAwesome;
+			font-size: 1.2em;
+			font-weight: 700;
+			color: #4f4f4f;
+			text-align: center;
+			line-height: 28px;
+
+			-webkit-border-radius: 15px;
+			-moz-border-radius: 15px;
+			border-radius: 15px;
+
+		}
+	}
+}

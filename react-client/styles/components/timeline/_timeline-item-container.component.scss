@@ -1,0 +1,30 @@
+.timeline {
+	&__ItemContainer {
+		position: relative;
+		width: 50%;
+
+		&-income {
+			float: left;
+			.timeline__SegmentMeta {
+				float: right;
+			}
+		}
+
+		&-expenses {
+			float: right;
+			.timeline__SegmentMeta {
+				float: left;
+				text-align: right;
+			}
+		}
+	}
+
+	&__SegmentMeta {
+		width: 100%;
+		font: {
+			size: 0.85em;
+			weight: 600;
+		}
+		color: $black-06;
+	}
+}

@@ -50,8 +50,6 @@ var calcFinanceTotals = function() {
 			type.forEach(calc);
 		}
 	}
-
-	console.log('finance totals', _financeTotals);
 };
 
 // Add a new finance
@@ -85,23 +83,18 @@ function updateFinance(updatedFinance) {
 	for(var i in _finances) {
 		if(_finances.hasOwnProperty(i)) {
 			_finances[i] = _finances[i].map(function(finance) {
-				console.log('check finance', finance, finance._id === updatedFinance._id);
 				if(finance._id === updatedFinance._id) {
 					finance.name = updatedFinance.name;
 					finance.amount = updatedFinance.amount;
 					finance.duedate = updatedFinance.duedate;
 					finance.interval = updatedFinance.interval;
 					finance.description = updatedFinance.description;
-
-					console.log('done updating finance ', finance);
-
 				}
 				return finance;
 			});
 			calcFinanceTotals.call(null);
 		}
 	}
-	console.log('done updating all finances', _finances);
 }
 
 function setFinanceModalOpen(data) {
@@ -153,7 +146,6 @@ AppDispatcher.register(function (payload) {
 
 		case FinanceActionTypes.FINANCE_ADD:
 			addFinance(action.data);
-			console.log('add finance to store');
 			//FinanceAPI.emit(action.actionType, action.data);
 			break;
 
