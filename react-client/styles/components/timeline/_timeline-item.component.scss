@@ -19,16 +19,19 @@
 
 	&-income {
 		background: $green-03;
+		&:before{background: $green-03;}
 		&.timeline__Item-future {
 			background: $green-02;
+			&:before{background: $green-02;}
 		}
 	}
 
 	&-expense {
 		background: $orange-03;
-
+		&:before{background: $orange-03;}
 		&.timeline__Item-future {
 			background: $orange-02;
+			&:before{background: $orange-02;}
 		}
 	}
 }
@@ -41,8 +44,6 @@
 	width: 98px;
 	height: 3px;
 	margin: -2px 0 0;
-
-	background: #999;
 }
 
 .timeline__ItemRow {
@@ -55,12 +56,12 @@
 		.timeline__Item {
 			&-income:before {
 				@extend %timelineLink;
-				background: $green-02;
+				//background: $green-02;
 			}
 
 			&-expense:before {
 				@extend %timelineLink;
-				background: $orange-02;
+				//background: $orange-02;
 				right: auto;
 				left: -98px;
 			}
