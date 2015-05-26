@@ -169,6 +169,13 @@ describe('Finances tests', function() {
 
 	describe('modifying a finance', function() {
 		it('should modify a finance', function(done) {
+			addedFinance.name = 'new name';
+			socketClient.emit('finance::modify', addedFinance);
+
+			socketClient.on('finance::modified', function(msg) {
+				expect(msg.name).to.equal(addedFinance.name);
+				done();
+			});
 			done();
 		});
 	});
