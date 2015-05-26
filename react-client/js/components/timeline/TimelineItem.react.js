@@ -15,7 +15,8 @@ var TimelineItem = React.createClass({
 		var classNames = ClassNames('timeline__Item',
 			{
 				'timeline__Item-income': item.type === 0,
-				'timeline__Item-expense': item.type === 1
+				'timeline__Item-expense': item.type === 1,
+				'timeline__Item-future': this.props.future === true
 			}
 		);
 		var rowClassNames = ClassNames('timeline__ItemRow', {
@@ -25,14 +26,14 @@ var TimelineItem = React.createClass({
 		var wrapperClassNames = ClassNames('timeline__ItemWrapper', {
 			'timeline__ItemWrapper-income': item.type === 0,
 			'timeline__ItemWrapper-expense': item.type === 1
-		})
+		});
 
 		return (
 			<div className={rowClassNames}>
 				<div className={wrapperClassNames}>
 					<div className={classNames}>
 						<div className="timeline__ItemAmountWrapper">
-							<div className="timeline__ItemAmount">{item.amount}</div>
+							<div className="timeline__ItemAmount">{Numeral(item.amount).format('$0,0.00')}</div>
 						</div>
 						<div className="timeline__ItemNameWrapper">
 							<div className="timeline__ItemName">{ item.name }</div>

@@ -51,9 +51,9 @@ var TimelineItemList = React.createClass({
 
 				{items.map(function(item, index) {
 					return (
-						<TimelineItem item={item} key={index} index={index} />
-					)
-				})}
+						<TimelineItem item={item} key={index} index={index} future={this.props.future} />
+					);
+				}, this)}
 			</div>
 		)
 	}
