@@ -185,9 +185,27 @@ describe('Finances tests', function() {
 
 			socketClient.on('timeline::item', function(msg) {
 				callbackCount += 1;
+				expect(msg).to.have.property('name');
+				expect(msg.name).to.equal(addedFinance.name);
 				if(callbackCount === 1) {
 					done();
 				}
+			});
+		});
+	});
+
+	describe('disabling a finance', function() {
+		it('should disable a finance', function(done) {
+			socketClient.emit('finance::disable', addedFinance._id);
+			socketClient.on('finance::disabled', function(msg) {
+				expect(msg).to.have.property('_id');
+				expect(msg).to.have.property('type');
+				expect(msg).to.have.property('disabled');
+
+				expect(msg._id).to.equal(addedFinance._id);
+				expect(msg.disabled).to.equal(true);
+
+				done();
 			});
 		});
 	});
