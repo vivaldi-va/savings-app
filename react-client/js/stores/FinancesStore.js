@@ -48,6 +48,7 @@ var calcFinanceTotals = function() {
 	};
 
 	for(var i in _finances) {
+		_financeTotals[i] = 0;
 		if(_finances.hasOwnProperty(i)) {
 			var type = _finances[i];
 			type.forEach(calc);
