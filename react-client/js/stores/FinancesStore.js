@@ -38,6 +38,9 @@ var calcFinanceTotals = function() {
 			case 24*7:
 				_financeTotals[type] += finance.amount * 4;
 				break;
+			case 24*7*2:
+				_financeTotals[type] += finance.amount * 2;
+				break;
 			case 24*31:
 				_financeTotals[type] += finance.amount;
 				break;
