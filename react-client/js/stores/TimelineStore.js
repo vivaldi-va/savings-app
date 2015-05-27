@@ -23,12 +23,17 @@ var addTimelineItem = function(item) {
 	console.log('add timeline item', item);
 
 	var newItemDate = Moment(item.timeline_date);
-	console.log(newItemDate.calendar())
+
+	console.log(newItemDate.calendar());
+
 	_timeline.items.forEach(function(segment) {
 		var segmentDate = Moment(segment.attrs.date);
 		//console.log('segment date', segmentDate.calendar())
+
 		if(newItemDate.isSame(segmentDate, 'day')) {
 			console.log('added new timeline item');
+
+
 			if(item.type === 0) {
 				segment.finances.income.push(item);
 			} else {
@@ -36,6 +41,22 @@ var addTimelineItem = function(item) {
 			}
 		}
 	});
+};
+
+var cleanUpdatedTimeline = function(financeId, type, cb) {
+	"use strict";
+	console.log('clean updated finance');
+	type = type === 0 ? 'income' : 'expenses';
+	_timeline.items.forEach(function(segment) {
+		segment.finances[type].forEach(function(item, index) {
+			if(item.finance_id === financeId) {
+				console.log('cleaned finance');
+				segment.finances[type].splice(index, 1);
+			}
+		});
+	});
+
+	cb();
 };
 
 // Extend Cart Store with EventEmitter to add eventing capabilities
@@ -46,6 +67,7 @@ var TimelineStore = _.extend({}, EventEmitter.prototype, {
 		return _timeline;
 	},
 
+	cleanUpdatedTimeline: cleanUpdatedTimeline,
 	// Add change listener
 	addChangeListener: function (callback) {
 		this.on('change', callback);

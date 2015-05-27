@@ -186,6 +186,9 @@ describe('Finances tests', function() {
 			socketClient.on('timeline::item', function(msg) {
 				callbackCount += 1;
 				expect(msg).to.have.property('name');
+				expect(msg).to.have.property('finance_id');
+				expect(msg).to.have.property('type');
+				expect(msg.finance_id).to.equal(addedFinance._id);
 				expect(msg.name).to.equal(addedFinance.name);
 				if(callbackCount === 1) {
 					done();

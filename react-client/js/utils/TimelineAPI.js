@@ -7,7 +7,8 @@ var Cookie = require('react-cookie');
 var SocketUtil = require('./SocketUtil');
 var actionMap = {
 	TIMELINE_ITEM: 'timeline::item',
-	TIMELINE_LOAD: 'timeline::load'
+	TIMELINE_LOAD: 'timeline::load',
+	TIMELINE_LOAD_UPDATE: 'timeline::load::modified'
 };
 
 module.exports = {

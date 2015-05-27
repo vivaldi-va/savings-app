@@ -6,7 +6,7 @@ var React = require('react');
 var FinanceActions = require('../actions/FinanceActions');
 
 var FinanceAPI = require('../utils/FinanceAPI');
-
+var TimelineStore = require('../stores/TimelineStore');
 var FinanceModal = React.createClass({
 	propTypes: {
 		onSubmit: React.PropTypes.func
@@ -78,6 +78,7 @@ var FinanceModal = React.createClass({
 		var amount = this.refs.amount.getDOMNode().value;
 		var interval = this.refs.interval.getDOMNode().value;
 		var date = new Date(this.refs.date.getDOMNode().value);
+
 		var updatedFinance = {
 			_id: this.props.modal.finance._id,
 			name: name,
@@ -86,9 +87,23 @@ var FinanceModal = React.createClass({
 			duedate: date
 		};
 
+		for(var key in this.props.modal.finance) {
+			if(this.props.modal.finance.hasOwnProperty(key)) {
 
-		FinanceAPI.emit('FINANCE_UPDATE', updatedFinance);
-		FinanceActions.closeModal();
+				if(!updatedFinance[key]) {
+					updatedFinance[key] = this.props.modal.finance[key];
+				}
+				//updatedFinance[key] ;
+			}
+		}
+
+
+		TimelineStore.cleanUpdatedTimeline(updatedFinance._id, updatedFinance.type, function() {
+			FinanceAPI.emit('FINANCE_UPDATE', updatedFinance);
+			FinanceActions.closeModal();
+		});
+
+
 	},
 	handleDisableFinance: function(e) {
 		"use strict";

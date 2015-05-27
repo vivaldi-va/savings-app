@@ -68,6 +68,7 @@ function addFinance(finance) {
 
 }
 
+
 // Remove item from cart
 function removeFinance(id) {
 	for(var i in _finances) {
@@ -100,6 +101,7 @@ function updateFinance(updatedFinance) {
 		}
 	}
 }
+
 
 function setFinanceModalOpen(data) {
 	console.log('setModalState', data);
