@@ -45,6 +45,11 @@ var SavingsApp = React.createClass({
 			FinanceActions.updateFinance(financeData);
 		});
 
+		FinanceAPI.initListener('FINANCE_DISABLED', function(financeData) {
+
+			FinanceActions.removeFinance(financeData);
+		});
+
 
 		TimelineAPI.getEmptyTimeline(function(err, timeline) {
 			TimelineActions.initTimeline(timeline);

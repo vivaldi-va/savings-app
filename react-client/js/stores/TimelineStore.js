@@ -20,18 +20,14 @@ var setTimeline = function(timeline) {
 
 var addTimelineItem = function(item) {
 	"use strict";
-	console.log('add timeline item', item);
 
 	var newItemDate = Moment(item.timeline_date);
-
-	console.log(newItemDate.calendar());
 
 	_timeline.items.forEach(function(segment) {
 		var segmentDate = Moment(segment.attrs.date);
 		//console.log('segment date', segmentDate.calendar())
 
 		if(newItemDate.isSame(segmentDate, 'day')) {
-			console.log('added new timeline item');
 
 
 			if(item.type === 0) {

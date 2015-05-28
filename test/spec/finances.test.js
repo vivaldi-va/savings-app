@@ -198,8 +198,8 @@ describe('Finances tests', function() {
 	});
 
 	describe('disabling a finance', function() {
-		it('should disable a finance', function(done) {
-			socketClient.emit('finance::disable', addedFinance._id);
+		it('should disable a finance from current date if none is set', function(done) {
+			socketClient.emit('finance::disable', {_id: addedFinance._id, disabled: true});
 			socketClient.on('finance::disabled', function(msg) {
 				expect(msg).to.have.property('_id');
 				expect(msg).to.have.property('type');
@@ -210,6 +210,81 @@ describe('Finances tests', function() {
 
 				done();
 			});
+		});
+
+		it('should disable a from set date', function(done) {
+			var disabledDate = new Date('01/03/2015');
+
+			var financeGetCallback = function(msg) {
+				expect(msg).to.be.ok;
+				expect(msg).to.have.property('_id');
+				expect(msg).to.have.property('name');
+				expect(msg).to.have.property('amount');
+
+				expect(msg.name).to.equal(testFinance.name);
+				log.debug('added finance amount', msg.amount, testFinance.amount);
+				expect(msg.amount).to.equal(testFinance.amount);
+				//expect(msg.name).to.equal(testFinance.name);
+				//expect(msg.amount).to.equal(testFinance.amount);
+				addedFinance = msg;
+
+
+				socketClient.emit('finance::disable', {_id: addedFinance._id, disabled: true, disabled_date: disabledDate});
+				socketClient.on('finance::disabled', function(msg) {
+					expect(msg).to.have.property('_id');
+					expect(msg).to.have.property('type');
+					expect(msg).to.have.property('disabled');
+					expect(msg).to.have.property('disabled_date');
+
+					expect(new Date(msg.disabled_date).toISOString()).to.equal(disabledDate.toISOString());
+
+					expect(msg._id).to.equal(addedFinance._id);
+					expect(msg.disabled).to.equal(true);
+
+					done();
+				});
+			};
+
+
+			socketClient.emit('finance::add', testFinance);
+			socketClient.on('finance::get', financeGetCallback);
+
+		});
+		it('should remove a finance if disabled set to false', function(done) {
+
+			var financeGetCallback = function(msg) {
+				expect(msg).to.be.ok;
+				expect(msg).to.have.property('_id');
+				expect(msg).to.have.property('name');
+				expect(msg).to.have.property('amount');
+
+				expect(msg.name).to.equal(testFinance.name);
+				log.debug('added finance amount', msg.amount, testFinance.amount);
+				expect(msg.amount).to.equal(testFinance.amount);
+				//expect(msg.name).to.equal(testFinance.name);
+				//expect(msg.amount).to.equal(testFinance.amount);
+				addedFinance = msg;
+
+
+				socketClient.emit('finance::disable', {_id: addedFinance._id, disabled: false});
+				socketClient.on('finance::disabled', function(msg) {
+					expect(msg).to.have.property('_id');
+					expect(msg).to.have.property('type');
+					expect(msg).to.have.property('disabled');
+					expect(msg).to.have.property('disabled_date');
+					expect(msg._id).to.equal(addedFinance._id);
+					expect(msg.disabled_date).to.not.be.ok;
+					expect(msg.disabled).to.equal(true);
+
+
+					done();
+				});
+			};
+
+
+			socketClient.emit('finance::add', testFinance);
+			socketClient.on('finance::get', financeGetCallback);
+
 		});
 	});
 

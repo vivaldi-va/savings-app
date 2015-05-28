@@ -14,7 +14,7 @@ var Timeline = React.createClass({
 			timelineItems = null;
 		} else {
 			timelineItems = this.props.timeline.items.map(function (segment, index) {
-				return (<TimelineSegment segment={segment} index={index} />)
+				return (<TimelineSegment key={index} segment={segment} index={index} />)
 			}, this);
 		}
 

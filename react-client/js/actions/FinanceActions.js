@@ -17,10 +17,11 @@ var FinanceActions = {
 	},
 
 
-	removeFinance: function(id) {
+	removeFinance: function(data) {
+		console.log('remove finance', data);
 		AppDispatcher.handleAction({
 			actionType: FinanceActionTypes.FINANCE_REMOVE,
-			id: id
+			id: data._id
 		});
 	},
 

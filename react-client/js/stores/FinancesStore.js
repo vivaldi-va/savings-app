@@ -157,8 +157,8 @@ AppDispatcher.register(function (payload) {
 
 
 		case FinanceActionTypes.FINANCE_REMOVE:
+			console.log('remove finance', action.id);
 			removeFinance(action.id);
-			FinanceAPI.emit(action.actionType, {id: action.id});
 			break;
 
 
