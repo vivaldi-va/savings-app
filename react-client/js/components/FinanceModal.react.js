@@ -164,6 +164,10 @@ var FinanceModal = React.createClass({
 		});
 
 	},
+	handleClickDatepicker: function(e) {
+		"use strict";
+		e.stopPropagation();
+	},
 	render: function() {
 		"use strict";
 		if(!this.props.modal) {
@@ -208,7 +212,7 @@ var FinanceModal = React.createClass({
 		//if(this.props.modal.finance)
 
 		var financeView = (
-			<div className="modal">
+			<div className="modal" onClick={this.closeDatepicker}>
 				<div className="modal__Header">
 					{title}
 				</div>
@@ -241,19 +245,21 @@ var FinanceModal = React.createClass({
 								value={Moment(this.state.duedate).format('DD/MM/YYYY')}
 								type="text"
 								className="input"
+								onClick={this.handleClickDatepicker}
 								onFocus={this.openDatepicker}
-								onBlur={this.closeDatepicker}
 								/>
 
 							{function() {
 								if(this.state.datepickeropen) {
 									return (
-										<DatePicker
-											className={datepickerClassnames}
-											dateFormat="DD/MM/YYYY"
-											date={this.state.duedate}
-											onChange={this.handleDateChange}
-											/>
+										<div onClick={this.handleClickDatepicker}>
+											<DatePicker
+												className={datepickerClassnames}
+												dateFormat="DD/MM/YYYY"
+												date={this.state.duedate}
+												onChange={this.handleDateChange}
+												/>
+										</div>
 									);
 								}
 							}.call(this)}
