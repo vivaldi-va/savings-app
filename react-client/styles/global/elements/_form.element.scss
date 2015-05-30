@@ -1,6 +1,7 @@
 .form {
 	&__InputGroup {
 		display: flex;
+		position: relative;
 		flex-direction: column;
 
 		& + & {

@@ -49,6 +49,7 @@ $color-danger: #e87511;
 $color-error: #7c211e;
 
 // injector
+@import 'components/_datepicker.component.scss';
 @import 'components/_header.component.scss';
 @import 'components/_modal.component.scss';
 @import 'components/_navigation.component.scss';

@@ -3,6 +3,9 @@
  */
 
 var React = require('react');
+var DatePicker = require('react-date-picker');
+var Moment = require('moment');
+var ClassNames = require('classnames');
 var FinanceActions = require('../actions/FinanceActions');
 
 var FinanceAPI = require('../utils/FinanceAPI');
@@ -21,7 +24,9 @@ var FinanceModal = React.createClass({
 		"use strict";
 		return {
 			interval: 24,
-			view: 'finance'
+			view: 'finance',
+			duedate: new Date(),
+			datepickeropen: false
 		};
 	},
 	componentDidMount: function() {
@@ -30,8 +35,10 @@ var FinanceModal = React.createClass({
 			this.refs.name.getDOMNode().value = this.props.modal.finance.name;
 			this.refs.amount.getDOMNode().value = this.props.modal.finance.amount;
 			this.refs.interval.getDOMNode().value = this.props.modal.finance.interval;
-			this.refs.date.getDOMNode().value = this.props.modal.finance.duedate;
 			this.refs.description.getDOMNode().value = this.props.modal.finance.description;
+			this.setState({
+				duedate: new Date(this.props.modal.finance.duedate)
+			});
 		}
 
 		console.log('loading finance', this.refs.interval.getDOMNode().value);
@@ -49,14 +56,20 @@ var FinanceModal = React.createClass({
 		e.preventDefault();
 		FinanceActions.closeModal();
 	},
+	handleDateChange: function(dateString, moment) {
+		"use strict";
+		console.log('changed date to %s', dateString);
+		this.setState({
+			duedate: moment.toDate()
+		});
+	},
 	handleCreateFinance: function(e) {
 		"use strict";
 		e.preventDefault();
 		var name = this.refs.name.getDOMNode().value;
 		var amount = this.refs.amount.getDOMNode().value;
 		var interval = this.refs.interval.getDOMNode().value;
-		var date = new Date(this.refs.date.getDOMNode().value);
-
+		var date = this.state.duedate;
 
 		var newFinance = {
 			name: name,
@@ -78,7 +91,7 @@ var FinanceModal = React.createClass({
 		var name = this.refs.name.getDOMNode().value;
 		var amount = this.refs.amount.getDOMNode().value;
 		var interval = this.refs.interval.getDOMNode().value;
-		var date = new Date(this.refs.date.getDOMNode().value);
+		var date = this.state.duedate;
 
 		var updatedFinance = {
 			_id: this.props.modal.finance._id,
@@ -138,6 +151,19 @@ var FinanceModal = React.createClass({
 			view: 'disable'
 		});
 	},
+	openDatepicker: function() {
+		"use strict";
+		this.setState({
+			datepickeropen: true
+		});
+	},
+	closeDatepicker: function() {
+		"use strict";
+		this.setState({
+			datepickeropen: false
+		});
+
+	},
 	render: function() {
 		"use strict";
 		if(!this.props.modal) {
@@ -148,6 +174,7 @@ var FinanceModal = React.createClass({
 		var submitButton;
 		var leftButtons;
 		var label;
+		var datepickerClassnames = ClassNames('datePicker', {'datePicker-open': this.state.datepickeropen});
 
 		if(!this.props.modal.finance) {
 			label = this.props.modal.type === 0 ?
@@ -175,6 +202,8 @@ var FinanceModal = React.createClass({
 			</div>
 			);
 		}
+
+
 
 		//if(this.props.modal.finance)
 
@@ -206,7 +235,29 @@ var FinanceModal = React.createClass({
 						</div>
 						<div className="form__InputGroup">
 							<label htmlFor="finance-modal-date" className="form__InputLabel">start date</label>
-							<input id="finance-modal-date" ref="date" type="text" className="input"/>
+							<input
+								id="finance-modal-date"
+								ref="date"
+								value={Moment(this.state.duedate).format('DD/MM/YYYY')}
+								type="text"
+								className="input"
+								onFocus={this.openDatepicker}
+								onBlur={this.closeDatepicker}
+								/>
+
+							{function() {
+								if(this.state.datepickeropen) {
+									return (
+										<DatePicker
+											className={datepickerClassnames}
+											dateFormat="DD/MM/YYYY"
+											date={this.state.duedate}
+											onChange={this.handleDateChange}
+											/>
+									);
+								}
+							}.call(this)}
+
 						</div>
 						<div className="form__InputGroup">
 							<label htmlFor="finance-modal-description" className="form__InputLabel">description</label>
