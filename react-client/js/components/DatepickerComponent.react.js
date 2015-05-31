@@ -77,17 +77,14 @@ var DatepickerComponent = React.createClass({
 					onFocus={this.handleFocusDatepicker}
 					/>
 
-				<div onClick={this.handleClickPicker}>
 					<DatePicker
 						ref="picker"
 						className={pickerClassNames}
 						dateFormat="DD/MM/YYYY"
 						date={this.state.date}
 						onChange={this.props.onSelect}
-						onClick={this.handleClickPicker}
 						/>
 				</div>
-			</div>
 		)
 
 
