@@ -57,6 +57,7 @@
     "react": "^0.13.3",
     "react-cookie": "^0.1.8",
     "react-date-picker": "^2.0.18",
+    "react-onclickoutside": "^0.2.4",
     "react-router": "^0.13.3",
     "redis": "^0.12.1",
     "requirejs": "~2.1.9",
@@ -64,6 +65,7 @@
     "socket.io-client": "^1.3.5",
     "socketio-jwt": "^2.3.5",
     "superagent": "^1.2.0",
+    "tether": "^0.7.2",
     "underscore": "^1.8.2"
   },
   "devDependencies": {

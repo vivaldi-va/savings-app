@@ -10,6 +10,8 @@ var FinanceActions = require('../actions/FinanceActions');
 
 var FinanceAPI = require('../utils/FinanceAPI');
 var TimelineStore = require('../stores/TimelineStore');
+
+var DatepickerComponent	=require('./DatepickerComponent.react.js');
 var FinanceModal = React.createClass({
 	propTypes: {
 		onSubmit: React.PropTypes.func
@@ -26,7 +28,7 @@ var FinanceModal = React.createClass({
 			interval: 24,
 			view: 'finance',
 			duedate: new Date(),
-			datepickeropen: false
+			disabledate: new Date()
 		};
 	},
 	componentDidMount: function() {
@@ -56,11 +58,18 @@ var FinanceModal = React.createClass({
 		e.preventDefault();
 		FinanceActions.closeModal();
 	},
-	handleDateChange: function(dateString, moment) {
+	handleDueDateChange: function(dateString, moment) {
 		"use strict";
 		console.log('changed date to %s', dateString);
 		this.setState({
 			duedate: moment.toDate()
+		});
+	},
+	handleDisableDateChange: function(dateString, moment) {
+		"use strict";
+		console.log('changed disable date to %s', dateString);
+		this.setState({
+			disabledate: moment.toDate()
 		});
 	},
 	handleCreateFinance: function(e) {
@@ -178,7 +187,6 @@ var FinanceModal = React.createClass({
 		var submitButton;
 		var leftButtons;
 		var label;
-		var datepickerClassnames = ClassNames('datePicker', {'datePicker-open': this.state.datepickeropen});
 
 		if(!this.props.modal.finance) {
 			label = this.props.modal.type === 0 ?
@@ -208,9 +216,6 @@ var FinanceModal = React.createClass({
 		}
 
 
-
-		//if(this.props.modal.finance)
-
 		var financeView = (
 			<div className="modal" onClick={this.closeDatepicker}>
 				<div className="modal__Header">
@@ -239,31 +244,11 @@ var FinanceModal = React.createClass({
 						</div>
 						<div className="form__InputGroup">
 							<label htmlFor="finance-modal-date" className="form__InputLabel">start date</label>
-							<input
-								id="finance-modal-date"
-								ref="date"
-								value={Moment(this.state.duedate).format('DD/MM/YYYY')}
-								type="text"
-								className="input"
-								onClick={this.handleClickDatepicker}
-								onFocus={this.openDatepicker}
+
+							<DatepickerComponent
+								date={this.state.duedate}
+								onSelect={this.handleDueDateChange}
 								/>
-
-							{function() {
-								if(this.state.datepickeropen) {
-									return (
-										<div onClick={this.handleClickDatepicker}>
-											<DatePicker
-												className={datepickerClassnames}
-												dateFormat="DD/MM/YYYY"
-												date={this.state.duedate}
-												onChange={this.handleDateChange}
-												/>
-										</div>
-									);
-								}
-							}.call(this)}
-
 						</div>
 						<div className="form__InputGroup">
 							<label htmlFor="finance-modal-description" className="form__InputLabel">description</label>
@@ -289,7 +274,10 @@ var FinanceModal = React.createClass({
 					<form className="form">
 						<div className="form__InputGroup">
 							<label htmlFor="finance-modal-disable-date" className="form__InputLabel">disable from</label>
-							<input id="finance-modal-disable-date" ref="disabledate" defaultValue={new Date()} type="text" className="input" />
+							<DatepickerComponent
+								date={this.state.disabledate}
+								onSelect={this.handleDisableDateChange}
+								/>
 						</div>
 						<div className="form__InputGroup">
 							<label htmlFor="finance-modal-remove" className="form__InputLabel">remove from timeline

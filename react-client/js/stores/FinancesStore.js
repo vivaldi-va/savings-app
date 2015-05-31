@@ -9,7 +9,9 @@ var moment				= require('moment');
 var AppDispatcher			= require('../dispatcher/AppDispatcher');
 var EventEmitter			= require('events').EventEmitter;
 var FinanceActionTypes	= require('../constants/FinanceActionTypes');
-var FinanceAPI				= require('../utils/FinanceAPI');
+var FinanceAPI			= require('../utils/FinanceAPI');
+
+
 
 // Define initial data points
 var _finances = {
@@ -54,6 +56,8 @@ var calcFinanceTotals = function() {
 			type.forEach(calc);
 		}
 	}
+
+	console.log('finance totals', _financeTotals);
 };
 
 // Add a new finance
@@ -69,7 +73,6 @@ function addFinance(finance) {
 }
 
 
-// Remove item from cart
 function removeFinance(id) {
 	for(var i in _finances) {
 		for(var f in _finances[i]) {
@@ -79,6 +82,8 @@ function removeFinance(id) {
 			}
 		}
 	}
+
+	calcFinanceTotals();
 }
 
 
@@ -143,28 +148,24 @@ var FinancesStore = _.extend({}, EventEmitter.prototype, {
 
 });
 
-// Register callback with AppDispatcher
+
 AppDispatcher.register(function (payload) {
 	var action = payload.action;
-	var text;
 
 	switch (action.actionType) {
 
 		case FinanceActionTypes.FINANCE_ADD:
 			addFinance(action.data);
-			//FinanceAPI.emit(action.actionType, action.data);
 			break;
 
 
 		case FinanceActionTypes.FINANCE_REMOVE:
-			console.log('remove finance', action.id);
 			removeFinance(action.id);
 			break;
 
 
 		case FinanceActionTypes.FINANCE_UPDATED:
 			updateFinance(action.data);
-			//FinanceAPI.emit(action.actionType, {id: action.id, data: action.data});
 			break;
 
 
