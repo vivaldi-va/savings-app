@@ -215,7 +215,6 @@ var FinanceModal = React.createClass({
 			);
 		}
 
-
 		var financeView = (
 			<div className="modal" onClick={this.closeDatepicker}>
 				<div className="modal__Header">

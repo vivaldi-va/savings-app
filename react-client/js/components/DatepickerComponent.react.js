@@ -7,6 +7,8 @@ var React = require('react');
 var DatePicker = require('react-date-picker');
 var Moment = require('Moment');
 var ClickOutside = require('react-onclickoutside');
+var ClassNames = require('classnames');
+var Tether = require('tether');
 
 var DatepickerComponent = React.createClass({
 	mixins: [ClickOutside],
@@ -29,6 +31,24 @@ var DatepickerComponent = React.createClass({
 			open: false
 		};
 	},
+	componentDidMount: function() {
+		"use strict";
+		console.log('componentDidMount');
+		var tether = new Tether({
+			element: this.refs.picker.getDOMNode(),
+			target: this.refs.dateinput.getDOMNode(),
+			attachment: 'top left',
+			targetAttachment: 'bottom left',
+			constraints: [
+				{
+					to: 'window',
+					attachment: 'together',
+					pin: true
+				}
+			]
+		});
+
+	},
 	handleClickOutside: function(e) {
 		"use strict";
 		this.setState({
@@ -43,30 +63,29 @@ var DatepickerComponent = React.createClass({
 	},
 	render: function() {
 		"use strict";
+		var picker;
+
+		var pickerClassNames = ClassNames('datePicker', {'datePicker-active': this.state.open});
 
 		return (
 			<div>
 				<input
+					ref="dateinput"
 					value={Moment(this.props.date).format('DD/MM/YYYY')}
 					type="text"
 					className="input"
 					onFocus={this.handleFocusDatepicker}
 					/>
 
-				{function() {
-					if(this.state.open) {
-						return (
-							<div onClick={this.handleClickDatepicker}>
-								<DatePicker
-									className="datePicker"
-									dateFormat="DD/MM/YYYY"
-									date={this.state.date}
-									onChange={this.props.onSelect}
-									/>
-							</div>
-						);
-					}
-				}.call(this)}
+				<div onClick={this.handleClickDatepicker}>
+					<DatePicker
+						ref="picker"
+						className={pickerClassNames}
+						dateFormat="DD/MM/YYYY"
+						date={this.state.date}
+						onChange={this.props.onSelect}
+						/>
+				</div>
 			</div>
 		)
 
