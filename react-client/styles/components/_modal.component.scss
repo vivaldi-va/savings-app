@@ -61,6 +61,10 @@ $barHeight: 38px;
 		min-width: $barHeight;
 		height: $barHeight;
 
+		&:hover {
+			background: $black-09;
+		}
+
 		&-green {
 			background: $green-02;
 			color: $white;
@@ -69,6 +73,10 @@ $barHeight: 38px;
 			}
 
 			text-shadow: 0 1px rgba(0,0,0,0.25);
+
+			&:hover {
+				background: $green-03;
+			}
 		}
 
 		&-blue {
@@ -79,6 +87,25 @@ $barHeight: 38px;
 			}
 
 			text-shadow: 0 1px rgba(0,0,0,0.25);
+
+			&:hover {
+				background: $blue-02;
+			}
 		}
+
+		&-red {
+			background: $red-01;
+			color: $white;
+			font: {
+				weight: 600;
+			}
+
+			text-shadow: 0 1px rgba(0,0,0,0.25);
+
+			&:hover {
+				background: $red-02;
+			}
+		}
+
 	}
 }

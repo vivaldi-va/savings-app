@@ -289,7 +289,13 @@ var FinanceModal = React.createClass({
 				<div className="modal__Footer">
 					<button type="button" className="modal__FooterButton modal__FooterButton-default" onClick={this.setViewFinance}><i className="fa fa-chevron-left"></i></button>
 					<div className="modal__FooterButtonGroup">
-						<button type="button" className="modal__FooterButton modal__FooterButton-red" onClick={this.handleDisableFinance}>disable finance</button>
+						<button
+							type="button"
+							className="modal__FooterButton modal__FooterButton-red"
+							onClick={this.handleDisableFinance}
+							>
+								Disable Finance
+						</button>
 					</div>
 				</div>
 			</div>
