@@ -139,7 +139,7 @@ var FinanceModal = React.createClass({
 
 		if(this.state.view === 'disable') {
 			disable = !this.refs.remove.getDOMNode().checked;
-			disableDate = new Date(this.refs.disabledate.getDOMNode().value) || new Date();
+			disableDate = this.state.disabledate || new Date();
 		}
 
 		TimelineStore.cleanUpdatedTimeline(finance._id, finance.type, function() {
